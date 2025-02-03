@@ -3,8 +3,12 @@
 import React from "react";
 import Container from "./container";
 import { useRouter, useSearchParams } from "next/navigation";
+import { cn } from "@/lib/utils";
 
-function Categories() {
+interface Props{
+  className?: string
+}
+function Categories({className}: Props) {
   const categories = [
     { id: 1, title: "All", image: "/images/all.png" },
     { id: 2, title: "Hotels", image: "/images/hotels.png" },
@@ -26,7 +30,7 @@ function Categories() {
 
   return (
     <Container>
-      <ul className="flex gap-6 list-none py-5">
+      <ul className={cn("flex gap-6 list-none", className)}>
         {categories.map((category) => (
           <li
             key={category.id}
