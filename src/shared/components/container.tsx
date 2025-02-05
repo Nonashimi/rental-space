@@ -6,7 +6,7 @@ type Props = {
 
 function Container({children}: Props) {
   return (
-    <div className='w-[1400px] mx-auto'>
+    <div className='w-[1700px] mx-auto'>
         {children}
     </div>
   )

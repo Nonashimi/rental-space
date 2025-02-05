@@ -1,62 +1,103 @@
 "use client"
 
 import { usePagination } from '@/hooks/usePagination'
-import { AlignLeft, ChevronLeft, ChevronRight, Heart, HeartHandshake, HeartIcon, MoveLeft, Rat, StarHalf, StarIcon } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { CardItem } from '@/store/cards'
+import {  ChevronLeft, ChevronRight, Heart, HeartHandshake, HeartIcon, MoveLeft, Rat, StarHalf, StarIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
-type Props = {}
+type Props = {
+    favoriteItems: Set<Number>,
+    handleFav: (id: number) =>void,
+    cardItem: CardItem
+}
 
-function Card({}: Props) {
-    const cardItem = {
-        images: [
-            "https://a0.muscache.com/im/pictures/miso/Hosting-614375154474735110/original/7e7f4c4a-c496-4844-bd02-44e276b41718.jpeg?im_w=1200&im_format=avif",
-            "https://a0.muscache.com/im/pictures/miso/Hosting-614375154474735110/original/1479b1a0-ee19-49a6-94e4-3c43049776c0.jpeg?im_w=720&im_format=avif",
-            "https://a0.muscache.com/im/pictures/miso/Hosting-614375154474735110/original/3ac04d3f-b4f5-4d01-8258-8083979c792e.jpeg?im_w=720&im_format=avif",
-            "https://a0.muscache.com/im/pictures/miso/Hosting-614375154474735110/original/cd0c1eba-74bd-4d6b-9ec3-20c6dd8b5226.jpeg?im_w=720&im_format=avif",
-            "https://a0.muscache.com/im/pictures/miso/Hosting-614375154474735110/original/ac259f95-bc29-4466-89f9-12a97f2b0977.jpeg?im_w=720&im_format=avif",
-            "https://a0.muscache.com/im/pictures/miso/Hosting-614375154474735110/original/7e7f4c4a-c496-4844-bd02-44e276b41718.jpeg?im_w=1200&im_format=avif",
-            "https://a0.muscache.com/im/pictures/miso/Hosting-614375154474735110/original/1479b1a0-ee19-49a6-94e4-3c43049776c0.jpeg?im_w=720&im_format=avif",
-            "https://a0.muscache.com/im/pictures/miso/Hosting-614375154474735110/original/3ac04d3f-b4f5-4d01-8258-8083979c792e.jpeg?im_w=720&im_format=avif",
-            "https://a0.muscache.com/im/pictures/miso/Hosting-614375154474735110/original/cd0c1eba-74bd-4d6b-9ec3-20c6dd8b5226.jpeg?im_w=720&im_format=avif",
-            "https://a0.muscache.com/im/pictures/miso/Hosting-614375154474735110/original/ac259f95-bc29-4466-89f9-12a97f2b0977.jpeg?im_w=720&im_format=avif",
-        ],
-        place: "Shangarh(Индия)",
-        description: "Национальный парк Большие Гималаи в 13 км",
-        date: "3-8 фев.",
-        price: 15000,
-        rate: 4.8
+function Card({favoriteItems, handleFav, cardItem}: Props) {
+   
+    const router = useRouter();
+
+    const {thisPage, clickPrev, clickNext, clickPoint} = usePagination(cardItem.images.length, 5);
+    const defineLocation = () => {
+        if(thisPage <= 3){
+            return 0;
+        }
+        else if(thisPage > 3 && thisPage <= cardItem.images.length - 3){
+            return thisPage - 3;
+        }else{
+            return cardItem.images.length - 5;
+        }
+    }
+    const defineSize = (index: number) => {
+        let max = index + 1 > thisPage ? index + 1 : thisPage;
+        let min = index + 1 < thisPage ? index + 1 : thisPage;
+        let divided = (max - min)/10;
+    
+        return 1 - divided;
     }
 
-    const {thisPage, clickPrev, clickNext} = usePagination(cardItem.images.length, 5);
+    
+
 
   return (
     <div>
-        <div className="w-full relative overflow-hidden rounded-2xl group">
+        <div onClick={() => router.push(`card/${cardItem.id}`)} className="w-full relative overflow-hidden rounded-2xl group cursor-pointer">
             <div 
-                className={`flex w-full  transition-all duration-300`}
-                style={{ transform: `translateX(-${(thisPage - 1) * 332}px)` }}
+                className={`flex w-full  transition-all duration-300  scrollbar-none`}
+                style={{ transform: `translateX(-${(thisPage - 1) * 100}%)` }}
             >
                 {
                     cardItem.images.map((image, index) => (
                         <img src={image} key={index} className='w-full h-[310px] flex-none  object-cover ' alt="" />
                     ))
-                }`
+                }
             </div>
-            <div className="absolute top-4 right-4 cursor-pointer">
-                    <HeartIcon className="fill-[#0000007c] text-white stroke-[1.5px]" size={25}/>
+            <div className="absolute top-4 right-4 cursor-pointer" onClick={(e) => {   
+                e.stopPropagation();
+                handleFav(cardItem.id)}}>
+                    <HeartIcon className={cn(` text-white stroke-[1.5px]`, 
+                        !favoriteItems.has(cardItem.id)?'fill-[#0000007c]':'fill-red-500'
+                    )} size={25}/>
             </div>
+            <div className="absolute bottom-4 left-[40%] w-[75px] overflow-hidden">
+                <div 
+                className="flex gap-[10px] w-[160px] transition-all duration-300"
+                style={{ transform: `translateX(-${defineLocation() * 17}px)` }}
+                >
+                    {Array.from({ length: cardItem.images.length}).map((_, index) => (
+                        <div
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                clickPoint(index + 1)}}
+                            key={index}
+                            className={cn(
+                                "w-[7px] h-[7px] rounded-full",
+                                index + 1 === thisPage ? "bg-white" : "bg-[#bebbb5]"
+                            )}
+                            style={{transform: `scale(${defineSize(index)})`}}
+                        />
+                    ))}
+                </div>
+            </div>
+
             <div className="w-full absolute top-[47%] transition-all duration-300 opacity-0 group-hover:opacity-100">
                 <div className="flex w-full px-4 box-border justify-between">
                     {thisPage != 1 ?
-                        <div onClick={clickPrev} className="w-[30px] h-[30px] rounded-full flex items-center justify-center bg-white opacity-90 cursor-pointer">
+                        <div onClick={(e) => {
+                            e.stopPropagation();
+                            clickPrev()}} 
+                            className="w-[30px] h-[30px] rounded-full flex items-center justify-center transition-all duration-300 bg-white opacity-90 cursor-pointer hover:scale-105">
                             <ChevronLeft size={20}/>
                         </div>
                         :
                         <div className=""></div>
                     }
 
-                    {thisPage !== cardItem.images.length - 1 ?
-                         <div onClick={clickNext} className="w-[30px] h-[30px] rounded-full flex items-center justify-center bg-white opacity-90 cursor-pointer">
+                    {thisPage !== cardItem.images.length ?
+                         <div onClick={(e) => {
+                            e.stopPropagation();
+                            clickNext()}} 
+                            className="w-[30px] h-[30px] rounded-full flex items-center justify-center transition-all duration-300 bg-white opacity-90 cursor-pointer hover:scale-105">
                             <ChevronRight size={20}/>
                         </div>
                         :

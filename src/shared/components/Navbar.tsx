@@ -3,15 +3,17 @@ import Categories from './categories'
 import Button from '../ui/button'
 import Container from './container'
 
-type Props = {}
+type Props = {
+  clickOpen: () => void,
+}
 
-function Navbar({}: Props) {
+function Navbar({clickOpen}: Props) {
   return (
     <Container>
         <div className='flex justify-between items-center py-4'>
             <Categories className = "w-[70%]"/>
             <div className="flex gap-4">
-                <Button>Фильтр</Button>
+                <Button onClick = {clickOpen}>Фильтр</Button>
                 <Button>Показывать итог</Button>
             </div>
         </div>

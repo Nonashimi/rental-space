@@ -3,13 +3,18 @@
 import React, { useEffect, useState } from 'react'
 import { Header } from './header'
 import Navbar from './Navbar'
+import Modal from './modal'
+import { useModal } from '@/hooks/useModal'
+import FilterVariantBlock from './filter-variant-block'
+import FilterBtns from './filter-btns'
+import FilterBody from './filter-body'
 
 type Props = {
 
 }
 
 function TopPart({}: Props) {
-
+     const {isOpen, clickClose, clickOpen} = useModal();
      const [isScrolled, setIsScrolled] = useState(false);
     
       useEffect(() => {
@@ -23,8 +28,13 @@ function TopPart({}: Props) {
 
   return (
     <div className={`sticky top-0 z-10 bg-white transition-shadow duration-300 ${isScrolled ? "shadow-md" : ""}`}>
+      {isOpen &&  <Modal 
+      clickClose={clickClose} 
+      title="Фильтры">
+        <FilterBody/>
+      </Modal>}
         <Header />
-        <Navbar />
+        <Navbar clickOpen={clickOpen}/>
     </div>
   )
 }

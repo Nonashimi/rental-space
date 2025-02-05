@@ -1,3 +1,4 @@
+import TopPart from '@/shared/components/top-part'
 import React from 'react'
 
 type Props = {
@@ -7,6 +8,7 @@ type Props = {
 function layout({children}: Props) {
   return (
     <div>
+        <TopPart/>
         {children}
     </div>
   )

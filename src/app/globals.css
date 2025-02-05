@@ -8,3 +8,33 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+.custom-range {
+  background: none;
+  pointer-events: none;
+}
+
+.custom-range::-webkit-slider-thumb {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: white;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),  /* Main shadow */
+              0 1px 3px rgba(0, 0, 0, 0.08); 
+  appearance: none;
+  pointer-events:auto;
+}
+
+.custom-range::-moz-range-thumb {
+  height: 30px;
+  width: 30px;
+   background-color: white;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),  /* Main shadow */
+              0 1px 3px rgba(0, 0, 0, 0.08); 
+  border-radius: 50%;
+  cursor: pointer;
+}

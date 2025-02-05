@@ -19,10 +19,15 @@ export const usePagination = (maxPages: number, showPages: number) => {
             setThisPage(thisPage + 1);
         }
     };
+    const clickPoint = (index:number) => {
+        setThisPage(index);
+    }
+
 
     return {
         thisPage,
         clickPrev,
-        clickNext
+        clickNext,
+        clickPoint
     }
 }

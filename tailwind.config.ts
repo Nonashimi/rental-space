@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 export default {
+  mode: 'jit',
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/shared/components/**/*.{js,ts,jsx,tsx,mdx}",
