@@ -1,14 +1,22 @@
 "use client"
 import { cn } from '@/lib/utils';
 import React, { useState } from 'react'
+import Input from '../ui/input';
 
-type Props = {}
+type Props = {
+    price: {
+        min: number,
+        max: number
+    },
+    changeMinByPercent: (value: number) => void,
+    changeMaxByPercent: (value: number) => void,
+  
+}
 
-function FilterSlidebar({}: Props) {
+function FilterSlidebar({price, changeMaxByPercent, changeMinByPercent}: Props) {
 
     const [min, setMin] = useState(0);
     const [max, setMax] = useState(100);
-
 
   
     const proggressBar = [
@@ -26,6 +34,19 @@ function FilterSlidebar({}: Props) {
 
         return isInRange;
       }
+
+
+      const handleMinByPercent = (min: number) => {
+        setMin(min);
+        changeMinByPercent(min);
+      }
+
+      const handleMaxByPercent = (max: number) => {
+        setMax(max);
+        changeMaxByPercent(max);
+      }
+
+
    return(
     <div className="">
         <div className="">
@@ -42,11 +63,25 @@ function FilterSlidebar({}: Props) {
             <div className="h-[2px] absolute bg-[#b233fc] rounded-md"
             style={{ left: `${min > max ? max : min}%`, right: `${100 - max}%` }}
             ></div>
-            <input type="range" defaultValue={`${min}`} onChange={(e) => setMin(Number(e.target.value))} className='custom-range absolute w-full  appearance-none ' />
-            <input type="range" defaultValue={`${max}`} onChange={(e) => setMax(Number(e.target.value))} className='custom-range absolute w-full  appearance-none ' />
+            <input type="range" defaultValue={`${min}`} onChange={(e) => handleMinByPercent(Number(e.target.value))} className='custom-range absolute w-full  appearance-none ' />
+            <input type="range" defaultValue={`${max}`} onChange={(e) => handleMaxByPercent(Number(e.target.value))} className='custom-range absolute w-full  appearance-none ' />
+        </div>
+
+        <div className="py-5 flex w-full justify-between">
+            <div className="flex w-[20%]  flex-col items-center gap-1">
+                <div className="text-[#615f5f] text-[13px] font-[600]">Минимум</div>
+                <div  className="w-full p-4 flex justify-center border border-[#e4dcdc] rounded-full">{price.min}tg</div> 
+            </div>
+            <div className="flex w-[20%]  flex-col items-center gap-1">
+                <div className="text-[#615f5f] text-[13px] font-[600]">Максимум</div>
+                <div className="w-full p-4 flex justify-center border border-[#e4dcdc] rounded-full">{price.max}tg</div>
+            </div>
+           
         </div>
     </div>
 
+// Math.round(5000 + ((100000 - 5000 )* (min/100))) 
+// Math.round(100000 - ( (95000 ) * (100 - max )/100))
    );
 
 }

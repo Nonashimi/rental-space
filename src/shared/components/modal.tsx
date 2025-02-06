@@ -16,7 +16,7 @@ function Modal({title, clickClose, children}: Props) {
                 <div className="font-bold text-[17px]">{title}</div>
             </div>
             <div className="w-full h-[1px] bg-[#d3d0d0]"></div>
-            <div className="p-5">
+            <div className="px-5">
                 {children}
             </div>
         </div>
