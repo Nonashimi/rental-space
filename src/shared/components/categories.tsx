@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Container from "./container";
 import { useRouter, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useFilterStore } from "@/store/filters";
 
 interface Props{
   className?: string
@@ -21,12 +22,29 @@ function Categories({className}: Props) {
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const selectedCategory = searchParams.get("category");
+  const {category:selectedCategory, setCategroies} = useFilterStore();
 
   const handleParams = (id: number) => {
-    const params = new URLSearchParams({ category: id.toString() });
+    setCategroies(id);
+    const params = new URLSearchParams(window.location.search);
+
+    if(id != 1){
+      params.set("category", id.toString()); 
+    }else{
+      params.delete(`category`);
+    }
+
     router.push(`?${params.toString()}`);
+
+    
   };
+
+  useEffect(() => {
+    const category = searchParams.get("category");
+    if (category) {
+      setCategroies(Number(category));
+    }
+  }, []);
 
   return (
     <Container>
@@ -36,7 +54,7 @@ function Categories({className}: Props) {
             key={category.id}
             onClick={() => handleParams(category.id)}
             className={`cursor-pointer font-bold text-[#6e6e6e] hover:text-purple-700 ${
-              selectedCategory == category.id.toString() ? "text-purple-700" : ""
+              selectedCategory == category.id ? "text-purple-700" : ""
             }`}
           >
             <span>{category.title}</span>

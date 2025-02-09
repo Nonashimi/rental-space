@@ -1,7 +1,7 @@
 "use client"
+import { maxVal, minVal } from '@/hooks/usePrices';
 import { cn } from '@/lib/utils';
-import React, { useState } from 'react'
-import Input from '../ui/input';
+import React, { useEffect, useState } from 'react'
 
 type Props = {
     price: {
@@ -15,9 +15,14 @@ type Props = {
 
 function FilterSlidebar({price, changeMaxByPercent, changeMinByPercent}: Props) {
 
-    const [min, setMin] = useState(0);
-    const [max, setMax] = useState(100);
-
+    const [min, setMin] = useState((price.min - minVal)/(maxVal - minVal) * 100);
+    const [max, setMax] = useState((price.max - minVal)/(maxVal - minVal) * 100);
+    
+    useEffect(() => {
+        setMin((price.min - minVal)/(maxVal - minVal) * 100);
+        setMax((price.max - minVal)/(maxVal - minVal) * 100);
+    },[price.min, price.max]);
+ 
   
     const proggressBar = [
         48, 12, 3, 29, 50, 17, 8, 41, 26, 5,
@@ -63,8 +68,8 @@ function FilterSlidebar({price, changeMaxByPercent, changeMinByPercent}: Props) 
             <div className="h-[2px] absolute bg-[#b233fc] rounded-md"
             style={{ left: `${min > max ? max : min}%`, right: `${100 - max}%` }}
             ></div>
-            <input type="range" defaultValue={`${min}`} onChange={(e) => handleMinByPercent(Number(e.target.value))} className='custom-range absolute w-full  appearance-none ' />
-            <input type="range" defaultValue={`${max}`} onChange={(e) => handleMaxByPercent(Number(e.target.value))} className='custom-range absolute w-full  appearance-none ' />
+            <input type="range" value={`${min}`} onChange={(e) => handleMinByPercent(Number(e.target.value))} className='custom-range absolute w-full  appearance-none' />
+            <input type="range" value={`${max}`} onChange={(e) => handleMaxByPercent(Number(e.target.value))} className='custom-range absolute w-full  appearance-none ' />
         </div>
 
         <div className="py-5 flex w-full justify-between">

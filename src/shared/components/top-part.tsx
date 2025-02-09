@@ -5,8 +5,6 @@ import { Header } from './header'
 import Navbar from './Navbar'
 import Modal from './modal'
 import { useModal } from '@/hooks/useModal'
-import FilterVariantBlock from './filter-variant-block'
-import FilterBtns from './filter-btns'
 import FilterBody from './filter-body'
 
 type Props = {
