@@ -38,3 +38,7 @@ body {
   border-radius: 50%;
   cursor: pointer;
 }
+
+.header-duration{
+  transition: all 150ms ease-in-out;
+}

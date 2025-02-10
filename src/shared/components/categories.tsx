@@ -47,7 +47,6 @@ function Categories({className}: Props) {
   }, []);
 
   return (
-    <Container>
       <ul className={cn("flex gap-6 list-none", className)}>
         {categories.map((category) => (
           <li
@@ -61,7 +60,6 @@ function Categories({className}: Props) {
           </li>
         ))}
       </ul>
-    </Container>
   );
 }
 

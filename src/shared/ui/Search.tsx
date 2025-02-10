@@ -6,8 +6,16 @@ import { SearchIcon } from "lucide-react";
 import { useTypeStore } from "@/store/search-type";
 import Box from "../components/box";
 import BlackFon from "../components/black-fon";
+import { cn } from "@/lib/utils";
 
-function Search() {
+
+interface Props{
+  className?: string,
+  isScrolled?: boolean,
+  negativeScroll?: () => void
+}
+
+function Search({className, isScrolled, negativeScroll}: Props) {
   const [location, setLocation] = useState("");
   const [arrivalDate, setArrival] = useState("");
   const [exitDate, setExit] = useState("");
@@ -28,22 +36,30 @@ function Search() {
   
   <>
     {type.isFocus && <BlackFon/>}
-    <div className="flex flex-col relative z-10" onBlur={handleBlur} onFocus={handleFocus}>
-        <div className="relative flex gap-[1px] items-center border w-[900px] rounded-full shadow-lg group focus-within:bg-[#ebebeb]">
-          <Input inputId={1} className="w-1/2" placeholder="где" value={location} changeValue={setLocation} />
+    <div onClick={negativeScroll} className={cn(className, "flex flex-col relative z-10 header-duration")} onBlur={handleBlur} onFocus={handleFocus}>
+        <div className={cn(isScrolled?'w-[400px]':'w-[900px]'," header-duration relative flex gap-[1px] items-center border rounded-full shadow-lg group focus-within:bg-[#ebebeb]")}>
+          <Input inputId={1} className={cn("w-1/2", {"p-3": isScrolled})} placeholder="где" value={location} changeValue={setLocation} />
           <div className="h-[30px] w-[1px] bg-gray-300"></div>
-          <Input inputId={2} className="w-1/4" placeholder="прибытие" value={arrivalDate} changeValue={setArrival} />
+          <div className="w-1/2 flex items-center">
+            {!isScrolled
+                  ? (<>
+                    <Input inputId={2} className={cn("w-1/2", {"p-3": isScrolled})} placeholder="прибытие" value={arrivalDate} changeValue={setArrival} />
+                       <div className="h-[30px] w-[1px] bg-gray-300"></div>
+                    <Input inputId={3} className={cn("w-1/2", {"p-3": isScrolled})} placeholder="отъезд" value={exitDate} changeValue={setExit} />
+                  </>)
+                  : (
+                    <Input inputId={2} className="w-full p-3" placeholder="Неделя" value={arrivalDate} changeValue={setArrival} />
+                  )
+            }
+          </div>
           <div className="h-[30px] w-[1px] bg-gray-300"></div>
-          <Input inputId={3} className="w-1/4" placeholder="отъезд" value={exitDate} changeValue={setExit} />
-          <div className="h-[30px] w-[1px] bg-gray-300"></div>
-          <Input inputId={4} className="w-1/2" placeholder="кто едет?" value={countOfPeople} changeValue={setCountOfPeople} />
+          <Input inputId={4} className={cn("w-1/2", {"p-3": isScrolled})} placeholder="кто едет?" value={countOfPeople} changeValue={setCountOfPeople} />
           
           <button
-            className="absolute w-[50px] h-[50px] bg-purple-700 flex justify-center items-center gap-2 right-2 rounded-full transition-all duration-300 text-white 
-            group-focus-within:w-[120px]"
-            tabIndex={-1} // Prevents button from taking focus
+            className={cn(isScrolled?'w-[30px] h-[30px]':'w-[50px] h-[50px]',"header-duration absolute bg-purple-700 flex justify-center items-center gap-2 right-2 rounded-full text-white group-focus-within:w-[120px]")}
+            tabIndex={-1}
           >
-            <SearchIcon className="w-[20px] h-[20px] text-white" />
+            <SearchIcon className={cn(" text-white w-[20px] h-[20px]" , {"w-[15px] h-[15px]": isScrolled})} />
             <p className="font-bold hidden group-focus-within:block">Искать</p>
           </button>
         </div>

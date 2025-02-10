@@ -54,6 +54,7 @@ export const useParamsDetails = () => {
         if(possibilityParam){possibilityArray = possibilityParam.split(",").map(Number);}
         setArrayAmenities(amenitiesArray);
         setArrayPossibility(possibilityArray);
+        
         if (pricesParam) {
             const [min, max] = pricesParam.split("-").map(Number);
             setPrices({ min, max });
