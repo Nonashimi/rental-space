@@ -4,17 +4,20 @@ import FilterBtns from './filter-btns'
 import FilterSlidebar from './filter-slidebar'
 import { Award, Crown, Filter, KeyRound, Minus, Plus, User, WashingMachineIcon, Zap } from 'lucide-react'
 import { Wifi, Utensils, WashingMachine, Snowflake, Thermometer } from "lucide-react";
-import Button from '../ui/button'
+import Button, { Variants } from '../ui/button'
 import { useFilterStore } from '@/store/filters'
 import { usePrices } from '@/hooks/usePrices'
 import { cn } from '@/lib/utils'
 import RoomPagination from './room-pagination'
 import { useSearchParams } from 'next/navigation'
+import { useParamsDetails } from '@/hooks/useParamsDetails'
 
 
-type Props = {}
+type Props = {
+  clickClose?: () => void,
+}
 
-function FilterBody({}: Props) {
+function FilterBody({clickClose}: Props) {
   const {prices, changeMinValuePercentage, changeMaxValuePercentage} = usePrices();
 
   const filters = useFilterStore();
@@ -60,11 +63,16 @@ function FilterBody({}: Props) {
       component: <User size={20} />,
     }
   ];
-  
 
-
+   const {cleanAll} = useFilterStore();
+      const paramsDetails = useParamsDetails();
+      const handleShow = () => {
+          paramsDetails.handleParams();
+          clickClose?.();
+      }
   return (
     <div className=''>
+      <div className="px-5 max-h-[70vh] overflow-y-scroll">
         <FilterVariantBlock 
           title='Тип размещения'>
             <FilterBtns/>
@@ -121,7 +129,12 @@ function FilterBody({}: Props) {
               </div>
             </Button>
         </FilterVariantBlock>
-    </div>
+        </div>
+            <div className="flex justify-between px-5 py-4 items-center  shadow-[0_-4px_10px_rgba(0,0,0,0.2)]">
+                <Button onClick={cleanAll} variant={Variants.transparent}>Очистить все</Button>
+                <Button onClick={handleShow}  variant={Variants.filling}>Показать 1000+ вариантов</Button>
+            </div>
+        </div>
   )
 }
 

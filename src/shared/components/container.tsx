@@ -1,12 +1,20 @@
+import { cn } from '@/lib/utils'
 import React from 'react'
 
+
+export enum Size {
+  sm = "w-[720px]",
+  md = 'w-[1120px]',
+  lg = 'w-[1700px]',
+}
 type Props = {
-    children: React.ReactNode
+    children: React.ReactNode,
+    size?: Size
 }
 
-function Container({children}: Props) {
+function Container({children, size = Size.lg}: Props) {
   return (
-    <div className='w-[1700px] mx-auto'>
+    <div className={cn('mx-auto', size)}>
         {children}
     </div>
   )

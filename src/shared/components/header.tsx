@@ -9,10 +9,11 @@ import Button, { Variants } from '../ui/button'
 type Props = {
     className?: string,
     isScrolled?: boolean,
-    negativeScroll: () => void
+    negativeScroll?: () => void,
+    positiveScroll?: () => void
 }
 
-export const  Header = ({className, isScrolled, negativeScroll}: Props) => {
+export const  Header = ({className, isScrolled, negativeScroll, positiveScroll}: Props) => {
   return (
     <>
      <Container>
@@ -31,7 +32,7 @@ export const  Header = ({className, isScrolled, negativeScroll}: Props) => {
                 <UserCircleIcon/>
               </div>
         </header>
-        <Search negativeScroll = {negativeScroll} isScrolled = {isScrolled} className = {isScrolled?"absolute translate-y-[-65px]":""}/>
+        <Search negativeScroll = {negativeScroll} positiveScroll={positiveScroll} isScrolled = {isScrolled} className = {isScrolled?"absolute translate-y-[-65px]":""}/>
       </div>
     </Container>
     <div className="w-full h-[1px] bg-gray-300"></div>

@@ -6,6 +6,8 @@ import { CardItem } from '@/store/cards'
 import {  ChevronLeft, ChevronRight, Heart, HeartHandshake, HeartIcon, MoveLeft, Rat, StarHalf, StarIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
+import ChevronCLick, { ChevronType } from '../ui/chevron-click'
+import PointersCard from '../ui/pointers-card'
 
 type Props = {
     favoriteItems: Set<Number>,
@@ -19,22 +21,17 @@ function Card({favoriteItems, handleFav, cardItem}: Props) {
 
     const {thisPage, clickPrev, clickNext, clickPoint} = usePagination(cardItem.images.length, 5);
     const defineLocation = () => {
-        if(thisPage <= 3){
+        if(thisPage <= 3)
             return 0;
-        }
-        else if(thisPage > 3 && thisPage <= cardItem.images.length - 3){
+        else if(thisPage > 3 && thisPage <= cardItem.images.length - 3)
             return thisPage - 3;
-        }else{
+        else
             return cardItem.images.length - 5;
-        }
+        
     }
-    const defineSize = (index: number) => {
-        let max = index + 1 > thisPage ? index + 1 : thisPage;
-        let min = index + 1 < thisPage ? index + 1 : thisPage;
-        let divided = (max - min)/10;
-    
-        return 1 - divided;
-    }
+
+    const defineSize = (index: number) => 1 - Math.abs(thisPage - (index + 1)) / 10;
+
 
     
 
@@ -59,47 +56,17 @@ function Card({favoriteItems, handleFav, cardItem}: Props) {
                         !favoriteItems.has(cardItem.id)?'fill-[#0000007c]':'fill-red-500'
                     )} size={25}/>
             </div>
-            <div className="absolute bottom-4 left-[40%] w-[75px] overflow-hidden">
-                <div 
-                className="flex gap-[10px] w-[160px] transition-all duration-300"
-                style={{ transform: `translateX(-${defineLocation() * 17}px)` }}
-                >
-                    {Array.from({ length: cardItem.images.length}).map((_, index) => (
-                        <div
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                clickPoint(index + 1)}}
-                            key={index}
-                            className={cn(
-                                "w-[7px] h-[7px] rounded-full",
-                                index + 1 === thisPage ? "bg-white" : "bg-[#bebbb5]"
-                            )}
-                            style={{transform: `scale(${defineSize(index)})`}}
-                        />
-                    ))}
-                </div>
-            </div>
-
+            <PointersCard defineLocation={defineLocation} cardItem={cardItem} clickPoint={clickPoint} thisPage={thisPage} defineSize={defineSize}/>
             <div className="w-full absolute top-[47%] transition-all duration-300 opacity-0 group-hover:opacity-100">
                 <div className="flex w-full px-4 box-border justify-between">
                     {thisPage != 1 ?
-                        <div onClick={(e) => {
-                            e.stopPropagation();
-                            clickPrev()}} 
-                            className="w-[30px] h-[30px] rounded-full flex items-center justify-center transition-all duration-300 bg-white opacity-90 cursor-pointer hover:scale-105">
-                            <ChevronLeft size={20}/>
-                        </div>
+                        <ChevronCLick handleChevronBtn={clickPrev} type={ChevronType.right}/>
                         :
                         <div className=""></div>
                     }
 
                     {thisPage !== cardItem.images.length ?
-                         <div onClick={(e) => {
-                            e.stopPropagation();
-                            clickNext()}} 
-                            className="w-[30px] h-[30px] rounded-full flex items-center justify-center transition-all duration-300 bg-white opacity-90 cursor-pointer hover:scale-105">
-                            <ChevronRight size={20}/>
-                        </div>
+                         <ChevronCLick handleChevronBtn={clickNext} type={ChevronType.left}/>
                         :
                         <div className=""></div>
                     }

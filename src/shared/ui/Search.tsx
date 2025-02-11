@@ -12,10 +12,11 @@ import { cn } from "@/lib/utils";
 interface Props{
   className?: string,
   isScrolled?: boolean,
-  negativeScroll?: () => void
+  negativeScroll?: () => void,
+  positiveScroll?: () => void
 }
 
-function Search({className, isScrolled, negativeScroll}: Props) {
+function Search({className, isScrolled, negativeScroll, positiveScroll}: Props) {
   const [location, setLocation] = useState("");
   const [arrivalDate, setArrival] = useState("");
   const [exitDate, setExit] = useState("");
@@ -29,6 +30,7 @@ function Search({className, isScrolled, negativeScroll}: Props) {
   const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
     if (!e.currentTarget.contains(e.relatedTarget)) {
       type.setFocus(false);
+      positiveScroll?.();
     }
   };
 
@@ -36,7 +38,7 @@ function Search({className, isScrolled, negativeScroll}: Props) {
   
   <>
     {type.isFocus && <BlackFon/>}
-    <div onClick={negativeScroll} className={cn(className, "flex flex-col relative z-10 header-duration")} onBlur={handleBlur} onFocus={handleFocus}>
+    <div onClick={negativeScroll} className={cn(className, "flex flex-col items-center w-full relative z-20 header-duration")} onBlur={handleBlur} onFocus={handleFocus}>
         <div className={cn(isScrolled?'w-[400px]':'w-[900px]'," header-duration relative flex gap-[1px] items-center border rounded-full shadow-lg group focus-within:bg-[#ebebeb]")}>
           <Input inputId={1} className={cn("w-1/2", {"p-3": isScrolled})} placeholder="где" value={location} changeValue={setLocation} />
           <div className="h-[30px] w-[1px] bg-gray-300"></div>

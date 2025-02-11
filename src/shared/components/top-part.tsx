@@ -14,7 +14,7 @@ type Props = {
 
 function TopPart({}: Props) {
     const {isOpen, clickClose, clickOpen} = useModal();
-    const {isScrolled, negativeScroll} = useScroll();
+    const {isScrolled, negativeScroll, positiveScroll} = useScroll();
   return (
     <div className={`sticky top-0 z-10 bg-white transition-shadow duration-300 ${isScrolled ? "shadow-md" : ""}`}>
       {isOpen &&  <Modal 
@@ -22,7 +22,7 @@ function TopPart({}: Props) {
       title="Фильтры">
         <FilterBody/>
       </Modal>}
-        <Header negativeScroll={negativeScroll} isScrolled={isScrolled}/>
+        <Header negativeScroll={negativeScroll} isScrolled={isScrolled} positiveScroll={positiveScroll}/>
         <Navbar clickOpen={clickOpen}/>
     </div>
   )

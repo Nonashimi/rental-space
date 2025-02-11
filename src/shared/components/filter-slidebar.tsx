@@ -84,9 +84,6 @@ function FilterSlidebar({price, changeMaxByPercent, changeMinByPercent}: Props) 
            
         </div>
     </div>
-
-// Math.round(5000 + ((100000 - 5000 )* (min/100))) 
-// Math.round(100000 - ( (95000 ) * (100 - max )/100))
    );
 
 }

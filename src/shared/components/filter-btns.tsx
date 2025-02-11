@@ -28,12 +28,10 @@ function FilterBtns({}: Props) {
     return (
         <div>
             <div className={`grid w-full p-1 grid-cols-3 border border-[#dfdada] rounded-[20px] relative`}>
-                {/* Индикатор активной кнопки */}
                 <div
                     className="w-[calc(100%/3-2px)] absolute h-[48px] border-black border-[2px] rounded-2xl top-1 left-1 transition-all duration-100"
                     style={{ transform: `translateX(${variants.findIndex(v => v.value === typeOfFilter) * 100}%)` }}
                 ></div>
-                {/* Кнопки */}
                 {variants.map((variant) => (
                     <button
                         key={variant.value}
