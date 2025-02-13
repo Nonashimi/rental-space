@@ -60,13 +60,13 @@ function Card({favoriteItems, handleFav, cardItem}: Props) {
             <div className="w-full absolute top-[47%] transition-all duration-300 opacity-0 group-hover:opacity-100">
                 <div className="flex w-full px-4 box-border justify-between">
                     {thisPage != 1 ?
-                        <ChevronCLick handleChevronBtn={clickPrev} type={ChevronType.right}/>
+                        <ChevronCLick handleChevronBtn={clickPrev} type={ChevronType.left}/>
                         :
                         <div className=""></div>
                     }
 
                     {thisPage !== cardItem.images.length ?
-                         <ChevronCLick handleChevronBtn={clickNext} type={ChevronType.left}/>
+                         <ChevronCLick handleChevronBtn={clickNext} type={ChevronType.right}/>
                         :
                         <div className=""></div>
                     }
