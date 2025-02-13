@@ -11,6 +11,7 @@ export const useModal = () =>{
 
     const clickClose = () => {
         setIsOpen(false);
+        console.log("close");
     }
 
     return {

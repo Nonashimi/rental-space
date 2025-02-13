@@ -21,7 +21,7 @@ function TopPart({}: Props) {
       clickClose={clickClose} 
       title="Фильтры">
         <Suspense fallback={<div>Loading...</div>}>
-          <FilterBody/>
+          <FilterBody clickClose={clickClose}/>
         </Suspense>
       </Modal>}
         <Header negativeScroll={negativeScroll} isScrolled={isScrolled} positiveScroll={positiveScroll}/>
