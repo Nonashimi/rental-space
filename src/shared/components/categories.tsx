@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect } from "react";
-import Container from "./container";
 import { useRouter, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useFilterStore } from "@/store/filters";

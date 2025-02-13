@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react'
+"use client"
+
+import React from 'react'
 import FilterVariantBlock from './filter-variant-block'
 import FilterBtns from './filter-btns'
 import FilterSlidebar from './filter-slidebar'
-import { Award, Crown, Filter, KeyRound, Minus, Plus, User, WashingMachineIcon, Zap } from 'lucide-react'
+import {  Crown, KeyRound, User, WashingMachineIcon, Zap } from 'lucide-react'
 import { Wifi, Utensils, WashingMachine, Snowflake, Thermometer } from "lucide-react";
 import Button, { Variants } from '../ui/button'
 import { useFilterStore } from '@/store/filters'
 import { usePrices } from '@/hooks/usePrices'
 import { cn } from '@/lib/utils'
 import RoomPagination from './room-pagination'
-import { useSearchParams } from 'next/navigation'
 import { useParamsDetails } from '@/hooks/useParamsDetails'
 
 

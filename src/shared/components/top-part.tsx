@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { Header } from './header'
 import Navbar from './Navbar'
 import Modal from './modal'
@@ -20,7 +20,9 @@ function TopPart({}: Props) {
       {isOpen &&  <Modal 
       clickClose={clickClose} 
       title="Фильтры">
-        <FilterBody/>
+        <Suspense fallback={<div>Loading...</div>}>
+          <FilterBody/>
+        </Suspense>
       </Modal>}
         <Header negativeScroll={negativeScroll} isScrolled={isScrolled} positiveScroll={positiveScroll}/>
         <Navbar clickOpen={clickOpen}/>

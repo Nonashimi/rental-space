@@ -1,18 +1,19 @@
 import Container from '@/shared/components/container'
 import React from 'react'
-
 type Props = {
-    params: {
-        id: number
-    }
+  params: Promise<{ id: string }>
 }
 
-function page({params}: Props) {
+
+async function Page({params}: Props) {
+
+  const id = (await params).id
+
   return (
     <Container>
-        <div className='font-bold text-[25px]'>Card number {params.id}</div>
+        <div className='font-bold text-[25px]'>Card number {id}</div>
     </Container>
   )
 }
 
-export default page
+export default Page
