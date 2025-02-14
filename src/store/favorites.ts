@@ -19,6 +19,13 @@ const favBlocks: FavBlock[] = [
   },
 ];
 
+
+export enum TypeOfToaster{
+  ItemDeleted = "ItemDeleted",
+  ItemAddedOrChanged = "ItemAdded",
+  noneOfThem = "noneOfThem",
+}
+
 export interface FavBlock {
     id: number;
     title: string;
@@ -43,6 +50,9 @@ interface State{
     closeAddModal: () => void,
     openCreateModal: () => void,
     switchFromCreateToAdd: () => void,
+    toaster: TypeOfToaster,
+    setToaster: (toaster: TypeOfToaster) => void
+
 }
 
 export const useFavoritesStore = create<State>((set, get) => ({
@@ -51,7 +61,15 @@ export const useFavoritesStore = create<State>((set, get) => ({
    currentCard: null,
    isAddModalOpen: false,
   isCreateModalOpen: false,
+  toaster: TypeOfToaster.noneOfThem,
+  setToaster(toaster: TypeOfToaster) {
+    set(() => ({
+      toaster: toaster 
+    }));
+  },
+
    deleteFromList: (id: number) => {
+    get().setToaster(TypeOfToaster.ItemDeleted);
     set((state) => ({
         favBlockList: state.favBlockList.map((block) => {
           if (block.favoriteItems.some((item) => item === id)) {
@@ -68,16 +86,15 @@ export const useFavoritesStore = create<State>((set, get) => ({
     return get().favBlockList.some((block) => block.favoriteItems.some((item) => item === (id)));
   },
    clickToFav:  (id: number) => {
-    toast("Hello world!");
     if(get().favBlockList.length === 0){
         get().openCreateModal();
         return;
     }
+    set(() => ({currentCard: id,}))
     if (get().inFavList(id)) {
       get().deleteFromList(id);
     } else {
       if (get().lastEditList === null) {
-        set(() => ({currentCard: id,}))
         get().openAddModal();
       } else {
         set((state) => ({ 
@@ -89,9 +106,10 @@ export const useFavoritesStore = create<State>((set, get) => ({
               }
               return block;
         })}));
-        set(() => ({
-            currentCard: null,
-          }))
+        get().setToaster(TypeOfToaster.ItemAddedOrChanged);
+        // set(() => ({
+        //     currentCard: null,
+        //   }))
       }
       
 
@@ -99,11 +117,16 @@ export const useFavoritesStore = create<State>((set, get) => ({
     
   
     
-    console.log(get().favBlockList);
 
   },
    chooseOneOfBlocks: (id: number) => {
     const currentCard = get().currentCard;
+    set(() => ({
+      favBlockList: get().favBlockList.map((block) => {
+        return {...block, favoriteItems: block.favoriteItems.filter((item) => item !== currentCard)};
+      }),
+    }))
+    set(() => ({lastEditList: id}))
     if (currentCard === null) return;
     set((state) => ({
         favBlockList: state.favBlockList.map((block) => {
@@ -115,6 +138,7 @@ export const useFavoritesStore = create<State>((set, get) => ({
           return block;
         }),
     }))
+    get().setToaster(TypeOfToaster.ItemAddedOrChanged);
     get().constFuctions(id);
   },
    createNewBlock: (title: string) => {
@@ -126,13 +150,14 @@ export const useFavoritesStore = create<State>((set, get) => ({
             favoriteItems: state.currentCard !== null ? [state.currentCard] : [],
         }]
     }))
+    get().setToaster(TypeOfToaster.ItemAddedOrChanged);
     get().constFuctions(id);
     get().closeCreateModal();
   },
   constFuctions: (id: number) => {  
     set(() => ({
         lastEditList: id,
-        currentCard: null,
+        // currentCard: null,
     }))
     get().closeAddModal();
     },

@@ -1,5 +1,4 @@
 import { Variant } from '@/shared/components/filter-btns';
-import { count } from 'console';
 import { create } from 'zustand';
 
 
@@ -8,6 +7,8 @@ export interface Category{
     title: string,
     image: string
 }
+
+
 export interface rooms{
     id: number,
     title: string,
