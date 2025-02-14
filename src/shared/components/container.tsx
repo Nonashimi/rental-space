@@ -4,7 +4,7 @@ import React from 'react'
 
 export enum Size {
   sm = "w-[720px]",
-  md = 'w-[1120px]',
+  md = 'w-[69%]',
   lg = 'w-[89%]',
 }
 type Props = {

@@ -1,4 +1,3 @@
-import toast from 'react-hot-toast';
 import { create } from 'zustand';
 
 const favBlocks: FavBlock[] = [
@@ -51,7 +50,8 @@ interface State{
     openCreateModal: () => void,
     switchFromCreateToAdd: () => void,
     toaster: TypeOfToaster,
-    setToaster: (toaster: TypeOfToaster) => void
+    setToaster: (toaster: TypeOfToaster) => void,
+    deleteBlockFromList: (id: number) => void
 
 }
 
@@ -78,6 +78,12 @@ export const useFavoritesStore = create<State>((set, get) => ({
           }
           return block;
         }),
+        lastEditList: state.favBlockList.find((block) => block.favoriteItems.some((item) => item === (id)))?.id || null,
+      }));
+  },
+  deleteBlockFromList: (id: number) => {
+    set((state) => ({
+        favBlockList: state.favBlockList.filter((block) => block.id !== id),
         lastEditList: state.favBlockList.find((block) => block.favoriteItems.some((item) => item === (id)))?.id || null,
       }));
   },
