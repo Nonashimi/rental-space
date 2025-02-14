@@ -3,19 +3,19 @@
 import { usePagination } from '@/hooks/usePagination'
 import { cn } from '@/lib/utils'
 import { CardItem } from '@/store/cards'
-import {  ChevronLeft, ChevronRight, Heart, HeartHandshake, HeartIcon, MoveLeft, Rat, StarHalf, StarIcon } from 'lucide-react'
+import { HeartIcon, StarIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import ChevronCLick, { ChevronType } from '../ui/chevron-click'
 import PointersCard from '../ui/pointers-card'
 
 type Props = {
-    favoriteItems: Set<Number>,
-    handleFav: (id: number) =>void,
-    cardItem: CardItem
+    cardItem: CardItem,
+    clickToFav: (id: number) => void,
+    inFavList: (id: number) => boolean
 }
 
-function Card({favoriteItems, handleFav, cardItem}: Props) {
+function Card({cardItem, clickToFav, inFavList}: Props) {
    
     const router = useRouter();
 
@@ -45,15 +45,15 @@ function Card({favoriteItems, handleFav, cardItem}: Props) {
             >
                 {
                     cardItem.images.map((image, index) => (
-                        <img src={image} key={index} className='w-full h-[310px] flex-none  object-cover ' alt="" />
+                        <img src={image} key={index} className='w-full h-[292px] flex-none  object-cover ' alt="" />
                     ))
                 }
             </div>
             <div className="absolute top-4 right-4 cursor-pointer" onClick={(e) => {   
                 e.stopPropagation();
-                handleFav(cardItem.id)}}>
+                clickToFav(cardItem.id)}}>
                     <HeartIcon className={cn(` text-white stroke-[1.5px]`, 
-                        !favoriteItems.has(cardItem.id)?'fill-[#0000007c]':'fill-red-500'
+                        !inFavList(cardItem.id)?'fill-[#0000007c]':'fill-red-500'
                     )} size={25}/>
             </div>
             <PointersCard defineLocation={defineLocation} cardItem={cardItem} clickPoint={clickPoint} thisPage={thisPage} defineSize={defineSize}/>

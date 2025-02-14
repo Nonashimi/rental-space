@@ -8,10 +8,6 @@ type Props = {
 }
 
 
-type ModalChildrenProps = ComponentProps<any> & {
-    clickClose: () => void;
-  };
-  
 
 function Modal({title, clickClose, children}: Props) {
    

@@ -40,22 +40,22 @@ function Search({className, isScrolled, negativeScroll, positiveScroll}: Props) 
     {type.isFocus && <BlackFon/>}
     <div onClick={negativeScroll} className={cn(className, "flex flex-col items-center w-full relative z-20 header-duration")} onBlur={handleBlur} onFocus={handleFocus}>
         <div className={cn(isScrolled?'w-[400px]':'w-[900px]'," header-duration relative flex gap-[1px] items-center border rounded-full shadow-lg group focus-within:bg-[#ebebeb]")}>
-          <Input inputId={1} className={cn("w-1/2", {"p-3": isScrolled})} placeholder="где" value={location} changeValue={setLocation} />
+          <Input inputId={1} className={cn("w-1/2", {"p-3": isScrolled})} placeholder="где" value={location} onChange={(e) => setLocation(e.target.value)} />
           <div className="h-[30px] w-[1px] bg-gray-300"></div>
           <div className="w-1/2 flex items-center">
             {!isScrolled
                   ? (<>
-                    <Input inputId={2} className={cn("w-1/2", {"p-3": isScrolled})} placeholder="прибытие" value={arrivalDate} changeValue={setArrival} />
+                    <Input inputId={2} className={cn("w-1/2", {"p-3": isScrolled})} placeholder="прибытие" value={arrivalDate} onChange={(e) => setArrival(e.target.value)} />
                        <div className="h-[30px] w-[1px] bg-gray-300"></div>
-                    <Input inputId={3} className={cn("w-1/2", {"p-3": isScrolled})} placeholder="отъезд" value={exitDate} changeValue={setExit} />
+                    <Input inputId={3} className={cn("w-1/2", {"p-3": isScrolled})} placeholder="отъезд" value={exitDate} onChange={(e) => setExit(e.target.value)} />
                   </>)
                   : (
-                    <Input inputId={2} className="w-full p-3" placeholder="Неделя" value={arrivalDate} changeValue={setArrival} />
+                    <Input inputId={2} className="w-full p-3" placeholder="Неделя" value={arrivalDate} onChange={(e) => setArrival(e.target.value)} />
                   )
             }
           </div>
           <div className="h-[30px] w-[1px] bg-gray-300"></div>
-          <Input inputId={4} className={cn("w-1/2", {"p-3": isScrolled})} placeholder="кто едет?" value={countOfPeople} changeValue={setCountOfPeople} />
+          <Input inputId={4} className={cn("w-1/2", {"p-3": isScrolled})} placeholder="кто едет?" value={countOfPeople} onChange={(e) => setCountOfPeople(e.target.value)} />
           
           <button
             className={cn(isScrolled?'w-[30px] h-[30px]':'w-[50px] h-[50px]',"header-duration absolute bg-purple-700 flex justify-center items-center gap-2 right-2 rounded-full text-white group-focus-within:w-[120px]")}

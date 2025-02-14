@@ -5,7 +5,7 @@ import React from 'react'
 export enum Size {
   sm = "w-[720px]",
   md = 'w-[1120px]',
-  lg = 'w-[1700px]',
+  lg = 'w-[89%]',
 }
 type Props = {
     children: React.ReactNode,
@@ -15,7 +15,7 @@ type Props = {
 
 function Container({children, size = Size.lg}: Props) {
   return (
-    <div className={cn('mx-auto sm:w-3/4 md:w-[900px] lg:w-[1000px] xl:w-[1200px] 2xl:w-[1500px]', size)}>
+    <div className={cn('mx-auto', size)}>
         {children}
     </div>
   )
