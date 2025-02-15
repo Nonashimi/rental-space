@@ -38,7 +38,7 @@ function Card({cardItem, clickToFav, inFavList}: Props) {
 
   return (
     <div>
-        <div onClick={() => router.push(`card/${cardItem.id}`)} className="w-full relative overflow-hidden rounded-2xl group cursor-pointer">
+        <div onClick={() => router.push(`rooms/${cardItem.id}`)} className="w-full relative overflow-hidden rounded-2xl group cursor-pointer">
             <div 
                 className={`flex w-full  transition-all duration-300  scrollbar-none`}
                 style={{ transform: `translateX(-${(thisPage - 1) * 100}%)` }}

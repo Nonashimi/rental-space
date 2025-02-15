@@ -1,6 +1,6 @@
 import React from 'react';
 import { Toast } from 'react-hot-toast';
-import Button, { Variants } from './button';
+import Button, { VariantsOfButton } from './button';
 import { TypeOfToaster } from '@/store/favorites';
 
 type Props = {
@@ -34,7 +34,7 @@ function ToastCustom({ t, title, image, clickBtn, type = TypeOfToaster.ItemAdded
       </span>
       {
         type === TypeOfToaster.ItemAddedOrChanged && (
-                <Button onClick={clickBtn} variant={Variants.transparent}>
+                <Button onClick={clickBtn} variant={VariantsOfButton.transparent}>
                     Изменить 
                 </Button>
         )

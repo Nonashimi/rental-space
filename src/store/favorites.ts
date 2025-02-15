@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import { create } from 'zustand';
 
 const favBlocks: FavBlock[] = [
@@ -69,7 +70,6 @@ export const useFavoritesStore = create<State>((set, get) => ({
   },
 
    deleteFromList: (id: number) => {
-    get().setToaster(TypeOfToaster.ItemDeleted);
     set((state) => ({
         favBlockList: state.favBlockList.map((block) => {
           if (block.favoriteItems.some((item) => item === id)) {
@@ -79,51 +79,44 @@ export const useFavoritesStore = create<State>((set, get) => ({
           return block;
         }),
         lastEditList: state.favBlockList.find((block) => block.favoriteItems.some((item) => item === (id)))?.id || null,
+        currentCard: null,
+        toaster: TypeOfToaster.ItemDeleted
       }));
   },
   deleteBlockFromList: (id: number) => {
     set((state) => ({
         favBlockList: state.favBlockList.filter((block) => block.id !== id),
-        lastEditList: state.favBlockList.find((block) => block.favoriteItems.some((item) => item === (id)))?.id || null,
+        lastEditList: state.favBlockList.find((block) => block.id === state.lastEditList)?.id || null,
       }));
   },
 
    inFavList: (id: number) => {
-    return get().favBlockList.some((block) => block.favoriteItems.some((item) => item === (id)));
+    return get().favBlockList.some((block) => block.favoriteItems.includes(id));
   },
    clickToFav:  (id: number) => {
+
+    set(() => ({currentCard: id,}))
+
     if(get().favBlockList.length === 0){
         get().openCreateModal();
         return;
     }
-    set(() => ({currentCard: id,}))
+    
     if (get().inFavList(id)) {
       get().deleteFromList(id);
-    } else {
-      if (get().lastEditList === null) {
+    } else if (get().lastEditList === null){
         get().openAddModal();
-      } else {
-        set((state) => ({ 
-            favBlockList: state.favBlockList.map((block) => {
-              if (block.id === state.lastEditList) {
-                const updatedItems = block.favoriteItems;
-                updatedItems.push(id);
-                return { ...block, favoriteItems: updatedItems };
-              }
-              return block;
-        })}));
-        get().setToaster(TypeOfToaster.ItemAddedOrChanged);
-        // set(() => ({
-        //     currentCard: null,
-        //   }))
-      }
-      
-
+    }else {
+      set((state) => ({ 
+          favBlockList: state.favBlockList.map((block) => {
+            if (block.id === state.lastEditList) {
+              return { ...block, favoriteItems: [...block.favoriteItems, id]};
+            }
+            return block;
+          }),
+          toaster: TypeOfToaster.ItemAddedOrChanged
+        }));
     }
-    
-  
-    
-
   },
    chooseOneOfBlocks: (id: number) => {
     const currentCard = get().currentCard;
@@ -132,38 +125,39 @@ export const useFavoritesStore = create<State>((set, get) => ({
         return {...block, favoriteItems: block.favoriteItems.filter((item) => item !== currentCard)};
       }),
     }))
-    set(() => ({lastEditList: id}))
     if (currentCard === null) return;
     set((state) => ({
         favBlockList: state.favBlockList.map((block) => {
           if (block.id === id) {
-            const updatedItems = block.favoriteItems;
-            updatedItems.push(currentCard);
-            return { ...block, favoriteItems: updatedItems };
+            return { ...block, favoriteItems: [...block.favoriteItems, currentCard] };
           }
           return block;
         }),
-    }))
-    get().setToaster(TypeOfToaster.ItemAddedOrChanged);
+        toaster: TypeOfToaster.ItemAddedOrChanged,
+    }));
     get().constFuctions(id);
   },
    createNewBlock: (title: string) => {
+    set(() => ({
+      favBlockList: get().favBlockList.map((block) => {
+        return {...block, favoriteItems: block.favoriteItems.filter((item) => item !== get().currentCard)};
+      }),
+    }))
     const id = Math.max(...get().favBlockList.map(el => el.id), 0) + 1;
     set((state) => ({
         favBlockList: [...state.favBlockList, {
             id: id,
             title: title,
             favoriteItems: state.currentCard !== null ? [state.currentCard] : [],
-        }]
+        }],
+        toaster: TypeOfToaster.ItemAddedOrChanged,
+        lastEditList: id,
     }))
-    get().setToaster(TypeOfToaster.ItemAddedOrChanged);
-    get().constFuctions(id);
     get().closeCreateModal();
   },
   constFuctions: (id: number) => {  
     set(() => ({
         lastEditList: id,
-        // currentCard: null,
     }))
     get().closeAddModal();
     },

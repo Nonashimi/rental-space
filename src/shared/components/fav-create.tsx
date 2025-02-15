@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Button, { Variants } from '../ui/button'
+import Button, { VariantsOfButton } from '../ui/button'
 import Input, { InputVariant } from '../ui/input'
 
 type Props = {
@@ -28,8 +28,8 @@ function FavCreate({createNewBLock}: Props) {
     <div className="">
         <div className="w-full h-[1px] bg-gray-200"></div>
         <div className="flex p-5 justify-between">
-            <Button onClick={clearTitle} className=' py-3' variant={Variants.transparent}>Очистить</Button>
-            <Button onClick={() => createNewBLock(title)} className=' py-3' variant={Variants.filling}>Создать</Button>
+            <Button onClick={clearTitle} className=' py-3' variant={VariantsOfButton.transparent}>Очистить</Button>
+            <Button onClick={() => createNewBLock(title)} className=' py-3' variant={VariantsOfButton.filling}>Создать</Button>
         </div>
     </div>
     

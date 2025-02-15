@@ -1,10 +1,10 @@
 "use client"
 
 import { useModal } from '@/hooks/useModal';
-import Container, { Size } from '@/shared/components/container'
+import Container, { SizeOfContainer } from '@/shared/components/container'
 import Modal, { SizeForModal } from '@/shared/components/modal';
 import WishBlock, { FavSize } from '@/shared/components/wish-block';
-import Button, { Variants } from '@/shared/ui/button';
+import Button, { VariantsOfButton } from '@/shared/ui/button';
 import { useFavoritesStore } from '@/store/favorites'
 import { X } from 'lucide-react';
 import React from 'react'
@@ -25,7 +25,7 @@ function WishPage({}: Props) {
         completeModal.clickClose();
     }
   return (
-    <Container size={Size.md}>
+    <Container size={SizeOfContainer.md}>
         {
             completeModal.isOpen && (
                 <Modal size={SizeForModal.sm} title="Удалить вишлист?" clickClose={completeModal.clickClose}>
@@ -35,8 +35,8 @@ function WishPage({}: Props) {
                     </div>
                     <div className="w-full h-[1px] bg-gray-200"></div>
                     <div className="py-5 px-7 flex justify-between">
-                        <Button className='py-3' variant={Variants.transparent} onClick={completeModal.clickClose}>Отменить</Button>
-                        <Button className='py-3' variant={Variants.filling} onClick={() => deleteAndCLose(id)}>Удалить</Button>
+                        <Button className='py-3' variant={VariantsOfButton.transparent} onClick={completeModal.clickClose}>Отменить</Button>
+                        <Button className='py-3' variant={VariantsOfButton.filling} onClick={() => deleteAndCLose(id)}>Удалить</Button>
                     </div>
                 </Modal>
             )

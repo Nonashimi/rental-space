@@ -1,5 +1,5 @@
 import { Header } from '@/shared/components'
-import { Size } from '@/shared/components/container'
+import { SizeOfContainer } from '@/shared/components/container'
 import React from 'react'
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 function Layout({children}: Props) {
   return (
     <div>
-        <Header size={Size.md} hasSearch = {false}/>
+        <Header size={SizeOfContainer.md} hasSearch = {false}/>
         {children}
     </div>
   )

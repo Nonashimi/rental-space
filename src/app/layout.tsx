@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto, Roboto_Mono } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -28,6 +29,8 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${robotoMono.variable} antialiased`}
       >
+        <div id="modal-root"></div>
+        <Toaster position="bottom-left" toastOptions={{ duration: 3000 }}/>
         {children}
       </body>
     </html>

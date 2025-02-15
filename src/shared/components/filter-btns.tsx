@@ -9,6 +9,7 @@ export enum Variant {
     house = "house",    
 }
 
+
 function FilterBtns({}: Props) {
     const styles = "w-full flex justify-center py-3 rounded-2xl transition-all duration-100 cursor-pointer hover:bg-[#ebebeb]";
     const active = "bg-[#ebebeb]";
