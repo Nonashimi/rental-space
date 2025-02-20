@@ -1,4 +1,3 @@
-import ApartmentMap from '@/shared/components/apartment-map'
 import Container from '@/shared/components/container'
 import React from 'react'
 type Props = {
@@ -12,7 +11,7 @@ async function Page({params}: Props) {
 
   return (
     <Container>
-      <ApartmentMap/>
+        <div>card {id}</div>
     </Container>
   )
 }
