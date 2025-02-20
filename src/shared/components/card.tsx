@@ -3,7 +3,7 @@
 import { usePagination } from '@/hooks/usePagination'
 import { cn } from '@/lib/utils'
 import { CardItem } from '@/store/cards'
-import { HeartIcon, StarIcon } from 'lucide-react'
+import { HeartIcon, Star } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import ChevronCLick, { ChevronType } from '../ui/chevron-click'
@@ -11,8 +11,8 @@ import PointersCard from '../ui/pointers-card'
 
 type Props = {
     cardItem: CardItem,
-    clickToFav: (id: number) => void,
-    inFavList: (id: number) => boolean
+    clickToFav?: (id: number) => void,
+    inFavList?: (id: number) => boolean
 }
 
 function Card({cardItem, clickToFav, inFavList}: Props) {
@@ -49,11 +49,11 @@ function Card({cardItem, clickToFav, inFavList}: Props) {
                     ))
                 }
             </div>
-            <div className="absolute top-4 right-4 cursor-pointer" onClick={(e) => {   
+            <div className="absolute top-4 right-4 cursor-pointer hover:scale-105" onClick={(e) => {   
                 e.stopPropagation();
-                clickToFav(cardItem.id)}}>
+                clickToFav?.(cardItem.id)}}>
                     <HeartIcon className={cn(` text-white stroke-[1.5px]`, 
-                        !inFavList(cardItem.id)?'fill-[#0000007c]':'fill-red-500'
+                        !inFavList?.(cardItem.id)?'fill-[#0000007c]':'fill-red-500'
                     )} size={25}/>
             </div>
             <PointersCard defineLocation={defineLocation} cardItem={cardItem} clickPoint={clickPoint} thisPage={thisPage} defineSize={defineSize}/>
@@ -74,9 +74,9 @@ function Card({cardItem, clickToFav, inFavList}: Props) {
             </div>
         </div>
         <div className="flex flex-col gap-[2px]">
-            <div className="flex justify-between  mt-2">
+            <div className="flex justify-between items-center  mt-2">
                 <div className="font-bold">{cardItem.place}</div>
-                <div className="flex gap-1"> <StarIcon size={20}/> {cardItem.rate}</div>
+                <div className="flex justify-center items-center gap-1"> <Star className='fill-black' size={15}/> <div className="">{cardItem.rate}</div></div>
             </div>
             <div className="text-[#5e5c5c] overflow-hidden whitespace-nowrap text-ellipsis w-full text-[17px] ">{cardItem.description}</div>
             <div className="text-[#5e5c5c] ">

@@ -5,7 +5,6 @@ import Card from './card'
 import { useCardListStore } from '@/store/cards';
 import { useToaster } from '@/hooks/useToaster';
 import { useFavoritesStore } from '@/store/favorites';
-import FavModals from './fav-modals';
 
 type Props = {}
 
@@ -13,12 +12,10 @@ function CardList({}: Props) {
 
   const {clickToFav, inFavList} = useFavoritesStore();
     const cards = useCardListStore();
-    useToaster();
 
     
   return (
     <>
-      <FavModals/>
       <div className="grid grid-cols-5 gap-6">
           {
               cards.cardList.map(card => 

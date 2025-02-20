@@ -1,14 +1,8 @@
-import CardList from "@/shared/components/card-list";
 import Container from "@/shared/components/container";
+import MainBody from "@/shared/components/main-body";
 
 export default function Home() {
   return (
-    <>
-    <section>
-      <Container>
-        <CardList/>
-      </Container>
-    </section>
-    </>
+          <MainBody/>
   );
 }

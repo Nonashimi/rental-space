@@ -2,7 +2,7 @@
 import { useCardListStore } from '@/store/cards'
 import React from 'react'
 import Button, { VariantsOfButton } from '../ui/button'
-import { Heart, Send } from 'lucide-react'
+import { Heart, Send, Star } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useFavoritesStore } from '@/store/favorites'
 import { useToaster } from '@/hooks/useToaster'
@@ -16,7 +16,7 @@ function RoomItem({ id }: Props) {
     const roomItem = useCardListStore().cardList.find(el => el.id === id)!;
     const images = roomItem.images.slice(0, 5);
     const favorites = useFavoritesStore();
-
+    const comments = 0;
     useToaster();
     return (
         <div className="">
@@ -62,6 +62,18 @@ function RoomItem({ id }: Props) {
                         <div className="flex flex-col gap-[2px]">
                             <div className="text-2xl font-semibold">{roomItem.place}</div>
                             <div className="">3 гостя,1 спальня,1кровать,1,5 ванной</div>
+                            <div className="flex gap-[5px] items-center">
+                                <Star size={17} className='fill-black'/>
+                                {
+                                    comments > 0 ? (
+                                        <div className="font-semibold underline">
+                                            {comments} отзыва 
+                                        </div>
+                                    ): 
+                                    (<div className="font-semibold">Пока нету отзывов</div>
+                                    )
+                                }
+                            </div>
                         </div>
                         <div className="">
 
