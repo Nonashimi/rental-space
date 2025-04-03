@@ -78,6 +78,10 @@ body {
 .custom-marker {
   background: none !important;
   border: none !important;
+  z-index: 0 !important;
+}
+.custom-marker:hover {
+  z-index: 5 !important;
 }
 
 .marker-container {
@@ -95,6 +99,7 @@ body {
   white-space: nowrap;
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
+
 
 .leaflet-popup-close-button {
   display: none;
