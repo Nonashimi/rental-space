@@ -84,6 +84,10 @@ body {
   z-index: 5 !important;
 }
 
+.custom-marker:has(.marker-active) {
+  z-index: 5 !important;
+}
+
 .marker-container {
   display: flex;
   align-items: center;
@@ -98,6 +102,18 @@ body {
   color: black;
   white-space: nowrap;
   border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all .3s;
+}
+
+.marker-active{
+  background-color: #222222;
+  color: white;
+  transform: scale(1.06) !important;
+}
+
+.marker-visited{
+  background-color: rgb(226, 223, 223);
+  color: rgb(0, 0, 0);
 }
 
 

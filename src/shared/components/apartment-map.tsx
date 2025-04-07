@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import dynamic from "next/dynamic";
 import "leaflet/dist/leaflet.css";
-import { useCardListStore } from "@/store/cards";
+import { MarkerCondition, useCardListStore } from "@/store/cards";
 import { useFavoritesStore } from "@/store/favorites";
 import CardPopup from "./cart-popup";
 
@@ -19,22 +19,21 @@ export default function ApartmentMap() {
   const [zoom, setZoom] = useState<number>(2);
   const [geoData, setGeoData] = useState<any>(null);
   const [L, setL] = useState<any>(null);
-  const { cardList } = useCardListStore();
+  const { cardList, updateCardCondition } = useCardListStore();  // Предполагается, что в store есть метод updateCardCondition
   const favorites = useFavoritesStore();
-
   useEffect(() => {
     import("leaflet").then((leaflet) => setL(leaflet));
   }, []);
 
   const createCustomIcon = useCallback(
-    (price: number, id: number) => {
+    (price: number, id: number, condition: MarkerCondition) => {
       if (!L) return null;
       const fav = favorites.inFavList(id);
       return L.divIcon({
         className: "custom-marker",
-        html: `<div class="marker-container flex gap-1 hover:scale-105 transition-all duration-300">
+        html: `<div class="marker-container ${condition} flex gap-1 hover:scale-[106%] transition-all duration-300">
                  <span class="marker-text">${price}₽</span>
-                 ${fav ? `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="red">
+                 ${fav ? `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="${condition === MarkerCondition.ACTIVE?"white":"red"}">
                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                  </svg>` : ""}
                </div>`,
@@ -71,8 +70,17 @@ export default function ApartmentMap() {
     }
   }, []);
 
+
+  const handleMapCLick = () => {
+    cardList.map(card => {
+      if(card.condition === MarkerCondition.ACTIVE) {
+        updateCardCondition(card.id, MarkerCondition.VISITED);
+      }
+    });
+  };
+
   return (
-    <div className="h-full">
+    <div className="h-full" onClick={handleMapCLick}>
       <MapContainer
         className="h-full"
         center={mapCenter}
@@ -84,6 +92,7 @@ export default function ApartmentMap() {
         ]}
         minZoom={2}
         maxZoom={12}
+        
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
@@ -105,14 +114,25 @@ export default function ApartmentMap() {
         )}
 
         {cardList.map((card) => {
-          const icon = createCustomIcon(card.price, card.id);
+          const icon = createCustomIcon(card.price, card.id, card.condition!);
           return (
             icon && (
-              <Marker 
-                key={card.id} 
-                icon={icon} 
+              <Marker
+                key={card.id}
+                icon={icon}
                 position={[card.coordinates.lat, card.coordinates.lng]}
-                >
+                eventHandlers={{
+                  click: () => {
+                    cardList.map(card => {
+                      if (card.condition === MarkerCondition.ACTIVE) {
+                        updateCardCondition(card.id, MarkerCondition.VISITED);
+                      }
+                      return card;
+                    });
+                    updateCardCondition(card.id, MarkerCondition.ACTIVE);
+                  },
+                }}
+              >
                 <Popup>
                   <CardPopup inFavList={favorites.inFavList} clickToFav={favorites.clickToFav} cardItem={card} />
                 </Popup>

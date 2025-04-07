@@ -1,6 +1,14 @@
 
 import { create } from 'zustand';
 
+
+export enum MarkerCondition  {
+  DEFAULT = "",
+  ACTIVE = "marker-active",
+  VISITED = "marker-visited",
+}
+
+
 export interface CardItem{
         images: string[];
         place: string;
@@ -9,12 +17,14 @@ export interface CardItem{
         price: number;
         rate: number;
         id: number;
-        coordinates: {lat: number, lng: number}
+        coordinates: {lat: number, lng: number},
+        condition?: MarkerCondition;
 }
 
 
 interface State{
-    cardList: CardItem[]
+    cardList: CardItem[],
+    updateCardCondition: (id: number, condition: MarkerCondition) => void,
 }
 
 const images =  [
@@ -30,7 +40,7 @@ const images =  [
     "https://a0.muscache.com/im/pictures/miso/Hosting-614375154474735110/original/ac259f95-bc29-4466-89f9-12a97f2b0977.jpeg?im_w=720&im_format=avif",
 ];
 
-export const useCardListStore = create<State>(() => ({
+export const useCardListStore = create<State>((set) => ({
    cardList : [
     {
       images,
@@ -182,8 +192,14 @@ export const useCardListStore = create<State>(() => ({
       id: 15,
       coordinates: { lat: 37.5665, lng: 126.9780 }
     },
-  ]
-  
+  ],
+  updateCardCondition(id, condition) {
+    set((state) => ({
+      cardList: state.cardList.map((card) =>
+        card.id === id ? { ...card, condition } : card
+      ),
+    }));
+  }
   
     
   }));
