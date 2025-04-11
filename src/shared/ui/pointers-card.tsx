@@ -12,7 +12,7 @@ type Props = {
 
 function PointersCard({defineLocation, cardItem, clickPoint, thisPage,defineSize}: Props) {
   return (
-    <div className="absolute bottom-4 left-[40%] w-[75px] overflow-hidden">
+    <div className="absolute bottom-4 left-[50%] translate-x-[-50%] w-[75px] overflow-hidden">
                 <div 
                 className="flex gap-[10px] w-[160px] transition-all duration-300"
                 style={{ transform: `translateX(-${defineLocation() * 17}px)` }}

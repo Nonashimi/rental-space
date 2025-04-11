@@ -3,7 +3,8 @@ import React from 'react'
 
 type Props = {
     handleChevronBtn: () => void
-    type: ChevronType
+    type: ChevronType,
+    size?: Size
 }
 
 export enum ChevronType {
@@ -11,15 +12,20 @@ export enum ChevronType {
     right = "right"
 }
 
-function ChevronCLick({handleChevronBtn, type}: Props) {
+export enum Size{
+  normal = "normal",
+  minimal = "minimal",
+}
+
+function ChevronCLick({handleChevronBtn, type, size = Size.normal}: Props) {
   return (
     <div onClick={(e) => {
         e.stopPropagation();
         handleChevronBtn()}} 
-        className="w-[30px] h-[30px] rounded-full flex items-center justify-center transition-all duration-300 bg-white opacity-90 cursor-pointer hover:scale-105">
+        className={`${size === Size.normal ? "w-[30px] h-[30px]": "w-[25px] h-[25px]"} rounded-full flex items-center justify-center transition-all duration-300 bg-white opacity-90 cursor-pointer hover:scale-105`}>
         {type === ChevronType.left 
-            ?<ChevronLeft size={20}/>
-            :<ChevronRight size={20}/>
+            ?<ChevronLeft size={size === Size.normal ? 20 : 15}/>
+            :<ChevronRight size={size === Size.normal ? 20 : 15}/>
         }
     </div>
   )

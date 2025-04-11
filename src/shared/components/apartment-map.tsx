@@ -3,9 +3,11 @@
 import { useEffect, useState, useCallback } from "react";
 import dynamic from "next/dynamic";
 import "leaflet/dist/leaflet.css";
-import { MarkerCondition, useCardListStore } from "@/store/cards";
+import { CardItem, MarkerCondition, useCardListStore } from "@/store/cards";
 import { useFavoritesStore } from "@/store/favorites";
 import CardPopup from "./cart-popup";
+import { useClustering } from "@/hooks/useClustering";
+import ListOfCardsPopup from "./list-of-cards-popup";
 
 // Динамический импорт react-leaflet
 const MapContainer = dynamic(() => import("react-leaflet").then((mod) => mod.MapContainer), { ssr: false });
@@ -21,22 +23,34 @@ export default function ApartmentMap() {
   const [L, setL] = useState<any>(null);
   const { cardList, updateCardCondition } = useCardListStore();  // Предполагается, что в store есть метод updateCardCondition
   const favorites = useFavoritesStore();
+  const {ClusterMarkers} = useClustering(cardList);
+  const [clusters, setCLusters] = useState<CardItem[][]>(ClusterMarkers());
   useEffect(() => {
     import("leaflet").then((leaflet) => setL(leaflet));
   }, []);
 
-  const createCustomIcon = useCallback(
-    (price: number, id: number, condition: MarkerCondition) => {
-      if (!L) return null;
-      const fav = favorites.inFavList(id);
-      return L.divIcon({
-        className: "custom-marker",
-        html: `<div class="marker-container ${condition} flex gap-1 hover:scale-[106%] transition-all duration-300">
+  const singleMarker = (condition:MarkerCondition, price:number, id: number) => {
+    const fav = favorites.inFavList(id);
+
+    return `<div class="marker-container ${condition} flex gap-1 hover:scale-[106%] transition-all duration-300">
                  <span class="marker-text">${price}₽</span>
                  ${fav ? `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="${condition === MarkerCondition.ACTIVE?"white":"red"}">
                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                  </svg>` : ""}
-               </div>`,
+               </div>`;
+  };
+
+  const clusterMarker = () => {
+    return  ` <div class="cluster-marker flex items-center justify-center hover:scale-[106%] duration-300">
+    </div>`;
+  }
+
+  const createCustomIcon = useCallback(
+    (cluster:CardItem[]) => {
+      if (!L) return null;
+      return L.divIcon({
+        className: "custom-marker",
+        html: cluster.length > 1 ? clusterMarker() : singleMarker(cluster[0].condition!, cluster[0].price, cluster[0].id),
         iconSize: [50, 30],
         iconAnchor: [25, 15],
       });
@@ -113,14 +127,14 @@ export default function ApartmentMap() {
           />
         )}
 
-        {cardList.map((card) => {
-          const icon = createCustomIcon(card.price, card.id, card.condition!);
+        {clusters.map((cluster) => {
+          const icon = createCustomIcon(cluster);
           return (
             icon && (
               <Marker
-                key={card.id}
+                key={cluster[0].id}
                 icon={icon}
-                position={[card.coordinates.lat, card.coordinates.lng]}
+                position={[cluster[0].coordinates.lat, cluster[0].coordinates.lng]}
                 eventHandlers={{
                   click: () => {
                     cardList.map(card => {
@@ -129,12 +143,16 @@ export default function ApartmentMap() {
                       }
                       return card;
                     });
-                    updateCardCondition(card.id, MarkerCondition.ACTIVE);
+                    updateCardCondition(cluster[0].id, MarkerCondition.ACTIVE);
                   },
                 }}
               >
                 <Popup>
-                  <CardPopup inFavList={favorites.inFavList} clickToFav={favorites.clickToFav} cardItem={card} />
+                  {cluster.length > 1 ? (
+                    <ListOfCardsPopup cardItems={cluster}/>
+                  ) : (
+                  <CardPopup inFavList={favorites.inFavList} clickToFav={favorites.clickToFav} cardItem={cluster[0]} />
+                  )}
                 </Popup>
               </Marker>
             )
