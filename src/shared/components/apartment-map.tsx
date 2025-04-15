@@ -6,8 +6,9 @@ import "leaflet/dist/leaflet.css";
 import { CardItem, MarkerCondition, useCardListStore } from "@/store/cards";
 import { useFavoritesStore } from "@/store/favorites";
 import CardPopup from "./cart-popup";
-import { useClustering } from "@/hooks/useClustering";
+import { Cluster, useClustering } from "@/hooks/useClustering";
 import ListOfCardsPopup from "./list-of-cards-popup";
+import { useMapEvent } from "react-leaflet";
 
 // Динамический импорт react-leaflet
 const MapContainer = dynamic(() => import("react-leaflet").then((mod) => mod.MapContainer), { ssr: false });
@@ -16,15 +17,17 @@ const Marker = dynamic(() => import("react-leaflet").then((mod) => mod.Marker), 
 const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), { ssr: false });
 const GeoJSON = dynamic(() => import("react-leaflet").then((mod) => mod.GeoJSON), { ssr: false });
 
+
 export default function ApartmentMap() {
   const [mapCenter, setMapCenter] = useState<[number, number]>([0, 0]);
   const [zoom, setZoom] = useState<number>(2);
   const [geoData, setGeoData] = useState<any>(null);
   const [L, setL] = useState<any>(null);
-  const { cardList, updateCardCondition } = useCardListStore();  // Предполагается, что в store есть метод updateCardCondition
+  const { cardList } = useCardListStore();  // Предполагается, что в store есть метод updateCardCondition
   const favorites = useFavoritesStore();
-  const {ClusterMarkers} = useClustering(cardList);
-  const [clusters, setCLusters] = useState<CardItem[][]>(ClusterMarkers());
+  const [minDestination, setMinDestination] = useState<number>(10.5);
+  const {ClusterMarkers} = useClustering(cardList, minDestination);
+  const [clusters, setCLusters] = useState<Cluster[]>(ClusterMarkers());
   useEffect(() => {
     import("leaflet").then((leaflet) => setL(leaflet));
   }, []);
@@ -40,17 +43,59 @@ export default function ApartmentMap() {
                </div>`;
   };
 
-  const clusterMarker = () => {
-    return  ` <div class="cluster-marker flex items-center justify-center hover:scale-[106%] duration-300">
-    </div>`;
+  const clusterMarker = (condition: MarkerCondition) => {
+    return  ` <div class="${condition} cluster-marker  flex  hover:scale-[106%] transition-all duration-300">
+    </div>`
+    ;
   }
 
+
+
+  const updateCondition = (id: number, condition: MarkerCondition) => {
+    setCLusters((prevClusters) => {
+      const updatedClusters = prevClusters.map((cluster) => {
+        if (cluster.id === id) {
+          return { ...cluster, condition };
+        }
+        return cluster;
+      });
+
+      return updatedClusters;
+    }
+    );
+  }
+
+
+
+  function ZoomWatcher() {
+    useMapEvent('zoomend', (e) => {
+      const zoom = e.target.getZoom();
+      if(zoom >= 3 && zoom <= 4){
+        setMinDestination(3);
+      }else if(zoom > 4 && zoom <= 10){
+        setMinDestination(0);
+      }else{
+        setMinDestination(10.5);
+      }
+     
+   
+    });
+
+    return null;
+  }
+
+
+  useEffect(() => {
+    setCLusters(ClusterMarkers());
+  }, [minDestination]);
+
+
   const createCustomIcon = useCallback(
-    (cluster:CardItem[]) => {
+    (cluster:Cluster) => {
       if (!L) return null;
       return L.divIcon({
         className: "custom-marker",
-        html: cluster.length > 1 ? clusterMarker() : singleMarker(cluster[0].condition!, cluster[0].price, cluster[0].id),
+        html: cluster.cardItems.length > 1 ? clusterMarker(cluster.condition) : singleMarker(cluster.condition, cluster.cardItems[0].price, cluster.id),
         iconSize: [50, 30],
         iconAnchor: [25, 15],
       });
@@ -85,16 +130,16 @@ export default function ApartmentMap() {
   }, []);
 
 
-  const handleMapCLick = () => {
-    cardList.map(card => {
+  const handleMapCLick = (e:React.MouseEvent<HTMLDivElement>) => {
+    clusters.map(card => {
       if(card.condition === MarkerCondition.ACTIVE) {
-        updateCardCondition(card.id, MarkerCondition.VISITED);
+        updateCondition(card.id, MarkerCondition.VISITED);
       }
     });
   };
 
   return (
-    <div className="h-full" onClick={handleMapCLick}>
+    <div className="h-full" onClick={(e) => handleMapCLick(e)}>
       <MapContainer
         className="h-full"
         center={mapCenter}
@@ -108,6 +153,7 @@ export default function ApartmentMap() {
         maxZoom={12}
         
       >
+        <ZoomWatcher/>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
         {geoData && (
@@ -132,26 +178,26 @@ export default function ApartmentMap() {
           return (
             icon && (
               <Marker
-                key={cluster[0].id}
+                key={cluster.cardItems[0].id}
                 icon={icon}
-                position={[cluster[0].coordinates.lat, cluster[0].coordinates.lng]}
+                position={[cluster.cardItems[0].coordinates.lat, cluster.cardItems[0].coordinates.lng]}
                 eventHandlers={{
                   click: () => {
-                    cardList.map(card => {
-                      if (card.condition === MarkerCondition.ACTIVE) {
-                        updateCardCondition(card.id, MarkerCondition.VISITED);
+                    clusters.map(cl => {
+                      if (cl.condition === MarkerCondition.ACTIVE) {
+                        updateCondition(cl.id, MarkerCondition.VISITED);
                       }
-                      return card;
+                      return cl;
                     });
-                    updateCardCondition(cluster[0].id, MarkerCondition.ACTIVE);
+                    updateCondition(cluster.id, MarkerCondition.ACTIVE);
                   },
                 }}
               >
                 <Popup>
-                  {cluster.length > 1 ? (
-                    <ListOfCardsPopup cardItems={cluster}/>
+                  {cluster.cardItems.length > 1 ? (
+                    <ListOfCardsPopup cardItems={cluster.cardItems}/>
                   ) : (
-                  <CardPopup inFavList={favorites.inFavList} clickToFav={favorites.clickToFav} cardItem={cluster[0]} />
+                  <CardPopup inFavList={favorites.inFavList} clickToFav={favorites.clickToFav} cardItem={cluster.cardItems[0]} />
                   )}
                 </Popup>
               </Marker>

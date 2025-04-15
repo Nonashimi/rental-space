@@ -1,7 +1,14 @@
-import { CardItem } from "@/store/cards";
+import { CardItem, MarkerCondition } from "@/store/cards";
 
-export const useClustering = (cardList: CardItem[]) => {   
-    const minimalDestination = 10.5;
+
+
+
+export type Cluster = {
+  id: number;
+  cardItems: CardItem[];
+  condition: MarkerCondition;
+}
+export const useClustering = (cardList: CardItem[], minimalDestination: number) => {   
      const ids = cardList.map((card, index) => index);
      const weight = cardList.map((card) => 1);
    
@@ -30,7 +37,7 @@ export const useClustering = (cardList: CardItem[]) => {
    
    
    
-     const ClusterMarkers = () => {
+     const ClusterMarkers = (): Cluster[] => {
        const clusters: { [key: number]: CardItem[] } = {};
    
        for(let i = 0; i < cardList.length; i++) {
@@ -51,8 +58,19 @@ export const useClustering = (cardList: CardItem[]) => {
          }
          clusters[id].push(cardList[index]);
        });
+
+
+       const arr = Object.values(clusters);
+       const finalClusters = arr.map((cluster) => {
+         const condition = MarkerCondition.DEFAULT;
+         return {
+           id: cluster[0].id,
+           cardItems: cluster,
+           condition: condition,
+         };
+       });
    
-       return Object.values(clusters);
+       return finalClusters;
      }
 
    return {
