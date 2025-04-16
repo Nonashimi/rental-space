@@ -86,7 +86,16 @@ export default function ApartmentMap() {
 
 
   useEffect(() => {
-    setCLusters(ClusterMarkers());
+    const updatedClusters = ClusterMarkers();
+    const popup = document.querySelectorAll(".leaflet-popup");
+    for(let i = 0; i < popup.length; i++) {
+      popup[i].remove();
+    }
+    setCLusters(
+      updatedClusters.map((cluster) => {
+        return { ...cluster, condition: clusters.find((c) => c.id === cluster.id)?.condition === MarkerCondition.ACTIVE ? MarkerCondition.VISITED : clusters.find((c) => c.id === cluster.id)?.condition || MarkerCondition.DEFAULT };
+      })
+    );
   }, [minDestination]);
 
 
