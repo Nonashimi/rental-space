@@ -3,19 +3,14 @@
 import { useEffect, useState, useCallback } from "react";
 import dynamic from "next/dynamic";
 import "leaflet/dist/leaflet.css";
-import { CardItem, MarkerCondition, useCardListStore } from "@/store/cards";
-import { useFavoritesStore } from "@/store/favorites";
-import CardPopup from "./cart-popup";
+import { MarkerCondition, useCardListStore } from "@/store/cards";
 import { Cluster, useClustering } from "@/hooks/useClustering";
-import ListOfCardsPopup from "./list-of-cards-popup";
 import { useMapEvent } from "react-leaflet";
 import { CustomMarker } from "./custom-marker";
 
 // Динамический импорт react-leaflet
 const MapContainer = dynamic(() => import("react-leaflet").then((mod) => mod.MapContainer), { ssr: false });
 const TileLayer = dynamic(() => import("react-leaflet").then((mod) => mod.TileLayer), { ssr: false });
-const Marker = dynamic(() => import("react-leaflet").then((mod) => mod.Marker), { ssr: false });
-const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), { ssr: false });
 const GeoJSON = dynamic(() => import("react-leaflet").then((mod) => mod.GeoJSON), { ssr: false });
 
 
