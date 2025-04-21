@@ -110,7 +110,7 @@ export default function ApartmentMap() {
   };
 
   return (
-    <div className="h-full" onClick={(e) => handleMapCLick(e)}>
+    <div className="h-screen" onClick={(e) => handleMapCLick(e)}>
       <MapContainer
         className="h-full"
         center={mapCenter}
