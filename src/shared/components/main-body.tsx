@@ -17,7 +17,7 @@ function MainBody({}: Props) {
     }
     useToaster();
   return (
-    <div className='flex-1'>
+    <div className='flex flex-col flex-1 bg-red'>
         <SwitchToMap isItMap={isItMap} handleSwitch={handleMap}/>
         <FavModals/>
         {

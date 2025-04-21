@@ -110,9 +110,9 @@ export default function ApartmentMap() {
   };
 
   return (
-    <div className="h-screen" onClick={(e) => handleMapCLick(e)}>
+    <div className="flex flex-col flex-1" onClick={(e) => handleMapCLick(e)}>
       <MapContainer
-        className="h-full"
+        className="flex-1"
         center={mapCenter}
         zoom={zoom}
         style={{ width: "100%", zIndex: "0" }}
