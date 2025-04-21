@@ -38,7 +38,7 @@ function Search({className, isScrolled, negativeScroll, positiveScroll}: Props) 
   
   <>
     {type.isFocus && <BlackFon/>}
-    <div onClick={negativeScroll} className={cn(className, "flex flex-col items-center w-full relative z-20 header-duration")} onBlur={handleBlur} onFocus={handleFocus}>
+    <div onClick={negativeScroll} className={cn(className, "inline-flex flex-col items-center relative z-20 header-duration")} onBlur={handleBlur} onFocus={handleFocus}>
         <div className={cn(isScrolled?'w-[400px]':'w-[900px]'," header-duration relative flex gap-[1px] items-center border rounded-full shadow-lg group focus-within:bg-[#ebebeb]")}>
           <Input inputId={1} className={cn("w-1/2", {"p-3": isScrolled})} placeholder="где" value={location} onChange={(e) => setLocation(e.target.value)} />
           <div className="h-[30px] w-[1px] bg-gray-300"></div>

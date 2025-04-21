@@ -7,7 +7,7 @@ type Props = {
 
 function layout({children}: Props) {
   return (
-    <div className='flex flex-col h-screen'>
+    <div className='flex flex-col'>
       <TopPart/>
         {children}
     </div>

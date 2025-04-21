@@ -23,9 +23,9 @@ export const  Header = ({className, isScrolled, negativeScroll, positiveScroll, 
   return (
     <>
      <Container size={size}>
-      <div className={cn(classes,"flex w-full flex-col items-center relative header-duration")}>
+      <div className={cn(classes,"flex flex-col items-center relative header-duration")}>
         <header className={
-          cn(className, 'flex w-full justify-between py-3 items-center relative z-30')
+          cn(className, 'flex w-full justify-between py-3 items-center relative z-10')
           }>
               <Logo className='w-[100px]'/>
               {

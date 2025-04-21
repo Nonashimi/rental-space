@@ -17,7 +17,7 @@ function MainBody({}: Props) {
     }
     useToaster();
   return (
-    <div className='h-[100%]'>
+    <div className=''>
         <SwitchToMap isItMap={isItMap} handleSwitch={handleMap}/>
         <FavModals/>
         {
