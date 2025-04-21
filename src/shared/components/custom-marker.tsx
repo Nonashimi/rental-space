@@ -3,15 +3,22 @@ import { Cluster } from '@/hooks/useClustering';
 import { MarkerCondition } from '@/store/cards';
 import { useFavoritesStore } from '@/store/favorites';
 import React, { useCallback, useEffect, useState } from 'react'
-import { Marker, Popup } from 'react-leaflet';
 import ListOfCardsPopup from './list-of-cards-popup';
 import CardPopup from './cart-popup';
+import dynamic from "next/dynamic";
 
 type Props = {
     cluster: Cluster,
     clusters: Cluster[],
     updateCondition: (id: number, condition: MarkerCondition) => void
 }
+
+const Marker = dynamic(() => import("react-leaflet").then((mod) => mod.Marker), { ssr: false });
+
+const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), { ssr: false });
+
+
+
 
 export const CustomMarker = ({cluster, clusters, updateCondition}: Props) =>{
     const [L, setL] = useState<any>(null);
