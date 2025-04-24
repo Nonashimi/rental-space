@@ -9,7 +9,6 @@ type Props = {
 function Layout({children}: Props) {
   return (
     <div>
-        <Header size={SizeOfContainer.md} hasSearch = {false}/>
         {children}
     </div>
   )
