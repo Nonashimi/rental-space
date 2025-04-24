@@ -45,7 +45,7 @@ function Card({cardItem, clickToFav, inFavList}: Props) {
             >
                 {
                     cardItem.images.map((image, index) => (
-                        <img src={image} key={index} className='w-full h-[292px] flex-none  object-cover ' alt="" />
+                        <img src={image} key={index} className='w-full aspect-[4/4] flex-none  object-cover ' alt="" />
                     ))
                 }
             </div>
