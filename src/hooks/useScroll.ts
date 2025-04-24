@@ -1,12 +1,13 @@
 "use client";
 import { useTypeStore } from "@/store/search-type";
+import { useViewType } from "@/store/view-type";
 import { useEffect, useState, useRef } from "react";
 
 export const useScroll = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const type = useTypeStore();
   const isManualOverride = useRef(false); 
-
+  const { isItList } = useViewType();
   const negativeScroll = () => {
     isManualOverride.current = true;
     setIsScrolled(false);
@@ -24,10 +25,11 @@ export const useScroll = () => {
     const handleScroll = () => {
 
       if (isManualOverride.current) return; 
-
-      setIsScrolled(window.scrollY > 0);
+      if(isItList)
+        setIsScrolled(window.scrollY > 0);
+      else
+        setIsScrolled(true);
       type.setFocus(false);
-
 
       const activeElement = document.activeElement as HTMLElement | null;
       if(activeElement?.tagName === "INPUT") {
@@ -38,7 +40,15 @@ export const useScroll = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isItList]);
+
+  useEffect(() => {
+    if(!isItList){
+      setIsScrolled(true);
+    }else{
+      setIsScrolled(window.scrollY > 0);
+    }
+  }, [isItList, type.isFocus]);
 
   return {
     isScrolled,

@@ -6,22 +6,20 @@ import ApartmentMap from './apartment-map'
 import Container from './container'
 import FavModals from './fav-modals'
 import { useToaster } from '@/hooks/useToaster'
+import { useViewType } from '@/store/view-type'
 
 type Props = {}
 
 
 function MainBody({}: Props) {
-    const [isItMap, setIsItMap] = React.useState(false);
-    const handleMap = () => {
-        setIsItMap(!isItMap);
-    }
+    const {isItList} = useViewType();
     useToaster();
   return (
     <div className='flex flex-col flex-1 bg-red'>
-        <SwitchToMap isItMap={isItMap} handleSwitch={handleMap}/>
+        <SwitchToMap/>
         <FavModals/>
         {
-            !isItMap
+            isItList
             ?<Container><CardList/></Container>
             :<ApartmentMap/>
         }
