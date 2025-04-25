@@ -37,7 +37,7 @@ function WishBlockPage({id}: Props) {
         <div className="flex-1 overflow-hidden">
             <div className='h-full' style={{ marginLeft: sidePadding }}>
                 <div className="flex relative h-full">
-                    <div className="w-[60%] pr-5 pt-5 flex flex-col flex-1">
+                    <div className="w-[57%] min-w-[57%] pr-5 pt-5 flex flex-col flex-1">
                         <div className="">
                             <div className="flex justify-between items-center">
                                 <ChevronLeft className='cursor-pointer' onClick={router.back}/>
