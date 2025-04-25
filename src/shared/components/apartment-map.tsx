@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import "leaflet/dist/leaflet.css";
-import { MarkerCondition, useCardListStore } from "@/store/cards";
+import { CardItem, MarkerCondition, useCardListStore } from "@/store/cards";
 import { Cluster, useClustering } from "@/hooks/useClustering";
 import { useMapEvent } from "react-leaflet";
 import { CustomMarker } from "./custom-marker";
@@ -14,11 +14,14 @@ const TileLayer = dynamic(() => import("react-leaflet").then((mod) => mod.TileLa
 const GeoJSON = dynamic(() => import("react-leaflet").then((mod) => mod.GeoJSON), { ssr: false });
 
 
-export default function ApartmentMap() {
+type Props = {
+  cardList: CardItem[];
+}
+
+export default function ApartmentMap({cardList}: Props) {
   const [mapCenter, setMapCenter] = useState<[number, number]>([0, 0]);
   const [zoom, setZoom] = useState<number>(2);
   const [geoData, setGeoData] = useState<any>(null);
-  const { cardList } = useCardListStore();  // Предполагается, что в store есть метод updateCardCondition
   const [minDestination, setMinDestination] = useState<number>(10.5);
   const {ClusterMarkers} = useClustering(cardList, minDestination);
   const [clusters, setCLusters] = useState<Cluster[]>(ClusterMarkers());
@@ -116,13 +119,9 @@ export default function ApartmentMap() {
         center={mapCenter}
         zoom={zoom}
         style={{ width: "100%", zIndex: "0" }}
-        maxBounds={[
-          [-90, -180],
-          [90, 180],
-        ]}
         minZoom={2}
         maxZoom={12}
-        
+        worldCopyJump={true}
       >
         <ZoomWatcher/>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
