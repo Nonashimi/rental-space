@@ -113,7 +113,7 @@ export default function ApartmentMap({cardList}: Props) {
   };
 
   return (
-    <div className="flex flex-col flex-1" onClick={(e) => handleMapCLick(e)}>
+    <div className="flex flex-col flex-1 h-full" onClick={(e) => handleMapCLick(e)}>
       <MapContainer
         className="flex-1"
         center={mapCenter}

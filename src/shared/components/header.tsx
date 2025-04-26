@@ -21,7 +21,7 @@ export const  Header = ({className, isScrolled, negativeScroll, positiveScroll, 
   const classes = hasSearch? isScrolled?'max-h-[90px]':'max-h-[200px] pb-6': "pb-2";
   const router = useRouter();
   return (
-    <>
+    <div className={className}>
      <Container size={size}>
       <div className={cn(classes,"flex flex-col items-center relative header-duration")}>
         <header className={
@@ -49,7 +49,7 @@ export const  Header = ({className, isScrolled, negativeScroll, positiveScroll, 
       </div>
     </Container>
     <div className="w-full h-[1px] bg-gray-300"></div>
-    </>
+    </div>
   )
 }
 
