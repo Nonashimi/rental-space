@@ -84,7 +84,12 @@ function WishBlockPage({id}: Props) {
                         <div className="grid grid-cols-3 gap-5 mt-5">
                             {favCardList && 
                                 favCardList.map((card) => ( 
-                                <Card key={card.id} cardItem={card} clickToFav={clickToFav} inFavList={inFavList}/>
+                                  <div key={card.id} className="">
+                                    <Card cardItem={card} clickToFav={clickToFav} inFavList={inFavList}/>
+                                    <div className="flex p-3 mt-2 bg-[#f7f7f7] rounded-xl">
+                                      <p className='cursor-pointer text-[#0000008c] underline text-[15px] transition-all duration-300 hover:text-[#000]'>Add note</p>
+                                    </div>
+                                  </div>
                                 ))}
                         </div>
                     </div>

@@ -34,7 +34,7 @@ function CardClusterPopup({cardItem}: Props) {
 
   return (
     <div className='bg-white rounded-xl shadow-lg flex gap-2'>
-        <div onClick={() => router.push(`rooms/${cardItem.id}`)} className="w-[240px] h-[130px] relative overflow-hidden rounded-lg group cursor-pointer">
+        <div onClick={() => router.push(`/rooms/${cardItem.id}`)} className="w-[240px] h-[130px] relative overflow-hidden rounded-lg group cursor-pointer">
             <div 
                 className={`flex w-full  transition-all duration-300  scrollbar-none`}
                 style={{ transform: `translateX(-${(thisPage - 1) * 100}%)` }}
