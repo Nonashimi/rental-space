@@ -11,7 +11,9 @@ import Card from './card'
 import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import Modal, { SizeForModal } from './modal'
-import { p } from 'framer-motion/client'
+import { useWishCardsStore } from '@/store/wish-cards'
+import { useToaster } from '@/hooks/useToaster'
+import FavModals from './fav-modals'
 
 type Props = {
     id: number
@@ -20,19 +22,23 @@ type Props = {
 function WishBlockPage({id}: Props) {
      const [sidePadding, setSidePadding] = useState<number>(0)
      const {favBlockList, inFavList, clickToFav}  = useFavoritesStore();
+     const {wishCards, setWishCards, setChangeNote} = useWishCardsStore();
      const router = useRouter();
      const {cardList} = useCardListStore();
      const [isFavTitleHide, setIsFavTitleHide] = useState<boolean>(true);
      const favoriteBlock = favBlockList.find((block) => block.id == id)!;
-     const favCardList = cardList.filter((card) => favoriteBlock.favoriteItems.includes(card.id)).map((c) => ({...c, note: ""})); 
-     const [isNotesOpen, setIsNotesOpen] = useState(true);
+     const [isNotesOpen, setIsNotesOpen] = useState(false);
      const [notesValue, setNotesValue] = useState<string>('');
+     const [noteId, setNoteId] = useState<number>(0);
+     useToaster();
+     const favCards =cardList.filter((card) => favoriteBlock.favoriteItems.includes(card.id));
       useEffect(() => {
         const widthClass = SizeOfContainer.lg as unknown as string
         const matchResult = widthClass.match(/\d+/)
         const blockWidth = matchResult ? parseInt(matchResult[0], 10) : 0
         const padding = (window.innerWidth - window.innerWidth * blockWidth/100) / 2
         setSidePadding(padding)
+        setWishCards(favCards.map((c) => ({...c, note: ""}))); 
       }, []);
 
     const element = document.querySelector('.observe-fav-title') as Element;
@@ -59,8 +65,9 @@ function WishBlockPage({id}: Props) {
       }
 
     const clickToNotes = (id: number) => {
-      setNotesValue(favCardList.find((card) => card.id === id)?.note!);
+      setNotesValue(wishCards.find((card) => card.id === id)?.note!);
       setIsNotesOpen(true);
+      setNoteId(id);
     }
 
     const changeNotes= (e: string) =>{
@@ -69,13 +76,24 @@ function WishBlockPage({id}: Props) {
       }
     }
 
+    const clickToSave = () => {
+      setChangeNote(noteId, notesValue);
+      setIsNotesOpen(false);
+      setNoteId(0);
+    }
+
+
+    const clearNote = () => {
+      setNotesValue('');
+    }
+
     
 
 
 
   return (
     <div className='flex flex-col'>
-        {isNotesOpen && <Modal size={SizeForModal.md} title="Добавить заметку" clickClose={() => setIsNotesOpen(false)}>
+          {isNotesOpen && <Modal size={SizeForModal.md} title="Добавить заметку" clickClose={() => setIsNotesOpen(false)}>
           <div className="">
             <div className="w-[85%] mx-auto py-7">
               <textarea
@@ -89,11 +107,13 @@ function WishBlockPage({id}: Props) {
             </div>
             <div className="w-full h-[1px] bg-gray-200"></div>
             <div className="flex py-3 justify-between w-[90%] mx-auto">
-              <Button variant={VariantsOfButton.transparent}>Clear</Button>
-              <Button className='border-none py-4 px-7' variant={VariantsOfButton.filling}>Save</Button>
+              {wishCards.find((card) => card.id === noteId)?.note?.length! > 0 && <Button  variant={VariantsOfButton.transparent}>Delete</Button>} 
+              {wishCards.find((card) => card.id === noteId)?.note?.length! === 0 && <Button onClick={clearNote} variant={VariantsOfButton.transparent}>Clear</Button>} 
+              <Button onClick={clickToSave} className='border-none py-4 px-7' variant={VariantsOfButton.filling}>Save</Button>
             </div>
           </div>
         </Modal>}
+        <FavModals/>
         <Header size={SizeOfContainer.lg} hasSearch={false} className='sticky top-0 z-10 bg-white'/>
         <div className="">
             <div className='' style={{ marginLeft: sidePadding }}>
@@ -115,24 +135,27 @@ function WishBlockPage({id}: Props) {
                                 <Button variant={VariantsOfButton.default} className='rounded-full py-2'>Share</Button>
                             </div>
                         <div className="grid grid-cols-3 gap-5 mt-5">
-                            {favCardList && 
-                                favCardList.map((card) => ( 
-                                  <div key={card.id} className="">
+                            {wishCards && 
+                                wishCards.map((card) => ( 
+                                  <div key={card.id} className="flex-1">
                                     <Card cardItem={card} clickToFav={clickToFav} inFavList={inFavList}/>
-                                    <div className="flex p-3 mt-2 bg-[#f7f7f7] rounded-xl gap-1 items-center">
-                                      {card.note}
-                                      {!(card.note.length > 0) ?
-                                        <p onClick={() => clickToNotes(card.id)} className='cursor-pointer text-[#0000008c] underline text-[15px] transition-all duration-300 hover:text-[#000]'>Add note</p>
-                                        :
-                                        <p onClick={() => clickToNotes(card.id)} className='cursor-pointer text-[#0000008c] underline text-[15px] transition-all duration-300 hover:text-[#000]'>Edit</p>
-                                      }
+                                    <div className="p-3 mt-2 bg-[#f7f7f7] rounded-xl text-[15px] text-[#0000008c]">
+                                      <span className="break-words">
+                                        {card.note}
+                                      </span>
+                                      <span
+                                        onClick={() => clickToNotes(card.id)}
+                                        className="cursor-pointer underline font-[600] transition-all duration-300 hover:text-[#000] ml-1"
+                                      >
+                                        {card.note.length > 0 ? 'Edit' : 'Add note'}
+                                      </span>
                                     </div>
                                   </div>
                                 ))}
                         </div>
                     </div>
                     <div className="h-[calc(100vh-90.667px)] w-full sticky top-[90.667px]">
-                            <ApartmentMap cardList={favCardList}/>
+                            <ApartmentMap cardList={favCards}/>
                     </div>
                 </div>
             </div>
