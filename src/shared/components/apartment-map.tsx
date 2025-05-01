@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import "leaflet/dist/leaflet.css";
-import { CardItem, MarkerCondition, useCardListStore } from "@/store/cards";
+import { CardItem, MarkerCondition } from "@/store/cards";
 import { Cluster, useClustering } from "@/hooks/useClustering";
 import { useMapEvent } from "react-leaflet";
 import { CustomMarker } from "./custom-marker";

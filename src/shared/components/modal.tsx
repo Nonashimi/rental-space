@@ -13,10 +13,11 @@ type Props = {
 
 export enum SizeForModal {
   sm = "w-[325px]",
-  md = 'w-[550px]',
+  md = 'w-[400px]',
+  lg = 'w-[550px]',
  
 }
-function Modal({ title, clickClose, children, size = SizeForModal.md }: Props) {
+function Modal({ title, clickClose, children, size = SizeForModal.lg }: Props) {
 
   return (
     <div className="bg-[#00000062] fixed z-50 top-0 left-0 right-0 bottom-0 flex justify-center items-center">

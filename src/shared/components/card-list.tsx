@@ -3,7 +3,6 @@
 import React from 'react'
 import Card from './card'
 import { useCardListStore } from '@/store/cards';
-import { useToaster } from '@/hooks/useToaster';
 import { useFavoritesStore } from '@/store/favorites';
 
 type Props = {}

@@ -9,8 +9,9 @@ import Button, { VariantsOfButton } from '../ui/button'
 import { useCardListStore } from '@/store/cards'
 import Card from './card'
 import { useRouter } from 'next/navigation'
-import { q } from 'framer-motion/client'
 import { cn } from '@/lib/utils'
+import Modal, { SizeForModal } from './modal'
+import { p } from 'framer-motion/client'
 
 type Props = {
     id: number
@@ -23,9 +24,9 @@ function WishBlockPage({id}: Props) {
      const {cardList} = useCardListStore();
      const [isFavTitleHide, setIsFavTitleHide] = useState<boolean>(true);
      const favoriteBlock = favBlockList.find((block) => block.id == id)!;
-     console.log(favBlockList);
-     console.log(favoriteBlock);
-     const favCardList = cardList.filter((card) => favoriteBlock.favoriteItems.includes(card.id));
+     const favCardList = cardList.filter((card) => favoriteBlock.favoriteItems.includes(card.id)).map((c) => ({...c, note: ""})); 
+     const [isNotesOpen, setIsNotesOpen] = useState(true);
+     const [notesValue, setNotesValue] = useState<string>('');
       useEffect(() => {
         const widthClass = SizeOfContainer.lg as unknown as string
         const matchResult = widthClass.match(/\d+/)
@@ -57,10 +58,42 @@ function WishBlockPage({id}: Props) {
         window.addEventListener('scroll', handleScroll, { passive: true });
       }
 
+    const clickToNotes = (id: number) => {
+      setNotesValue(favCardList.find((card) => card.id === id)?.note!);
+      setIsNotesOpen(true);
+    }
+
+    const changeNotes= (e: string) =>{
+      if(e.length <= 250){
+        setNotesValue(e);
+      }
+    }
+
+    
+
 
 
   return (
     <div className='flex flex-col'>
+        {isNotesOpen && <Modal size={SizeForModal.md} title="Добавить заметку" clickClose={() => setIsNotesOpen(false)}>
+          <div className="">
+            <div className="w-[85%] mx-auto py-7">
+              <textarea
+                className='w-full min-h-[110px] p-3 border border-gray-300 rounded-lg text-base outline-[#000]'
+                name="" 
+                placeholder='Введите текст заметки'
+                value={notesValue}
+                onChange={(e) => changeNotes(e.target.value)}
+              ></textarea>
+              <div className="text-[13px] text-[#696969] font-bold mt-1">{notesValue.length}/250 characters</div>
+            </div>
+            <div className="w-full h-[1px] bg-gray-200"></div>
+            <div className="flex py-3 justify-between w-[90%] mx-auto">
+              <Button variant={VariantsOfButton.transparent}>Clear</Button>
+              <Button className='border-none py-4 px-7' variant={VariantsOfButton.filling}>Save</Button>
+            </div>
+          </div>
+        </Modal>}
         <Header size={SizeOfContainer.lg} hasSearch={false} className='sticky top-0 z-10 bg-white'/>
         <div className="">
             <div className='' style={{ marginLeft: sidePadding }}>
@@ -86,8 +119,13 @@ function WishBlockPage({id}: Props) {
                                 favCardList.map((card) => ( 
                                   <div key={card.id} className="">
                                     <Card cardItem={card} clickToFav={clickToFav} inFavList={inFavList}/>
-                                    <div className="flex p-3 mt-2 bg-[#f7f7f7] rounded-xl">
-                                      <p className='cursor-pointer text-[#0000008c] underline text-[15px] transition-all duration-300 hover:text-[#000]'>Add note</p>
+                                    <div className="flex p-3 mt-2 bg-[#f7f7f7] rounded-xl gap-1 items-center">
+                                      {card.note}
+                                      {!(card.note.length > 0) ?
+                                        <p onClick={() => clickToNotes(card.id)} className='cursor-pointer text-[#0000008c] underline text-[15px] transition-all duration-300 hover:text-[#000]'>Add note</p>
+                                        :
+                                        <p onClick={() => clickToNotes(card.id)} className='cursor-pointer text-[#0000008c] underline text-[15px] transition-all duration-300 hover:text-[#000]'>Edit</p>
+                                      }
                                     </div>
                                   </div>
                                 ))}

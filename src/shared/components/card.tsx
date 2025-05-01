@@ -15,7 +15,7 @@ type Props = {
     inFavList?: (id: number) => boolean
 }
 
-function Card({cardItem, clickToFav, inFavList}: Props) {
+const Card = React.memo(({cardItem, clickToFav, inFavList}: Props) => {
    
     const router = useRouter();
 
@@ -88,6 +88,6 @@ function Card({cardItem, clickToFav, inFavList}: Props) {
         </div>
     </div>
   )
-}
+})
 
 export default Card
