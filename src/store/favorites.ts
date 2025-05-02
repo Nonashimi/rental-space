@@ -1,4 +1,3 @@
-import toast from 'react-hot-toast';
 import { create } from 'zustand';
 
 const favBlocks: FavBlock[] = [

@@ -16,9 +16,10 @@ const GeoJSON = dynamic(() => import("react-leaflet").then((mod) => mod.GeoJSON)
 
 type Props = {
   cardList: CardItem[];
+  activeId?: number
 }
 
-export default function ApartmentMap({cardList}: Props) {
+export default function ApartmentMap({cardList, activeId}: Props) {
   const [mapCenter, setMapCenter] = useState<[number, number]>([0, 0]);
   const [zoom, setZoom] = useState<number>(2);
   const [geoData, setGeoData] = useState<any>(null);
@@ -144,7 +145,7 @@ export default function ApartmentMap({cardList}: Props) {
         )}
 
         {clusters.map((cluster) => 
-         <CustomMarker key={cluster.id} cluster={cluster} clusters={clusters} updateCondition={updateCondition}/>
+         <CustomMarker activeId = {activeId} key={cluster.id} cluster={cluster} clusters={clusters} updateCondition={updateCondition}/>
         )}
       </MapContainer>
     </div>

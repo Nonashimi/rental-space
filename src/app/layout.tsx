@@ -30,7 +30,11 @@ export default function RootLayout({
         className={`${roboto.variable} ${robotoMono.variable} antialiased`}
       >
         <div id="modal-root"></div>
-        <Toaster position="bottom-left" toastOptions={{ duration: 3000 }}/>
+        <Toaster 
+          position="bottom-left" 
+          toastOptions={{ 
+            duration: 1500,
+            }}/>
         {children}
       </body>
     </html>

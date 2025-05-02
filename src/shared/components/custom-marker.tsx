@@ -10,7 +10,8 @@ import dynamic from "next/dynamic";
 type Props = {
     cluster: Cluster,
     clusters: Cluster[],
-    updateCondition: (id: number, condition: MarkerCondition) => void
+    updateCondition: (id: number, condition: MarkerCondition) => void,
+    activeId?: number,
 }
 
 const Marker = dynamic(() => import("react-leaflet").then((mod) => mod.Marker), { ssr: false });
@@ -20,7 +21,7 @@ const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), { 
 
 
 
-export const CustomMarker = ({cluster, clusters, updateCondition}: Props) =>{
+export const CustomMarker = ({cluster, clusters, updateCondition, activeId}: Props) =>{
     const [L, setL] = useState<any>(null);
 
     useEffect(() => {
@@ -28,12 +29,18 @@ export const CustomMarker = ({cluster, clusters, updateCondition}: Props) =>{
       }, []);
     
     const favorites = useFavoritesStore();
+    const activeMarker = (id: number, condition: MarkerCondition) => {
+      return activeId != -1 && activeId === id ? MarkerCondition.ACTIVE : condition;
+    }
+    useEffect(() => {
+      console.log(activeId);
+    }, [activeId]);
 
     const singleMarker = (condition:MarkerCondition, price:number, id: number) => {
     const fav = favorites.inFavList(id);
-        return `<div class="marker-container ${condition} flex gap-1 hover:scale-[106%] transition-all duration-300">
+        return `<div class="marker-container ${activeMarker(id, condition)} flex gap-1 hover:scale-[106%] transition-all duration-300">
                     <span class="marker-text">${price}₽</span>
-                    ${fav ? `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="${condition === MarkerCondition.ACTIVE?"white":"red"}">
+                    ${fav ? `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="${activeMarker(id, condition) === MarkerCondition.ACTIVE?"white":"red"}">
                     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                     </svg>` : ""}
                 </div>`;
@@ -57,7 +64,7 @@ export const CustomMarker = ({cluster, clusters, updateCondition}: Props) =>{
         iconAnchor: [25, 15],
         });
     },
-    [L, favorites]
+    [L, favorites, activeId]
     );
 
     const icon = createCustomIcon(cluster);

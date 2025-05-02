@@ -30,6 +30,14 @@ function WishBlockPage({id}: Props) {
      const [isNotesOpen, setIsNotesOpen] = useState(false);
      const [notesValue, setNotesValue] = useState<string>('');
      const [noteId, setNoteId] = useState<number>(0);
+     const [hoveredCard, setHoveredCard] = useState<number>(-1);
+
+     const mouseEnter = (id: number) => {
+      setHoveredCard(id);
+     }
+     const mouseLeave = () => {
+      setHoveredCard(-1);
+     }
      useToaster();
      const favCards =cardList.filter((card) => favoriteBlock.favoriteItems.includes(card.id));
       useEffect(() => {
@@ -137,7 +145,7 @@ function WishBlockPage({id}: Props) {
                         <div className="grid grid-cols-3 gap-5 mt-5">
                             {wishCards && 
                                 wishCards.map((card) => ( 
-                                  <div key={card.id} className="flex-1">
+                                  <div onMouseLeave={mouseLeave} onMouseEnter={() => mouseEnter(card.id)} key={card.id} className="flex-1">
                                     <Card cardItem={card} clickToFav={clickToFav} inFavList={inFavList}/>
                                     <div className="p-3 mt-2 bg-[#f7f7f7] rounded-xl text-[15px] text-[#0000008c]">
                                       <span className="break-words">
@@ -155,7 +163,7 @@ function WishBlockPage({id}: Props) {
                         </div>
                     </div>
                     <div className="h-[calc(100vh-90.667px)] w-full sticky top-[90.667px]">
-                            <ApartmentMap cardList={favCards}/>
+                            <ApartmentMap activeId = {hoveredCard} cardList={favCards}/>
                     </div>
                 </div>
             </div>
