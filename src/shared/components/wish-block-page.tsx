@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Header } from './header'
 import { SizeOfContainer } from './container'
 import { useFavoritesStore } from '@/store/favorites'
@@ -7,13 +7,13 @@ import { ChevronLeft, Ellipsis } from 'lucide-react'
 import ApartmentMap from './apartment-map'
 import Button, { VariantsOfButton } from '../ui/button'
 import { useCardListStore } from '@/store/cards'
-import Card from './card'
 import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import Modal, { SizeForModal } from './modal'
-import { useWishCardsStore } from '@/store/wish-cards'
+import { CardNote, useWishCardsStore } from '@/store/wish-cards'
 import { useToaster } from '@/hooks/useToaster'
 import FavModals from './fav-modals'
+import Card from './card'
 
 type Props = {
     id: number
@@ -31,7 +31,6 @@ function WishBlockPage({id}: Props) {
      const [notesValue, setNotesValue] = useState<string>('');
      const [noteId, setNoteId] = useState<number>(0);
      const [hoveredCard, setHoveredCard] = useState<number>(-1);
-
      const mouseEnter = (id: number) => {
       setHoveredCard(id);
      }
@@ -39,41 +38,54 @@ function WishBlockPage({id}: Props) {
       setHoveredCard(-1);
      }
      useToaster();
+
      const favCards =cardList.filter((card) => favoriteBlock.favoriteItems.includes(card.id));
+      useEffect(() => {
+        if (cardList.length === 0 || favBlockList.length === 0) return;
+        const prototypeWishCard = favBlockList.map((favBlock => {
+          return {id: favBlock.id, card: cardList.filter((card) => favBlock.favoriteItems.includes(card.id)).map((fav) => ({...fav, note: ""}))};
+         }))
+        setWishCards(prototypeWishCard); 
+      }, [cardList]);
+
+      const wishCard = useMemo(() => {
+        return wishCards.find((wish) => wish.id == id)?.card || [];
+      }, [wishCards, id]);
+      
+
       useEffect(() => {
         const widthClass = SizeOfContainer.lg as unknown as string
         const matchResult = widthClass.match(/\d+/)
         const blockWidth = matchResult ? parseInt(matchResult[0], 10) : 0
         const padding = (window.innerWidth - window.innerWidth * blockWidth/100) / 2
         setSidePadding(padding)
-        setWishCards(favCards.map((c) => ({...c, note: ""}))); 
-      }, []);
 
-    const element = document.querySelector('.observe-fav-title') as Element;
-    if (element) {
+        const element = document.querySelector('.observe-fav-title');
+        if (!element) return;
+      
         let ticking = false;
+      
         const handleScroll = () => {
           if (!ticking) {
             window.requestAnimationFrame(() => {
               const rect = element.getBoundingClientRect();
-      
-              if (rect.top < 115) {
-                setIsFavTitleHide(false);
-              } else {
-                setIsFavTitleHide(true);
-              }
-      
+              setIsFavTitleHide(rect.top >= 115);
               ticking = false;
             });
-      
             ticking = true;
           }
         };
+      
         window.addEventListener('scroll', handleScroll, { passive: true });
-      }
+      
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }, []);
+      
 
     const clickToNotes = (id: number) => {
-      setNotesValue(wishCards.find((card) => card.id === id)?.note!);
+      setNotesValue(wishCard.find((card) => card.id === id)?.note!);
       setIsNotesOpen(true);
       setNoteId(id);
     }
@@ -82,10 +94,11 @@ function WishBlockPage({id}: Props) {
       if(e.length <= 250){
         setNotesValue(e);
       }
+      console.log(wishCards);
     }
 
     const clickToSave = () => {
-      setChangeNote(noteId, notesValue);
+      setChangeNote(id, noteId, notesValue);
       setIsNotesOpen(false);
       setNoteId(0);
     }
@@ -115,8 +128,8 @@ function WishBlockPage({id}: Props) {
             </div>
             <div className="w-full h-[1px] bg-gray-200"></div>
             <div className="flex py-3 justify-between w-[90%] mx-auto">
-              {wishCards.find((card) => card.id === noteId)?.note?.length! > 0 && <Button  variant={VariantsOfButton.transparent}>Delete</Button>} 
-              {wishCards.find((card) => card.id === noteId)?.note?.length! === 0 && <Button onClick={clearNote} variant={VariantsOfButton.transparent}>Clear</Button>} 
+              {wishCard.find((card) => card.id === noteId)?.note?.length! > 0 && <Button  variant={VariantsOfButton.transparent}>Delete</Button>} 
+              {wishCard.find((card) => card.id === noteId)?.note?.length! === 0 && <Button onClick={clearNote} variant={VariantsOfButton.transparent}>Clear</Button>} 
               <Button onClick={clickToSave} className='border-none py-4 px-7' variant={VariantsOfButton.filling}>Save</Button>
             </div>
           </div>
@@ -143,8 +156,8 @@ function WishBlockPage({id}: Props) {
                                 <Button variant={VariantsOfButton.default} className='rounded-full py-2'>Share</Button>
                             </div>
                         <div className="grid grid-cols-3 gap-5 mt-5">
-                            {wishCards && 
-                                wishCards.map((card) => ( 
+                            {wishCard && 
+                                wishCard.map((card) => ( 
                                   <div onMouseLeave={mouseLeave} onMouseEnter={() => mouseEnter(card.id)} key={card.id} className="flex-1">
                                     <Card cardItem={card} clickToFav={clickToFav} inFavList={inFavList}/>
                                     <div className="p-3 mt-2 bg-[#f7f7f7] rounded-xl text-[15px] text-[#0000008c]">
