@@ -9,7 +9,7 @@ import Button, { VariantsOfButton } from '../ui/button'
 import { useCardListStore } from '@/store/cards'
 import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import Modal, { SizeForModal } from './modal'
+import Modal, { SizeForModal, TypeOfModal } from './modal'
 import { useWishCardsStore } from '@/store/wish-cards'
 import { useToaster } from '@/hooks/useToaster'
 import FavModals from './fav-modals'
@@ -32,6 +32,7 @@ function WishBlockPage({id}: Props) {
      const [noteId, setNoteId] = useState<number>(0);
      const [hoveredCard, setHoveredCard] = useState<number>(-1);
      const [oldVal, setOldVal] = useState<string>("");
+     const [isDeleteNoteOpen, setIsDeleteNoteOpen] = useState<boolean>(false);
      const mouseEnter = (id: number) => {
       setHoveredCard(id);
      }
@@ -115,6 +116,23 @@ function WishBlockPage({id}: Props) {
     }
 
 
+    const clickToCancel = () => {
+      setIsDeleteNoteOpen(false);
+      setIsNotesOpen(true);
+    }
+
+    const switchToDelete = () => {
+      setIsNotesOpen(false);
+      setIsDeleteNoteOpen(true);
+    }
+
+
+    const clickToDelete = () => {
+      setIsDeleteNoteOpen(false);
+      setChangeNote(id, noteId, "");
+    }
+
+
 
   return (
     <div className='flex flex-col'>
@@ -132,11 +150,22 @@ function WishBlockPage({id}: Props) {
             </div>
             <div className="w-full h-[1px] bg-gray-200"></div>
             <div className="flex py-3 justify-between w-[90%] mx-auto">
-              {wishCard.find((card) => card.id === noteId)?.note?.length! > 0 && <Button  variant={VariantsOfButton.transparent}>Delete</Button>} 
+              {wishCard.find((card) => card.id === noteId)?.note?.length! > 0 && <Button  onClick={switchToDelete} variant={VariantsOfButton.transparent}>Delete</Button>} 
               {wishCard.find((card) => card.id === noteId)?.note?.length! === 0 && <Button disabled={checkToVal()} onClick={clearNote} variant={VariantsOfButton.transparent}>Clear</Button>} 
               <Button disabled={checkToVal()} onClick={clickToSave} className='border-none py-4 px-7' variant={VariantsOfButton.filling}>Save</Button>
             </div>
           </div>
+        </Modal>}
+        {isDeleteNoteOpen && <Modal type={TypeOfModal.withoutTitle} clickClose={() => setIsDeleteNoteOpen(false)} size={SizeForModal.sm} title = "">
+          <div className="pt-7 pb-10 flex flex-col items-center gap-2">
+            <div className="font-semibold text-[18px]">Delete this note?</div>
+            <div className="text-[#6a6a6a]">You can add a new note later.</div>
+          </div>
+          <div className="w-full h-[1px] bg-gray-200"></div>
+            <div className="flex py-3 justify-between w-[90%] mx-auto">
+              <Button onClick={clickToCancel} variant={VariantsOfButton.transparent}>Cancel</Button>
+              <Button onClick={clickToDelete} className='border-none py-4 px-7' variant={VariantsOfButton.filling}>Delete</Button>
+            </div>
         </Modal>}
         <FavModals/>
         <Header size={SizeOfContainer.lg} hasSearch={false} className='sticky top-0 z-10 bg-white'/>

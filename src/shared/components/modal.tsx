@@ -1,14 +1,21 @@
 import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 type Props = {
   title: string;
   clickClose: () => void;
   children: React.ReactNode;
   size?: SizeForModal,
+  type?: TypeOfModal,
 };
+
+
+
+export enum TypeOfModal {
+  default = "DEFAULT",
+  withoutTitle = "WITHOUT_TITLE"
+}
 
 
 export enum SizeForModal {
@@ -17,7 +24,7 @@ export enum SizeForModal {
   lg = 'w-[550px]',
  
 }
-function Modal({ title, clickClose, children, size = SizeForModal.lg }: Props) {
+function Modal({ title, clickClose, children, size = SizeForModal.lg, type = TypeOfModal.default }: Props) {
 
   return (
     <div className="bg-[#00000062] fixed z-50 top-0 left-0 right-0 bottom-0 flex justify-center items-center">
@@ -31,9 +38,9 @@ function Modal({ title, clickClose, children, size = SizeForModal.lg }: Props) {
         >
           <div className="flex relative p-5 justify-center items-center">
             <X className="absolute left-5 cursor-pointer" onClick={clickClose} size={20} />
-            <div className="font-bold text-[17px]">{title}</div>
+            {type !== TypeOfModal.withoutTitle &&  <div className="font-bold text-[17px]">{title}</div>}
           </div>
-          <div className="w-full h-[1px] bg-[#d3d0d0]"></div>
+          {type !== TypeOfModal.withoutTitle && <div className="w-full h-[1px] bg-[#d3d0d0]"></div>}
           {children}
         </motion.div>
       </AnimatePresence>
