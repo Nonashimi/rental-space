@@ -12,10 +12,11 @@ type Props = {
     children: React.ReactNode,
     className?: string,
     variant?: VariantsOfButton,
-    loading?: boolean
+    loading?: boolean,
+    disabled?: boolean
 }& React.ButtonHTMLAttributes<HTMLButtonElement>
 
-function Button({children, className,variant = VariantsOfButton.default , loading, ...props}: Props) {
+function Button({children, className,variant = VariantsOfButton.default , loading, disabled, ...props}: Props) {
   return (
      <button 
         {...props}
@@ -26,11 +27,13 @@ function Button({children, className,variant = VariantsOfButton.default , loadin
             "text-black border-[#ebebeb] hover:border-[#7a7979] focus:bg-white": variant === VariantsOfButton.default,
             "bg-[#b233fc] text-white font-bold hover:bg-[#aa2df3]": variant === VariantsOfButton.filling,
             "bg-transparent font-bold border-none p-2 hover:bg-[#f1f0f0]": variant === VariantsOfButton.transparent,
-            "bg-[#afabab] text-[#afabab] hover:bg-[#948f8f] pointer-events-none": loading
+            "bg-[#afabab] text-[#afabab] hover:bg-[#948f8f] pointer-events-none": loading,
+            "opacity-[0.3] pointer-events-none": disabled
           },
           
           className
         )}
+
       
     >
       {loading? <div className="absolute top-[30%] left-[45%]  animate-spin"><LoaderIcon className='text-white' size={25}/></div>: ""}

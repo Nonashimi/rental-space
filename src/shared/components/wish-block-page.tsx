@@ -10,7 +10,7 @@ import { useCardListStore } from '@/store/cards'
 import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import Modal, { SizeForModal } from './modal'
-import { CardNote, useWishCardsStore } from '@/store/wish-cards'
+import { useWishCardsStore } from '@/store/wish-cards'
 import { useToaster } from '@/hooks/useToaster'
 import FavModals from './fav-modals'
 import Card from './card'
@@ -31,6 +31,7 @@ function WishBlockPage({id}: Props) {
      const [notesValue, setNotesValue] = useState<string>('');
      const [noteId, setNoteId] = useState<number>(0);
      const [hoveredCard, setHoveredCard] = useState<number>(-1);
+     const [oldVal, setOldVal] = useState<string>("");
      const mouseEnter = (id: number) => {
       setHoveredCard(id);
      }
@@ -86,6 +87,7 @@ function WishBlockPage({id}: Props) {
 
     const clickToNotes = (id: number) => {
       setNotesValue(wishCard.find((card) => card.id === id)?.note!);
+      setOldVal(wishCard.find((card) => card.id === id)?.note || "");
       setIsNotesOpen(true);
       setNoteId(id);
     }
@@ -94,7 +96,6 @@ function WishBlockPage({id}: Props) {
       if(e.length <= 250){
         setNotesValue(e);
       }
-      console.log(wishCards);
     }
 
     const clickToSave = () => {
@@ -108,7 +109,10 @@ function WishBlockPage({id}: Props) {
       setNotesValue('');
     }
 
-    
+
+    const checkToVal = () => {
+      return oldVal == notesValue;
+    }
 
 
 
@@ -129,8 +133,8 @@ function WishBlockPage({id}: Props) {
             <div className="w-full h-[1px] bg-gray-200"></div>
             <div className="flex py-3 justify-between w-[90%] mx-auto">
               {wishCard.find((card) => card.id === noteId)?.note?.length! > 0 && <Button  variant={VariantsOfButton.transparent}>Delete</Button>} 
-              {wishCard.find((card) => card.id === noteId)?.note?.length! === 0 && <Button onClick={clearNote} variant={VariantsOfButton.transparent}>Clear</Button>} 
-              <Button onClick={clickToSave} className='border-none py-4 px-7' variant={VariantsOfButton.filling}>Save</Button>
+              {wishCard.find((card) => card.id === noteId)?.note?.length! === 0 && <Button disabled={checkToVal()} onClick={clearNote} variant={VariantsOfButton.transparent}>Clear</Button>} 
+              <Button disabled={checkToVal()} onClick={clickToSave} className='border-none py-4 px-7' variant={VariantsOfButton.filling}>Save</Button>
             </div>
           </div>
         </Modal>}
