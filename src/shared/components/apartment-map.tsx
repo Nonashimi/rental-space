@@ -15,12 +15,12 @@ const GeoJSON = dynamic(() => import("react-leaflet").then((mod) => mod.GeoJSON)
 
 
 type Props = {
-  cardList: CardItem[];
-  activeId?: number
+  cardList: CardItem[],
+  activeId?: number,
+  mapCenter?: [number, number],
 }
 
-export default function ApartmentMap({cardList, activeId}: Props) {
-  const [mapCenter, setMapCenter] = useState<[number, number]>([0, 0]);
+export default function ApartmentMap({cardList, activeId, mapCenter = [0, 0]}: Props) {
   const [zoom, setZoom] = useState<number>(2);
   const [geoData, setGeoData] = useState<any>(null);
   const [minDestination, setMinDestination] = useState<number>(10.5);

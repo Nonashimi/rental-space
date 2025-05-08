@@ -29,7 +29,7 @@ function WishBlockPage({id}: Props) {
      const favoriteBlock = favBlockList.find((block) => block.id == id)!;
      const [isNotesOpen, setIsNotesOpen] = useState(false);
      const [notesValue, setNotesValue] = useState<string>('');
-     const [noteId, setNoteId] = useState<number>(0);
+     const [noteId, setNoteId] = useState<number>(0);favBlockList
      const [hoveredCard, setHoveredCard] = useState<number>(-1);
      const [oldVal, setOldVal] = useState<string>("");
      const [isDeleteNoteOpen, setIsDeleteNoteOpen] = useState<boolean>(false);
@@ -40,6 +40,7 @@ function WishBlockPage({id}: Props) {
       setHoveredCard(-1);
      }
      useToaster();
+
 
      const favCards =cardList.filter((card) => favoriteBlock.favoriteItems.includes(card.id));
       useEffect(() => {
@@ -53,6 +54,36 @@ function WishBlockPage({id}: Props) {
       const wishCard = useMemo(() => {
         return wishCards.find((wish) => wish.id == id)?.card || [];
       }, [wishCards, id]);
+
+      const mapCenter = useMemo(() => {
+        const block = favBlockList.find((block) => block.id == id);
+        if (!block) return [0, 0] as [number, number];
+      
+        const favs = cardList.filter((card) => block.favoriteItems.includes(card.id));
+        const validCards = favs.filter(card =>
+          typeof card.coordinates.lat === 'number' &&
+          typeof card.coordinates.lng === 'number'
+        );
+      
+        if (validCards.length === 0) return [0, 0];
+        if (validCards.length === 1) return [validCards[0].coordinates.lat, validCards[0].coordinates.lng];
+      
+        let max_lat = -Infinity, min_lat = Infinity;
+        let max_lng = -Infinity, min_lng = Infinity;
+      
+        validCards.forEach(({ coordinates: { lat, lng } }) => {
+          if (lat > max_lat) max_lat = lat;
+          if (lat < min_lat) min_lat = lat;
+          if (lng > max_lng) max_lng = lng;
+          if (lng < min_lng) min_lng = lng;
+        });
+      
+        return [(max_lat + min_lat) / 2, (max_lng + min_lng) / 2] as [number, number];
+      }, [cardList, favBlockList, id]);
+      
+
+      
+      
       
 
       useEffect(() => {
@@ -209,7 +240,7 @@ function WishBlockPage({id}: Props) {
                         </div>
                     </div>
                     <div className="h-[calc(100vh-90.667px)] w-full sticky top-[90.667px]">
-                            <ApartmentMap activeId = {hoveredCard} cardList={favCards}/>
+                            <ApartmentMap mapCenter={mapCenter as [number, number]} activeId = {hoveredCard} cardList={favCards}/>
                     </div>
                 </div>
             </div>
