@@ -51,7 +51,7 @@ interface State{
     switchFromCreateToAdd: () => void,
     toaster: TypeOfToaster,
     setToaster: (toaster: TypeOfToaster) => void,
-    deleteBlockFromList: (id: number) => void
+    deleteBlockFromList: (id: number) => void,
 
 }
 
@@ -175,5 +175,5 @@ export const useFavoritesStore = create<State>((set, get) => ({
             return;
         }
       set({ isCreateModalOpen: false, isAddModalOpen: true });
-    },
+    }
   }));

@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useMemo, useState } from 'react'
+import React, {  useMemo, useState } from 'react'
 import { Header } from './header'
 import { SizeOfContainer } from './container'
 import { useFavoritesStore } from '@/store/favorites'
@@ -9,11 +9,14 @@ import Button, { VariantsOfButton } from '../ui/button'
 import { useCardListStore } from '@/store/cards'
 import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import Modal, { SizeForModal, TypeOfModal } from './modal'
 import { useWishCardsStore } from '@/store/wish-cards'
 import { useToaster } from '@/hooks/useToaster'
 import FavModals from './fav-modals'
 import Card from './card'
+import { useMapCenter } from '@/hooks/useMapCenter'
+import { useNoteClickEvents } from '@/hooks/useNoteClickEvents'
+import { useHandleScroll } from '@/hooks/useHandleScroll'
+import NoteModule from './note-module'
 
 type Props = {
     id: number
@@ -21,7 +24,7 @@ type Props = {
 
 function WishBlockPage({id}: Props) {
      const [sidePadding, setSidePadding] = useState<number>(0)
-     const {favBlockList, inFavList, clickToFav}  = useFavoritesStore();
+     const {favBlockList, inFavList, deleteFromList, clickToFav}  = useFavoritesStore();
      const {wishCards, setWishCards, setChangeNote} = useWishCardsStore();
      const router = useRouter();
      const {cardList} = useCardListStore();
@@ -29,175 +32,78 @@ function WishBlockPage({id}: Props) {
      const favoriteBlock = favBlockList.find((block) => block.id == id)!;
      const [isNotesOpen, setIsNotesOpen] = useState(false);
      const [notesValue, setNotesValue] = useState<string>('');
+     const [oldVal, setOldVal] = useState<string>('');
      const [noteId, setNoteId] = useState<number>(0);favBlockList
      const [hoveredCard, setHoveredCard] = useState<number>(-1);
-     const [oldVal, setOldVal] = useState<string>("");
      const [isDeleteNoteOpen, setIsDeleteNoteOpen] = useState<boolean>(false);
-     const mouseEnter = (id: number) => {
-      setHoveredCard(id);
-     }
-     const mouseLeave = () => {
-      setHoveredCard(-1);
-     }
-     useToaster();
-
-
+     const {mapCenter} = useMapCenter({cardList, id});
      const favCards =cardList.filter((card) => favoriteBlock.favoriteItems.includes(card.id));
-      useEffect(() => {
-        if (cardList.length === 0 || favBlockList.length === 0) return;
-        const prototypeWishCard = favBlockList.map((favBlock => {
-          return {id: favBlock.id, card: cardList.filter((card) => favBlock.favoriteItems.includes(card.id)).map((fav) => ({...fav, note: ""}))};
-         }))
-        setWishCards(prototypeWishCard); 
-      }, [cardList]);
-
-      const wishCard = useMemo(() => {
-        return wishCards.find((wish) => wish.id == id)?.card || [];
+     const wishCard = useMemo(() => {
+      return wishCards.find((wish) => wish.id == id)?.card || [];
       }, [wishCards, id]);
+     const {
+          changeNotes,
+          clickToNotes,
+          clickToSave,
+          clearNote,
+          checkToVal,
+          switchToDelete,
+          clickToCancel,
+          clickToDelete,
+          clickFav
+          }  =  useNoteClickEvents({
+              setNotesValue,
+              setOldVal,
+              setIsNotesOpen,
+              setChangeNote,
+              setIsDeleteNoteOpen,
+              setNoteId,
+              wishCard,
+              clickToFav,
+              deleteFromList,
+              id,
+              noteId,
+              notesValue,
+              oldVal
+          });
 
-      const mapCenter = useMemo(() => {
-        const block = favBlockList.find((block) => block.id == id);
-        if (!block) return [0, 0] as [number, number];
-      
-        const favs = cardList.filter((card) => block.favoriteItems.includes(card.id));
-        const validCards = favs.filter(card =>
-          typeof card.coordinates.lat === 'number' &&
-          typeof card.coordinates.lng === 'number'
-        );
-      
-        if (validCards.length === 0) return [0, 0];
-        if (validCards.length === 1) return [validCards[0].coordinates.lat, validCards[0].coordinates.lng];
-      
-        let max_lat = -Infinity, min_lat = Infinity;
-        let max_lng = -Infinity, min_lng = Infinity;
-      
-        validCards.forEach(({ coordinates: { lat, lng } }) => {
-          if (lat > max_lat) max_lat = lat;
-          if (lat < min_lat) min_lat = lat;
-          if (lng > max_lng) max_lng = lng;
-          if (lng < min_lng) min_lng = lng;
+
+      useHandleScroll({
+        setSidePadding,
+        setIsFavTitleHide,
+        cardList,
+        setWishCards
         });
-      
-        return [(max_lat + min_lat) / 2, (max_lng + min_lng) / 2] as [number, number];
-      }, [cardList, favBlockList, id]);
-      
 
-      
-      
-      
+     useToaster();
+      const mouseEnter = (id: number) => {
+        setHoveredCard(id);
+       }
+       const mouseLeave = () => {
+        setHoveredCard(-1);
+       }
 
-      useEffect(() => {
-        const widthClass = SizeOfContainer.lg as unknown as string
-        const matchResult = widthClass.match(/\d+/)
-        const blockWidth = matchResult ? parseInt(matchResult[0], 10) : 0
-        const padding = (window.innerWidth - window.innerWidth * blockWidth/100) / 2
-        setSidePadding(padding)
-
-        const element = document.querySelector('.observe-fav-title');
-        if (!element) return;
-      
-        let ticking = false;
-      
-        const handleScroll = () => {
-          if (!ticking) {
-            window.requestAnimationFrame(() => {
-              const rect = element.getBoundingClientRect();
-              setIsFavTitleHide(rect.top >= 115);
-              ticking = false;
-            });
-            ticking = true;
-          }
-        };
-      
-        window.addEventListener('scroll', handleScroll, { passive: true });
-      
-        return () => {
-          window.removeEventListener('scroll', handleScroll);
-        };
-      }, []);
-      
-
-    const clickToNotes = (id: number) => {
-      setNotesValue(wishCard.find((card) => card.id === id)?.note!);
-      setOldVal(wishCard.find((card) => card.id === id)?.note || "");
-      setIsNotesOpen(true);
-      setNoteId(id);
-    }
-
-    const changeNotes= (e: string) =>{
-      if(e.length <= 250){
-        setNotesValue(e);
-      }
-    }
-
-    const clickToSave = () => {
-      setChangeNote(id, noteId, notesValue);
-      setIsNotesOpen(false);
-      setNoteId(0);
-    }
-
-
-    const clearNote = () => {
-      setNotesValue('');
-    }
-
-
-    const checkToVal = () => {
-      return oldVal == notesValue;
-    }
-
-
-    const clickToCancel = () => {
-      setIsDeleteNoteOpen(false);
-      setIsNotesOpen(true);
-    }
-
-    const switchToDelete = () => {
-      setIsNotesOpen(false);
-      setIsDeleteNoteOpen(true);
-    }
-
-
-    const clickToDelete = () => {
-      setIsDeleteNoteOpen(false);
-      setChangeNote(id, noteId, "");
-    }
 
 
 
   return (
     <div className='flex flex-col'>
-          {isNotesOpen && <Modal size={SizeForModal.md} title="Добавить заметку" clickClose={() => setIsNotesOpen(false)}>
-          <div className="">
-            <div className="w-[85%] mx-auto py-7">
-              <textarea
-                className='w-full min-h-[110px] p-3 border border-gray-300 rounded-lg text-base outline-[#000]'
-                name="" 
-                placeholder='Введите текст заметки'
-                value={notesValue}
-                onChange={(e) => changeNotes(e.target.value)}
-              ></textarea>
-              <div className="text-[13px] text-[#696969] font-bold mt-1">{notesValue.length}/250 characters</div>
-            </div>
-            <div className="w-full h-[1px] bg-gray-200"></div>
-            <div className="flex py-3 justify-between w-[90%] mx-auto">
-              {wishCard.find((card) => card.id === noteId)?.note?.length! > 0 && <Button  onClick={switchToDelete} variant={VariantsOfButton.transparent}>Delete</Button>} 
-              {wishCard.find((card) => card.id === noteId)?.note?.length! === 0 && <Button disabled={checkToVal()} onClick={clearNote} variant={VariantsOfButton.transparent}>Clear</Button>} 
-              <Button disabled={checkToVal()} onClick={clickToSave} className='border-none py-4 px-7' variant={VariantsOfButton.filling}>Save</Button>
-            </div>
-          </div>
-        </Modal>}
-        {isDeleteNoteOpen && <Modal type={TypeOfModal.withoutTitle} clickClose={() => setIsDeleteNoteOpen(false)} size={SizeForModal.sm} title = "">
-          <div className="pt-7 pb-10 flex flex-col items-center gap-2">
-            <div className="font-semibold text-[18px]">Delete this note?</div>
-            <div className="text-[#6a6a6a]">You can add a new note later.</div>
-          </div>
-          <div className="w-full h-[1px] bg-gray-200"></div>
-            <div className="flex py-3 justify-between w-[90%] mx-auto">
-              <Button onClick={clickToCancel} variant={VariantsOfButton.transparent}>Cancel</Button>
-              <Button onClick={clickToDelete} className='border-none py-4 px-7' variant={VariantsOfButton.filling}>Delete</Button>
-            </div>
-        </Modal>}
+        <NoteModule 
+        isNotesOpen={isNotesOpen}
+        notesValue={notesValue}
+        changeNotes={changeNotes}
+        noteId={noteId}
+        clickToDelete={clickToDelete}
+        clickToSave={clickToSave}
+        clickToCancel={clickToCancel}
+        isDeleteNoteOpen={isDeleteNoteOpen}
+        wishCard={wishCard}
+        setIsNotesOpen={setIsNotesOpen}
+        switchToDelete={switchToDelete}
+        checkToVal={checkToVal}
+        clearNote={clearNote}
+        setIsDeleteNoteOpen={setIsDeleteNoteOpen}
+        />
         <FavModals/>
         <Header size={SizeOfContainer.lg} hasSearch={false} className='sticky top-0 z-10 bg-white'/>
         <div className="">
@@ -223,7 +129,7 @@ function WishBlockPage({id}: Props) {
                             {wishCard && 
                                 wishCard.map((card) => ( 
                                   <div onMouseLeave={mouseLeave} onMouseEnter={() => mouseEnter(card.id)} key={card.id} className="flex-1">
-                                    <Card cardItem={card} clickToFav={clickToFav} inFavList={inFavList}/>
+                                    <Card cardItem={card} clickToFav={clickFav} inFavList={inFavList}/>
                                     <div className="p-3 mt-2 bg-[#f7f7f7] rounded-xl text-[15px] text-[#0000008c]">
                                       <span className="break-words">
                                         {card.note}

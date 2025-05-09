@@ -32,9 +32,6 @@ export const CustomMarker = ({cluster, clusters, updateCondition, activeId}: Pro
     const activeMarker = (id: number, condition: MarkerCondition) => {
       return activeId != -1 && activeId === id ? MarkerCondition.ACTIVE : condition;
     }
-    useEffect(() => {
-      console.log(activeId);
-    }, [activeId]);
 
     const singleMarker = (condition:MarkerCondition, price:number, id: number) => {
     const fav = favorites.inFavList(id);
