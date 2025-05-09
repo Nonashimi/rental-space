@@ -123,6 +123,8 @@ export default function ApartmentMap({cardList, activeId, mapCenter = [0, 0]}: P
         minZoom={2}
         maxZoom={12}
         worldCopyJump={true}
+        maxBounds={[[85, -1000], [-85, 1000]]}
+        maxBoundsViscosity={1.0}   
       >
         <ZoomWatcher/>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
