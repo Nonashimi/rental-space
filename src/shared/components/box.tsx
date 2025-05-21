@@ -10,7 +10,7 @@ type Props = {
 function Box({className, children}: Props) {
     const type = useTypeStore();
   return (
-    <div className={cn(className, ' bg-white shadow-2xl rounded-3xl p-10 box-border')}>
+    <div className={cn(' bg-white shadow-2xl rounded-3xl p-10 box-border', className)}>
         {children}
     </div>
   )

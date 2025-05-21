@@ -7,6 +7,7 @@ import { useTypeStore } from "@/store/search-type";
 import Box from "../components/box";
 import BlackFon from "../components/black-fon";
 import { cn } from "@/lib/utils";
+import SearchDestinction from "../components/search-destinction";
 
 
 interface Props{
@@ -68,7 +69,13 @@ function Search({className, isScrolled, negativeScroll, positiveScroll}: Props) 
 
         {type.isFocus && (
           <div className="w-[900px] mt-3 absolute top-[65px]">
-            {type.typeId === 1 && <Box className="w-[400px] h-[300px]">{type.typeId}</Box>}
+            {type.typeId === 1 && (
+                <div className="rounded-3xl overflow-hidden w-[450px] h-[550px]">
+                    <Box className="w-full h-full overflow-y-auto">
+                      <SearchDestinction />
+                    </Box>
+                </div>
+            )}
             {(type.typeId === 2 || type.typeId === 3) && <Box className="w-[900px] h-[300px]">{type.typeId}</Box>}
             {type.typeId === 4 && <Box className="w-[400px] h-[300px] ml-auto">{type.typeId}</Box>}
           </div>
