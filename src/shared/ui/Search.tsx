@@ -8,6 +8,8 @@ import Box from "../components/box";
 import BlackFon from "../components/black-fon";
 import { cn } from "@/lib/utils";
 import SearchDestinction from "../components/search-destinction";
+import Button, { VariantsOfButton } from "./button";
+import Calendar from "./calendar";
 
 
 interface Props{
@@ -16,6 +18,12 @@ interface Props{
   negativeScroll?: () => void,
   positiveScroll?: () => void
 }
+
+const btns = [
+  { id: 1, title: "Date" },
+  { id: 2, title: "Months" },
+  { id: 3, title: "Flexible" },
+]
 
 function Search({className, isScrolled, negativeScroll, positiveScroll}: Props) {
   const [location, setLocation] = useState("");
@@ -76,7 +84,25 @@ function Search({className, isScrolled, negativeScroll, positiveScroll}: Props) 
                     </Box>
                 </div>
             )}
-            {(type.typeId === 2 || type.typeId === 3) && <Box className="w-[900px] h-[300px]">{type.typeId}</Box>}
+            {(type.typeId === 2 || type.typeId === 3) && (
+                <div className="rounded-3xl overflow-hidden w-[900px] h-[550px]">
+                    <Box className="w-full h-full overflow-y-auto">
+                      <div className="flex justify-center">
+                        <div className="gap-2 bg-[#ebebeb] p-1 rounded-3xl inline-flex">
+                          {btns.map((btn) => (
+                            <Button key={btn.id} className="py-2 px-5 rounded-3xl hover:bg-[#a3a3a3]" variant={VariantsOfButton.transparent}>
+                              {btn.title}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-8 mt-4">
+                        <Calendar/>
+                        <Calendar/>
+                      </div>
+                    </Box>
+                </div>
+            )}
             {type.typeId === 4 && <Box className="w-[400px] h-[300px] ml-auto">{type.typeId}</Box>}
           </div>
         )}
