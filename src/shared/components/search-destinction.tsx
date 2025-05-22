@@ -25,7 +25,7 @@ function SearchDestinction({}: Props) {
     <div className='flex flex-col gap-2'>
         <div className="text-[13px]">Suggested destinations</div>
         {cities.map((city, index) =>(
-            <SearchDestinctionCard title={city.title} description={city.description}/>
+            <SearchDestinctionCard key={index} title={city.title} description={city.description}/>
         ))}
     </div>
   )

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Input from "./input";
-import { SearchIcon } from "lucide-react";
+import { ChevronLeft, ChevronRight, SearchIcon } from "lucide-react";
 import { useTypeStore } from "@/store/search-type";
 import Box from "../components/box";
 import BlackFon from "../components/black-fon";
@@ -23,7 +23,7 @@ const btns = [
   { id: 1, title: "Date" },
   { id: 2, title: "Months" },
   { id: 3, title: "Flexible" },
-]
+];
 
 function Search({className, isScrolled, negativeScroll, positiveScroll}: Props) {
   const [location, setLocation] = useState("");
@@ -41,6 +41,29 @@ function Search({className, isScrolled, negativeScroll, positiveScroll}: Props) 
       type.setFocus(false);
       positiveScroll?.();
     }
+  };
+
+
+  const today = new Date();
+  const [counter, setCounter] = useState(0);
+  const date = new Date();
+  date.setMonth(date.getMonth() + counter);
+  const [currentMonth, setCurrentMonth] = useState(date.getMonth());
+  const [currentYear, setCurrentYear] = useState(date.getFullYear());
+  const nextDate = new Date();
+  nextDate.setMonth(currentMonth + 1);
+
+
+  const handlePrev = () => {
+    setCounter((prev) => {
+      return prev - 1;
+    });
+  };
+
+  const handleNext = () => {
+    setCounter((prev) => {
+      return prev + 1;
+    });
   };
 
   return (
@@ -96,9 +119,13 @@ function Search({className, isScrolled, negativeScroll, positiveScroll}: Props) 
                           ))}
                         </div>
                       </div>
-                      <div className="grid grid-cols-2 gap-8 mt-4">
-                        <Calendar/>
-                        <Calendar/>
+                      <div className="flex justify-between ">
+                        <ChevronLeft onClick={handlePrev} className={cn(counter == 0 ? "pointer-events-none opacity-[10%]" : "cursor-pointer")}/>
+                        <div className="grid grid-cols-2 gap-8 mt-4">
+                          <Calendar date={today} currentMonth={currentMonth} currentYear={currentYear}/>
+                          <Calendar date={nextDate} currentMonth={nextDate.getMonth()} currentYear={nextDate.getFullYear()}/>
+                        </div>
+                        <ChevronRight onClick={handleNext} className="cursor-pointer"/>
                       </div>
                     </Box>
                 </div>
