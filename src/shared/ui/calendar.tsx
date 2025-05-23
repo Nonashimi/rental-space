@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import { cn } from '@/lib/utils';
+import { use, useState } from 'react';
+import { DataFromDate } from './Search';
+import { data } from 'framer-motion/client';
 
 const monthNames = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -7,14 +10,20 @@ const monthNames = [
 
 const daysShort = ['Sa', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sat'];
 
-
+export enum CalendarType {
+  checkIn = 'checkIn',
+  checkOut = 'checkOut'
+}
 type Props = {
   date: Date;
   currentMonth: number;
   currentYear: number;
+  type: CalendarType;
+  dataFromDate: DataFromDate | undefined;
+  setDataFromDate: (data: DataFromDate) => void;
 };
 
-export default function Calendar({date, currentMonth, currentYear}: Props) {
+export default function Calendar({date, currentMonth, currentYear, type, dataFromDate, setDataFromDate}: Props) {
   
   const generateCalendar = () => {
     const firstDay = new Date(currentYear, currentMonth, 1).getDay();
@@ -30,8 +39,28 @@ export default function Calendar({date, currentMonth, currentYear}: Props) {
 
     return dates;
   };
+    
+  const checkIn = (date: Date | null) => {
+    if (dataFromDate) {
+      setDataFromDate({
+        ...dataFromDate,
+        checkIn: date,
+      });
+    }
+  };
 
-
+  const checkOut = (date: Date | null) => {
+    setDataFromDate(
+      {...dataFromDate, checkOut: date}
+    );
+  };
+  const switchAll = (date: Date | null) => {
+    setDataFromDate({
+      checkIn: date,
+      checkOut: null,
+    });
+  };
+  
   const dates = generateCalendar();
   const today = new Date();
   return (
@@ -50,20 +79,44 @@ export default function Calendar({date, currentMonth, currentYear}: Props) {
 
       <div className="grid grid-cols-7 text-center gap-y-2">
         {dates.map((day, index) => {
-          const isToday =
-            day === date.getDate() &&
-            currentMonth === date.getMonth() &&
-            currentYear === date.getFullYear();
-
           const isPast = ( day || 0 ) < date.getDate() && currentMonth === today.getMonth();
-
+          const dayDate = new Date(currentYear, currentMonth, day || 0);
+          const isCheckIn = dataFromDate?.checkIn && dayDate.toDateString() === dataFromDate.checkIn.toDateString();
+          const isCheckOut = dataFromDate?.checkOut && dayDate.toDateString() === dataFromDate.checkOut.toDateString();
+          const isStart = dataFromDate?.checkIn && dataFromDate?.checkOut && dayDate.toDateString() === dataFromDate.checkIn.toDateString();
+          const isEnd = dataFromDate?.checkIn && dataFromDate?.checkOut && dayDate.toDateString() === dataFromDate.checkOut.toDateString();
+          const isSelected = isCheckIn || isCheckOut;
+          const isInRange = dataFromDate?.checkIn && dataFromDate?.checkOut && dayDate > dataFromDate.checkIn && dayDate < dataFromDate.checkOut;
           return (
-            <div
-              key={`${index}-${currentMonth}`}
-              className={`w-[50px] h-[50px] flex items-center justify-center rounded-full  ${isPast ? 'text-gray-400 pointer-events-none' : 'text-black cursor-pointer hover:border hover:border-black'} 
-              }`}
-            >
-              {day || ''}
+            <div className={cn(
+                    {"bg-[#ebebeb]": isInRange}, 
+                    {"rounded-[100%_0_0_100%] bg-[#ebebeb]": isStart},
+                    {"rounded-[0_100%_100%_0] bg-[#ebebeb]": isEnd},
+                    "min-w-[50px] h-[50px]")} key={index}>
+              <div
+                onClick={
+                    isPast
+                      ? undefined
+                      : () => {
+                         if (!dataFromDate?.checkIn) {
+                          checkIn(dayDate);
+                        }else if(dataFromDate?.checkIn && dayDate > dataFromDate.checkIn){
+                          checkOut(dayDate);
+                        }else{
+                          switchAll(dayDate);
+                        } 
+                  }}
+                key={`${index}-${currentMonth}`}
+                className={cn(
+                            `h-full flex items-center justify-center rounded-full box-border relative z-4 
+                            ${isPast ? 'text-gray-400 pointer-events-none' : ' text-black cursor-pointer'}}`,
+                            {
+                              'bg-[#b233fc] border-none text-white': isSelected,
+                            }
+                        )}
+              >
+                {day || ''}
+              </div>
             </div>
           );
         })}
