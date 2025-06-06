@@ -1,6 +1,7 @@
 import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import React from 'react';
+import { cn } from '@/lib/utils';
 
 type Props = {
   title: string;
@@ -8,6 +9,7 @@ type Props = {
   children: React.ReactNode;
   size?: SizeForModal,
   type?: TypeOfModal,
+  className?: string,
 };
 
 
@@ -22,12 +24,14 @@ export enum SizeForModal {
   sm = "w-[325px]",
   md = 'w-[400px]',
   lg = 'w-[550px]',
- 
+  xl = "w-[750px]",
+  xxl= "w-[900px]"
+  
 }
-function Modal({ title, clickClose, children, size = SizeForModal.lg, type = TypeOfModal.default }: Props) {
+function Modal({ title, clickClose, children, size = SizeForModal.lg, type = TypeOfModal.default, className }: Props) {
 
   return (
-    <div className="bg-[#00000062] fixed z-50 top-0 left-0 right-0 bottom-0 flex justify-center items-center">
+    <div className={cn("bg-[#00000062] fixed z-50 top-0 left-0 right-0 bottom-0 flex justify-center items-center", className)}>
       <AnimatePresence>
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}

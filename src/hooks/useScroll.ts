@@ -6,53 +6,51 @@ import { useEffect, useState, useRef } from "react";
 export const useScroll = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const type = useTypeStore();
-  const isManualOverride = useRef(false); 
   const { isItList } = useViewType();
+  const isManualOverride = useRef(false);
+
+  const updateScrollState = () => {
+    const shouldBeScrolled = isItList ? window.scrollY > 0 : true;
+    if(!type.isFocus)
+      setIsScrolled(prev => prev !== shouldBeScrolled ? shouldBeScrolled : prev);
+    else
+      negativeScroll();
+  };
+
+  const handleScroll = () => {
+    if (isManualOverride.current) return;
+
+    updateScrollState();
+    
+    const activeElement = document.activeElement as HTMLElement | null;
+    if (activeElement?.tagName === "INPUT") {
+      activeElement.blur();
+    }
+
+    type.setFocus(false);
+  };
+
   const negativeScroll = () => {
     isManualOverride.current = true;
     setIsScrolled(false);
-
+    console.log("negative scroll");
     setTimeout(() => {
       isManualOverride.current = false;
     }, 500);
   };
 
-  const positiveScroll = () => {
-    setIsScrolled(window.scrollY > 0);
-  }
-
   useEffect(() => {
-    const handleScroll = () => {
-
-      if (isManualOverride.current) return; 
-      if(isItList)
-        setIsScrolled(window.scrollY > 0);
-      else
-        setIsScrolled(true);
-      type.setFocus(false);
-
-      const activeElement = document.activeElement as HTMLElement | null;
-      if(activeElement?.tagName === "INPUT") {
-        activeElement.blur();
-      }
-    
-    };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isItList]);
 
   useEffect(() => {
-    if(!isItList){
-      setIsScrolled(true);
-    }else{
-      setIsScrolled(window.scrollY > 0);
-    }
+    updateScrollState();
+    console.log("is it ");
   }, [isItList, type.isFocus]);
 
   return {
     isScrolled,
-    negativeScroll,
-    positiveScroll
+    negativeScroll
   };
 };

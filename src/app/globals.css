@@ -172,5 +172,9 @@ body {
   display: none; /* Chrome/Safari */
 }
 
+/* 
 
-
+circle{
+  fill: none;
+  stroke-width: 20px;
+} */

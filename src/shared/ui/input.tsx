@@ -1,5 +1,4 @@
 import { cn } from '@/lib/utils'
-import { useTypeStore } from '@/store/search-type'
 import React from 'react'
 
 
@@ -10,18 +9,18 @@ export enum InputVariant{
 type Props = {
     className?: string,
     value?: string,
-    inputId?: number,
-    variant?: InputVariant
+    variant?: InputVariant,
+    disabled?: boolean
 } & React.InputHTMLAttributes<HTMLInputElement>
 
-function Input({className, value, inputId, variant = InputVariant.search,  ...props}: Props) {
-    const type = useTypeStore();
+function Input({className, value, variant = InputVariant.search, disabled,  ...props}: Props) {
   return (
-    <input onFocus={() => type.setTypeId(inputId || 0)} {...props} type="text" value={value}  className={cn(
-        'py-5 px-7 text-[15px] box-border bg-transparent text-black transition duration-300  cursor-pointer ', 
+    <input {...props} type="text" value={value}  className={cn(
+        'py-5 px-7 text-[15px] box-border bg-transparent text-black transition duration-300  cursor-pointer placeholder-[#6b6b6b]', 
         {
-          "focus:bg-white focus:shadow-lg outline-none rounded-full hover:bg-[#ebebeb]": variant === InputVariant.search,
-          "border border-[#7a7a7a] rounded-lg": variant === InputVariant.outline
+          "outline-none": variant === InputVariant.search,
+          "border border-[#7a7a7a] rounded-lg": variant === InputVariant.outline,
+          'pointer-events-none': disabled
         },
         className)} />
   )

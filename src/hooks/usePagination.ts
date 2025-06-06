@@ -2,11 +2,13 @@
 import { useState } from "react"
 
 
+type Props = {
+    maxPages: number,
+    newPage?: number
+}
 
-
-export const usePagination = (maxPages: number, showPages: number) => {
-    const [thisPage, setThisPage] = useState(1);
-
+export const usePagination = ({maxPages, newPage = 1}: Props) => {
+    const [thisPage, setThisPage] = useState(newPage);
 
     const clickPrev = () => {
         if (thisPage > 1) {

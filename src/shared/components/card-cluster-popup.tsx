@@ -14,7 +14,7 @@ type Props = {cardItem: CardItem}
 function CardClusterPopup({cardItem}: Props) {
     const router = useRouter();
 
-    const {thisPage, clickPrev, clickNext, clickPoint} = usePagination(cardItem.images.length, 5);
+    const {thisPage, clickPrev, clickNext, clickPoint} = usePagination({maxPages: cardItem.images.length});
     const {inFavList, clickToFav} = useFavoritesStore();
     const defineLocation = () => {
         if(thisPage <= 3)

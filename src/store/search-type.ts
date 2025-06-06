@@ -1,14 +1,14 @@
 import { create } from 'zustand';
 
 
-interface State{
+export interface TypeState{
     typeId: number,
     isFocus: boolean,
     setTypeId: (id: number) => void,
     setFocus: (isFocus: boolean) => void
 }
 
-export const useTypeStore = create<State>((set) => ({
+export const useTypeStore = create<TypeState>((set) => ({
     typeId: 0,
     isFocus: false,
     setTypeId: (id: number) => set({ typeId: id }),

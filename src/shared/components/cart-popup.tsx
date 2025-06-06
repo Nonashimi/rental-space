@@ -19,7 +19,7 @@ function CardPopup({cardItem, clickToFav, inFavList}: Props) {
    
     const router = useRouter();
 
-    const {thisPage, clickPrev, clickNext, clickPoint} = usePagination(cardItem.images.length, 5);
+    const {thisPage, clickPrev, clickNext, clickPoint} = usePagination({maxPages: cardItem.images.length});
     const defineLocation = () => {
         if(thisPage <= 3)
             return 0;
