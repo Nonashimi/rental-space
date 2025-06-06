@@ -51,6 +51,7 @@ export const useScroll = () => {
 
   return {
     isScrolled,
-    negativeScroll
+    negativeScroll,
+    handleScroll
   };
 };

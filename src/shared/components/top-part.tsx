@@ -14,7 +14,7 @@ type Props = {
 
 function TopPart({}: Props) {
     const {isOpen, clickClose, clickOpen} = useModal();
-    const {isScrolled, negativeScroll, positiveScroll} = useScroll();
+    const {isScrolled, negativeScroll, handleScroll: positiveScroll} = useScroll();
   return (
     <div className={`sticky top-0 z-10 bg-white transition-shadow duration-300 ${isScrolled ? "shadow-md" : ""}`}>
       {isOpen &&  <Modal 
