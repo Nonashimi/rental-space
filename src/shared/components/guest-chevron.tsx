@@ -41,7 +41,7 @@ function GuestChevron({title, description, maxPeople, changeValue, pagination, c
 
 
   return (
-    <div className="flex justify-between items-center py-3">
+    <div className="flex justify-between items-center py-2">
         <div className="flex flex-col">
             <div className="">{title}</div>
             <div className="text-[14px] text-gray-500">{description}</div>

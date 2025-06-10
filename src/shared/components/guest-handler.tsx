@@ -58,8 +58,11 @@ function GuestHandler({}: Props) {
     <div>
         <div className="flex flex-col gap-4">
             <GuestChevron title={params[0].title} maxPeople={16-count} isHaveChildren = {children.thisPage > 0} changeValue={changeCounter} description={params[0].description??''} pagination={adults}/>
+            <hr/>
             <GuestChevron title={params[1].title} maxPeople={16-count} checkToAdults = {checkToAdults} changeValue={changeCounter} description={params[1].description??''} pagination={children}/>
+            <hr/>
             <GuestChevron title={params[2].title} description={params[2].description??''} pagination={infants}/>
+            <hr/>
             <GuestChevron title={params[3].title} description={params[3].description??''} pagination={pets}/>
         </div>
     </div>
