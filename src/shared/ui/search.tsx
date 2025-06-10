@@ -13,6 +13,7 @@ import { Dates, useSearchDatasStore } from "@/store/search-datas";
 import MonthChoose from "../components/month-choose";
 import SearchInput from "./search-input";
 import FlexibleChoose, { durationArray } from "../components/flexible-choose";
+import GuestHandler from "../components/guest-handler";
 
 
 interface Props{
@@ -160,7 +161,13 @@ function Search({className, isScrolled, negativeScroll, positiveScroll}: Props) 
                     </Box>
                 </div>
             )}
-            {type.typeId === 5 && <Box className="w-[400px] h-[300px] ml-auto">{type.typeId}</Box>}
+            {type.typeId === 5 && 
+             <div className="rounded-3xl overflow-hidden w-[450px] h-[410px] ml-auto">
+                <Box className="w-full h-full overflow-y-auto">
+                  <GuestHandler/>
+                </Box>
+             </div>
+            }
           </div>
         )}
       </div>

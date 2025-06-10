@@ -11,7 +11,7 @@ export const usePagination = ({maxPages, newPage = 1}: Props) => {
     const [thisPage, setThisPage] = useState(newPage);
 
     const clickPrev = () => {
-        if (thisPage > 1) {
+        if (thisPage > newPage) {
             setThisPage(thisPage - 1);
         }
     };
