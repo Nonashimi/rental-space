@@ -27,9 +27,10 @@ export const usePagination = ({maxPages, newPage = 1}: Props) => {
 
 
     return {
+        maxPages,
         thisPage,
         clickPrev,
         clickNext,
-        clickPoint
+        clickPoint,
     }
 }

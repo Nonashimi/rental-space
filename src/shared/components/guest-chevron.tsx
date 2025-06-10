@@ -6,11 +6,40 @@ import React from 'react'
 type Props = {
     title: string,
     description: string,
+    maxPeople?: number,
+    changeValue?: (val: number) => void,
+    checkToAdults?: () => void,
+    isHaveChildren?: boolean,
+    pagination:{
+        thisPage: number;
+        maxPages: number;
+        clickPrev: () => void;
+        clickNext: () => void;
+        clickPoint: (index: number) => void;
+    }
 }
 
-function GuestChevron({title, description}: Props) {
-    const maxPage = 16;
-    const {thisPage, clickPrev, clickNext} = usePagination({maxPages: maxPage, newPage: 0});
+function GuestChevron({title, description, maxPeople, changeValue, pagination, checkToAdults, isHaveChildren = false}: Props) {
+    const {thisPage, clickPrev, clickNext} = pagination;
+    const clickToPlus = () => {
+        clickNext();
+        if(maxPeople !== undefined)
+            changeValue?.(1);
+
+        if(checkToAdults){
+            checkToAdults();
+            changeValue?.(1);
+        }
+
+    }
+    const clickToMinus = () => {
+        clickPrev();
+        if(maxPeople !== undefined)
+            changeValue?.(-1);
+        console.log(maxPeople);
+    }
+
+
   return (
     <div className="flex justify-between items-center py-3">
         <div className="flex flex-col">
@@ -19,19 +48,19 @@ function GuestChevron({title, description}: Props) {
         </div>
         <div className="flex gap-2 items-center">
             <div 
-                onClick={clickPrev}
+                onClick={clickToMinus}
                 className={cn("w-[30px] h-[30px] rounded-full border border-gray-500 flex justify-center items-center cursor-pointer",
-                {'opacity-20 pointer-events-none': thisPage === 0}
+                {'opacity-20 pointer-events-none': isHaveChildren?thisPage <= 1:thisPage ===0}
             )}>
                 <Minus className='text-gray-500 font-bold' width={17} height={17}/>
             </div>
             <div className="w-[30px] flex justify-center">
                 {thisPage}
             </div>
-            <div 
-                onClick={clickNext}
+            <div
+                onClick={clickToPlus}
                 className={cn("w-[30px] h-[30px] rounded-full border border-gray-500 flex justify-center items-center cursor-pointer",
-                {'opacity-20 pointer-events-none': (thisPage) >= 16}
+                {'opacity-20 pointer-events-none': maxPeople !== undefined ?maxPeople === 0:thisPage>=pagination.maxPages}
             )}>
                 <Plus className='text-gray-500 font-bold' width={17} height={17}/>
             </div>

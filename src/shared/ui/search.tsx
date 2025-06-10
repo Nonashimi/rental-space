@@ -35,7 +35,7 @@ const btns = [
 
 function Search({className, isScrolled, negativeScroll, positiveScroll}: Props) {
   const [countOfPeople, setCountOfPeople] = useState("");
-  const {dateType, setDateType, dataFromMonths, setDataFromDate, dataFromDate, months: monthsData, duration} = useSearchDatasStore();
+  const {dateType, setDateType, dataFromMonths, setDataFromDate, dataFromDate, months: monthsData, duration, guestData} = useSearchDatasStore();
   const type = useTypeStore();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -97,7 +97,17 @@ function Search({className, isScrolled, negativeScroll, positiveScroll}: Props) 
       return `any ${strDur}`;
     }
   }
-  
+
+const questFormat = () => {
+  const quests = guestData.adults + guestData.children;
+  const questString = quests === 1 ? '1 guest' : quests > 0 ? `${quests} guests` : '';
+  const infantString = guestData.infants === 1 ? '1 infant' : guestData.infants > 0 ? `${guestData.infants} infants` : '';
+  const petString = guestData.pets === 1 ? '1 pet' : guestData.pets > 0 ? `${guestData.pets} pets` : '';
+
+  return [questString, infantString, petString].filter(Boolean).join(', ');
+};
+
+
   const valueForDateInput = () => {
     console.log(dataFromDate);
     return dateType === 2 ? formatMonth(dataFromMonths) : stringForFlexible();
@@ -122,7 +132,7 @@ function Search({className, isScrolled, negativeScroll, positiveScroll}: Props) 
             }
           </div>
           <div className="h-[30px] w-[1px] bg-gray-300"></div>
-          <SearchInput className="w-1/3" title={!isScrolled?"Кто":"Гости"} inputId={5} placeHolder="Добавить гостей" type={type} isScrolled={isScrolled}/>
+          <SearchInput className="w-1/3" title={!isScrolled?"Кто":"Гости"} inputId={5} placeHolder="Добавить гостей" value={questFormat()} type={type} isScrolled={isScrolled}/>
           <button
             className={cn(isScrolled?'w-[30px] h-[30px]':'w-[50px] h-[50px]',"header-duration absolute bg-purple-700 flex justify-center items-center gap-2 right-2 rounded-full text-white", type.isFocus && "w-[120px]")}
             tabIndex={-1}

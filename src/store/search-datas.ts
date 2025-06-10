@@ -18,6 +18,14 @@ export type month = {
 }
 
 
+export type guestData = {
+  adults: number,
+  children: number,
+  infants: number,
+  pets: number
+}
+
+
 interface State{
     destination: string;
     dateType: number;
@@ -27,6 +35,7 @@ interface State{
     activeDate: TypeOfDate,
     duration: number,
     months: month[],
+    guestData: guestData,
     setActiveMonth: (value: number) => void,
     setDataFromMonths: (data: Dates) => void,
     setDataFromDate: (data: Dates) => void;
@@ -35,6 +44,7 @@ interface State{
     setActiveDate: (value: TypeOfDate) => void,
     setDuration :(val: number) => void,
     setMonths: (val: month) => void,
+    setGuestData: (key: string, value: number) => void,
 }
 
 export const useSearchDatasStore = create<State>((set, get) => ({
@@ -52,18 +62,22 @@ export const useSearchDatasStore = create<State>((set, get) => ({
     duration: 1,
     months: [],
     activeDate: TypeOfDate.checkIn,
-    setActiveMonth: (value: number) => set({activeMonth: value}),
-    setDataFromDate: (data: Dates) => set({ dataFromDate: { ...data } }),
-    setDestination: (destination: string) => set({ destination }),
-    setDateType: (dateType: number) => set({ dateType }),
-    setDataFromMonths: (data: Dates) => set({dataFromMonths: { ...data}}),
-    setActiveDate: (value: TypeOfDate) => set({activeDate: value}),
-    setDuration: (val: number) => set({duration: val}),
-    setMonths: (val: month) => {
+    guestData: {adults: 0, children: 0, infants: 0, pets: 0},
+    setActiveMonth: (value) => set({activeMonth: value}),
+    setDataFromDate: (data) => set({ dataFromDate: { ...data } }),
+    setDestination: (destination) => set({ destination }),
+    setDateType: (dateType) => set({ dateType }),
+    setDataFromMonths: (data) => set({dataFromMonths: { ...data}}),
+    setActiveDate: (value) => set({activeDate: value}),
+    setDuration: (val) => set({duration: val}),
+    setMonths: (val) => {
       if(get().months.includes(val)){
         set({months: get().months.filter(month => month.id != val.id)});
       }else{
         set({months: [...get().months, val]});
       }
+    },
+    setGuestData: (key, value) => {
+      set({guestData: {...get().guestData, [key]: value}});
     }
   }));
