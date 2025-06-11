@@ -16,10 +16,12 @@ type Props = {
         clickPrev: () => void;
         clickNext: () => void;
         clickPoint: (index: number) => void;
-    }
+    },
+    clickToModal?: () => void,
+    href?: string
 }
 
-function GuestChevron({title, description, maxPeople, changeValue, pagination, checkToAdults, isHaveChildren = false}: Props) {
+function GuestChevron({title, description, maxPeople, changeValue, pagination, checkToAdults, isHaveChildren = false, clickToModal}: Props) {
     const {thisPage, clickPrev, clickNext} = pagination;
     const clickToPlus = () => {
         clickNext();
@@ -44,7 +46,12 @@ function GuestChevron({title, description, maxPeople, changeValue, pagination, c
     <div className="flex justify-between items-center py-2">
         <div className="flex flex-col">
             <div className="">{title}</div>
-            <div className="text-[14px] text-gray-500">{description}</div>
+            {
+                clickToModal?
+                <div onClick={clickToModal} className="text-[14px] text-gray-500 underline cursor-pointer">{description}</div>
+                :
+                <div className="text-[14px] text-gray-500">{description}</div>
+            }
         </div>
         <div className="flex gap-2 items-center">
             <div 

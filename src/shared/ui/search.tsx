@@ -187,7 +187,7 @@ const clickToX = (id: number) => {
                 </div>
             )}
             {type.typeId === 5 && 
-             <div className="rounded-3xl overflow-hidden w-[450px] h-[410px] ml-auto">
+             <div className="rounded-3xl overflow-hidden w-[450px] h-[425px] ml-auto">
                 <Box className="w-full h-full overflow-y-auto">
                   <GuestHandler/>
                 </Box>

@@ -5,6 +5,7 @@ import { usePagination } from '@/hooks/usePagination'
 import { cn } from '@/lib/utils'
 import GuestChevron from './guest-chevron'
 import { useSearchDatasStore } from '@/store/search-datas'
+import Modal from './modal'
 
 type Props = {}
 
@@ -29,13 +30,17 @@ function GuestHandler({}: Props) {
         {
             id: 3,
             title: 'Infants',
+            description: 'Under 2',
         },
         {
             id: 4,
             title: 'Pets',
             description: 'Bringing a service animal?',
+            href: ''
         }
     ];
+
+    const [isPetModalOpen, setIsPetModalOpen] = useState(false);
 
     const changeCounter = (val: number) => {
         setCount(prev => (
@@ -56,6 +61,16 @@ function GuestHandler({}: Props) {
     },[adults.thisPage, children.thisPage, infants.thisPage, pets.thisPage]);
   return (
     <div>
+        {
+            isPetModalOpen && <Modal title='' clickClose={() => setIsPetModalOpen(false)}>
+                <div className="p-5 pb-10">
+                    <img className='' src="https://a0.muscache.com/pictures/adafb11b-41e9-49d3-908e-049dfd6934b6.jpg" alt="" />
+                    <div className="text-[20px] font-semibold py-3">Service animals</div>
+                    <p className=''>Service animals aren’t pets, so there’s no need to add them here.</p>
+                </div>
+            </Modal>
+        }
+        
         <div className="flex flex-col gap-4">
             <GuestChevron title={params[0].title} maxPeople={16-count} isHaveChildren = {children.thisPage > 0} changeValue={changeCounter} description={params[0].description??''} pagination={adults}/>
             <hr/>
@@ -63,7 +78,7 @@ function GuestHandler({}: Props) {
             <hr/>
             <GuestChevron title={params[2].title} description={params[2].description??''} pagination={infants}/>
             <hr/>
-            <GuestChevron title={params[3].title} description={params[3].description??''} pagination={pets}/>
+            <GuestChevron title={params[3].title} description={params[3].description??''} clickToModal={() => setIsPetModalOpen(true)} pagination={pets}/>
         </div>
     </div>
   )
