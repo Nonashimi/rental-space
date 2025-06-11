@@ -34,8 +34,7 @@ const btns = [
 
 
 function Search({className, isScrolled, negativeScroll, positiveScroll}: Props) {
-  const [countOfPeople, setCountOfPeople] = useState("");
-  const {dateType, setDateType, dataFromMonths, setDataFromDate, dataFromDate, months: monthsData, duration, guestData} = useSearchDatasStore();
+  const {dateType, setDateType, dataFromMonths, setDataFromMonths, setDataFromDate, dataFromDate, months: monthsData, duration, guestData, setGuestData, setActiveMonth, clearMonths, setDuration, clearGuestData} = useSearchDatasStore();
   const type = useTypeStore();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -56,7 +55,7 @@ function Search({className, isScrolled, negativeScroll, positiveScroll}: Props) 
     setDateType(id);
     if(id === 1)
       type.setTypeId(2);
-    else if(id === 2)
+    else if(id === 2 || id === 3)
       type.setTypeId(4);
   }
   const DateToStirng = (date: Date) => {
@@ -108,6 +107,21 @@ const questFormat = () => {
 };
 
 
+const clickToX = (id: number) => {
+  if(id === 2 || id === 3){
+    setDataFromDate({});
+    type.setTypeId(2);
+  }else if(id === 4){
+    switch(dateType){
+      case(2): setDataFromMonths({}); setActiveMonth(3); return;
+      case(3): clearMonths(); setDuration(1); return;
+    } 
+  }else if(id === 5){
+    clearGuestData();
+  }
+}
+
+
   const valueForDateInput = () => {
     console.log(dataFromDate);
     return dateType === 2 ? formatMonth(dataFromMonths) : stringForFlexible();
@@ -117,22 +131,22 @@ const questFormat = () => {
     {type.isFocus && <BlackFon/>}
     <div ref={containerRef} className={cn(className, "inline-flex flex-col items-center relative z-20 header-duration")}>
         <div className={cn(isScrolled?'w-[400px]':'w-[900px]'," header-duration relative flex gap-[2px] items-center border rounded-full shadow-lg  group", type.isFocus && "bg-[#d6d4d4] border-[#a3a3a3]")}>
-          <SearchInput className="w-1/3" title={!isScrolled?"Где":"Где угодно"} inputId={1} placeHolder="Поиск местности" defaultValue={""} type={type} isScrolled={isScrolled}/>
+          <SearchInput clickToX={clickToX} className="w-1/3" title={!isScrolled?"Где":"Где угодно"} inputId={1} placeHolder="Поиск местности" defaultValue={""} type={type} isScrolled={isScrolled}/>
           <div className="h-[30px] w-[1px] bg-gray-300"></div>
           <div className="w-1/3 flex items-center">
             {
               !isScrolled && dateType === 1?
                 <>
-                  <SearchInput className="w-1/2" title={"Прибытие"} inputId={2} value={formatDate(dataFromDate.checkIn)} placeHolder="Добавить дату" disabled={true} type={type} isScrolled={isScrolled}/>
+                  <SearchInput clickToX={clickToX} className="w-1/2" title={"Прибытие"} inputId={2} value={formatDate(dataFromDate.checkIn)} placeHolder="Добавить дату" disabled={true} type={type} isScrolled={isScrolled}/>
                     <div className="h-[30px] w-[1px] bg-gray-300"></div>
-                  <SearchInput className="w-1/2" title={"Отьезд"} inputId={3} value={formatDate(dataFromDate.checkOut)}  placeHolder="Добавить дату" disabled={true} type={type} isScrolled={isScrolled}/>
+                  <SearchInput clickToX={clickToX} className="w-1/2" title={"Отьезд"} inputId={3} value={formatDate(dataFromDate.checkOut)}  placeHolder="Добавить дату" disabled={true} type={type} isScrolled={isScrolled}/>
                 </>
                :
-                <SearchInput className="w-full" title={isScrolled?"Любое время":"Когда"} inputId={4} placeHolder="Добавить дату" value={valueForDateInput()} disabled={true} type={type} isScrolled={isScrolled}/>
+                <SearchInput clickToX={clickToX} className="w-full" title={isScrolled?"Любое время":"Когда"} inputId={4} placeHolder="Добавить дату" value={valueForDateInput()} disabled={true} type={type} isScrolled={isScrolled}/>
             }
           </div>
           <div className="h-[30px] w-[1px] bg-gray-300"></div>
-          <SearchInput className="w-1/3" title={!isScrolled?"Кто":"Гости"} inputId={5} placeHolder="Добавить гостей" value={questFormat()} type={type} isScrolled={isScrolled}/>
+          <SearchInput clickToX={clickToX} className="w-1/3" inputClassName = "w-1/2" title={!isScrolled?"Кто":"Гости"} inputId={5} placeHolder="Добавить гостей" value={questFormat()} type={type} isScrolled={isScrolled}/>
           <button
             className={cn(isScrolled?'w-[30px] h-[30px]':'w-[50px] h-[50px]',"header-duration absolute bg-purple-700 flex justify-center items-center gap-2 right-2 rounded-full text-white", type.isFocus && "w-[120px]")}
             tabIndex={-1}

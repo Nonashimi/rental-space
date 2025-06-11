@@ -44,7 +44,9 @@ interface State{
     setActiveDate: (value: TypeOfDate) => void,
     setDuration :(val: number) => void,
     setMonths: (val: month) => void,
+    clearMonths: () => void,
     setGuestData: (key: string, value: number) => void,
+    clearGuestData: () => void,
 }
 
 export const useSearchDatasStore = create<State>((set, get) => ({
@@ -77,7 +79,13 @@ export const useSearchDatasStore = create<State>((set, get) => ({
         set({months: [...get().months, val]});
       }
     },
+    clearMonths: () => {
+      set({months: []});
+    },
     setGuestData: (key, value) => {
       set({guestData: {...get().guestData, [key]: value}});
+    },
+    clearGuestData: () => {
+      set({guestData: {adults: 0, infants: 0, children: 0, pets: 0}});
     }
   }));
