@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import SearchDestinction from "../components/search-destinction";
 import Button, { VariantsOfButton } from "./button";
 import Calendars from "../components/Calendars";
-import { Dates, useSearchDatasStore } from "@/store/search-datas";
+import { Dates, TypeOfDate, useSearchDatasStore } from "@/store/search-datas";
 import MonthChoose from "../components/month-choose";
 import SearchInput from "./search-input";
 import FlexibleChoose, { durationArray } from "../components/flexible-choose";
@@ -34,7 +34,7 @@ const btns = [
 
 
 function Search({className, isScrolled, negativeScroll, positiveScroll}: Props) {
-  const {dateType, setDateType, dataFromMonths, setDataFromMonths, setDataFromDate, dataFromDate, months: monthsData, duration, guestData, setGuestData, setActiveMonth, clearMonths, setDuration, clearGuestData} = useSearchDatasStore();
+  const {dateType, setDateType, dataFromMonths, setDataFromMonths, setDataFromDate, dataFromDate, months: monthsData, duration, guestData, setActiveDate, setActiveMonth, clearMonths, setDuration, clearGuestData} = useSearchDatasStore();
   const type = useTypeStore();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -111,6 +111,7 @@ const clickToX = (id: number) => {
   if(id === 2 || id === 3){
     setDataFromDate({});
     type.setTypeId(2);
+    setActiveDate(TypeOfDate.checkIn);
   }else if(id === 4){
     switch(dateType){
       case(2): setDataFromMonths({}); setActiveMonth(3); return;
