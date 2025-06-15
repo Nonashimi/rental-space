@@ -48,7 +48,7 @@ function GuestChevron({title, description, maxPeople, changeValue, pagination, c
             <div className="">{title}</div>
             {
                 clickToModal?
-                <div onClick={clickToModal} className="text-[14px] text-gray-500 underline cursor-pointerJ">{description}</div>
+                <div onClick={clickToModal} className="text-[14px] text-gray-500 underline cursor-pointer">{description}</div>
                 :
                 <div className="text-[14px] text-gray-500">{description}</div>
             }
