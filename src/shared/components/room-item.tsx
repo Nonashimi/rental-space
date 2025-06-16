@@ -75,8 +75,16 @@ function RoomItem({ id }: Props) {
                                 }
                             </div>
                         </div>
-                        <div className="">
-
+                        <div className="my-6">
+                            <hr />
+                            <div className="flex gap-7 items-center py-4">
+                                <img className='w-[40px] h-[40px] rounded-full' src="https://static.vecteezy.com/system/resources/thumbnails/036/324/708/small/ai-generated-picture-of-a-tiger-walking-in-the-forest-photo.jpg" alt="" />
+                                <div className="flex flex-col">
+                                    <div className="text-[16px] font-semibold">Hosted bt Olzhas</div>
+                                    <div className="text-[14px] text-gray-500">4 moths hosting</div>
+                                </div>
+                            </div>
+                            <hr/>
                         </div>
                     </div>
                     <div className="">
