@@ -29,7 +29,7 @@ function NoteModule({isNotesOpen, notesValue, changeNotes, noteId, clickToDelete
           <div className="">
             <div className="w-[85%] mx-auto py-7">
               <textarea
-                className='w-full min-h-[110px] p-3 border border-gray-300 rounded-lg text-base outline-[#000]'
+                className='w-full min-h-[110px] dark:bg-[#3b3a3a22] p-3 border border-gray-300 rounded-lg text-base outline-[#000]'
                 name="" 
                 placeholder='Введите текст заметки'
                 value={notesValue}
@@ -37,7 +37,7 @@ function NoteModule({isNotesOpen, notesValue, changeNotes, noteId, clickToDelete
               ></textarea>
               <div className="text-[13px] text-[#696969] font-bold mt-1">{notesValue.length}/250 characters</div>
             </div>
-            <div className="w-full h-[1px] bg-gray-200"></div>
+            <div className="w-full h-[1px] bg-[var(--line-color)]"></div>
             <div className="flex py-3 justify-between w-[90%] mx-auto">
               {wishCard.find((card) => card.id === noteId)?.note?.length! > 0 && <Button  onClick={switchToDelete} variant={VariantsOfButton.transparent}>Delete</Button>} 
               {wishCard.find((card) => card.id === noteId)?.note?.length! === 0 && <Button disabled={checkToVal()} onClick={clearNote} variant={VariantsOfButton.transparent}>Clear</Button>} 
@@ -50,7 +50,7 @@ function NoteModule({isNotesOpen, notesValue, changeNotes, noteId, clickToDelete
             <div className="font-semibold text-[18px]">Delete this note?</div>
             <div className="text-[#6a6a6a]">You can add a new note later.</div>
           </div>
-          <div className="w-full h-[1px] bg-gray-200"></div>
+          <div className="w-full h-[1px] bg-[var(--line-color)]"></div>
             <div className="flex py-3 justify-between w-[90%] mx-auto">
               <Button onClick={clickToCancel} variant={VariantsOfButton.transparent}>Cancel</Button>
               <Button onClick={clickToDelete} className='border-none py-4 px-7' variant={VariantsOfButton.filling}>Delete</Button>

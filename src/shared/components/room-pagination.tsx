@@ -13,7 +13,7 @@ type Props = {
 function RoomPagination({title, id, setRooms, count}: Props) {
   return (
     <div className="flex justify-between items-center">
-                  <div className="text-[#585555] font-bold">{title}</div>
+                  <div className="text-[var(--text-gray-color)] font-bold">{title}</div>
                   <div className="flex gap-2 items-center">
                     <div 
                         onClick={() => {setRooms(id, PlusOrMinus.minus)}}
@@ -21,7 +21,7 @@ function RoomPagination({title, id, setRooms, count}: Props) {
                             "w-[35px] h-[35px] rounded-full border flex justify-center items-center border-[#646262] cursor-pointer",
                             count === 0 && 'pointer-events-none opacity-30'
                             )}>
-                            <Minus className='text-[#646262]' size={18}/>
+                            <Minus className='text-[var(--text-gray-color)]' size={18}/>
                     </div>
                     <div className="w-[70px] text-center">{count === 0 ? 'Неважно' : `${count}+`}</div>
                     <div 
@@ -31,7 +31,7 @@ function RoomPagination({title, id, setRooms, count}: Props) {
                             ,
                             count >= 8 && 'pointer-events-none opacity-30'
                             )}>
-                            <Plus className='text-[#646262]' size={18}/>
+                            <Plus className='text-[var(--text-gray-color)]' size={18}/>
                     </div>
                   </div>
     </div>

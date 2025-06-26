@@ -38,13 +38,13 @@ function Modal({ title, clickClose, children, size = SizeForModal.lg, type = Typ
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
-          className={`${size} bg-white rounded-2xl box-border shadow-lg`}
+          className={`${size} bg-[var(--modal-bg-color)] rounded-2xl box-border shadow-lg`}
         >
           <div className="flex relative p-5 justify-center items-center">
             <X className="absolute left-5 cursor-pointer" onClick={clickClose} size={20} />
             {type !== TypeOfModal.withoutTitle &&  <div className="font-bold text-[17px]">{title}</div>}
           </div>
-          {type !== TypeOfModal.withoutTitle && <div className="w-full h-[1px] bg-[#d3d0d0]"></div>}
+          {type !== TypeOfModal.withoutTitle && <div className="w-full h-[1px] bg-[var(--line-color)]"></div>}
           {children}
         </motion.div>
       </AnimatePresence>

@@ -64,13 +64,13 @@ export const  Header = ({className, isScrolled, negativeScroll, positiveScroll, 
               <div ref={menuRef} className="w-[120px] relative flex justify-end">
                 <div className="flex items-center gap-4">
                   <div className="w-[40px] h-[40px] rounded-full flex items-center justify-center bg-black text-white text-[13px]">O</div>
-                  <div onClick={() => setOpenMenu(!openMenu)} className="w-[40px] h-[40px] rounded-full bg-gray-200 flex items-center justify-center cursor-pointer hover:bg-gray-300 transition-all duration-300">
+                  <div onClick={() => setOpenMenu(!openMenu)} className="w-[40px] h-[40px] rounded-full bg-[var(--weak-gray-color)] flex items-center justify-center cursor-pointer hover:bg-[var(--weak-gray-color)] transition-all duration-300">
                     <Menu width={18}/>
                   </div>
                 </div>
                 {
-                  openMenu && <Box className='p-0 py-3 rounded-xl w-[250px] h-[100px] absolute top-14 shadow'>
-                  <div onClick={() => router.push('/wishlist')} className="flex gap-3 px-3 py-1 items-center hover:bg-gray-100 cursor-pointer">
+                  openMenu && <Box className='p-0 py-3 rounded-xl w-[250px] h-[100px] absolute top-14 shadow dark:bg-[#222]'>
+                  <div onClick={() => router.push('/wishlist')} className="flex gap-3 px-3 py-1 items-center hover:bg-gray-100 dark:hover:bg-[#302f2f] transition-all duration-300 cursor-pointer">
                     <Heart width={16}/>
                     <div className="">Wishlists</div>
                   </div>

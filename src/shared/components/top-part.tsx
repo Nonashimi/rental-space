@@ -16,7 +16,7 @@ function TopPart({}: Props) {
     const {isOpen, clickClose, clickOpen} = useModal();
     const {isScrolled, negativeScroll, handleScroll: positiveScroll} = useScroll();
   return (
-    <div className={`sticky top-0 z-10 bg-white transition-shadow duration-300 ${isScrolled ? "shadow-md" : ""}`}>
+    <div className={`sticky top-0 z-10 bg-[var(--bg-color)] transition-shadow duration-300 ${isScrolled ? "shadow-md" : ""}`}>
       {isOpen &&  <Modal 
       clickClose={clickClose} 
       title="Фильтры">

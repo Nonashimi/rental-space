@@ -24,9 +24,9 @@ function Button({children, className,variant = VariantsOfButton.default , loadin
             'p-4 relative text-[16px] box-border outline-none rounded-xl bg-transparent  transition duration-300 border   cursor-pointer ',
           {
             
-            "text-black border-[#ebebeb] hover:border-[#7a7979] focus:bg-white": variant === VariantsOfButton.default,
-            "bg-[#b233fc] border-none text-white font-bold hover:bg-[#aa2df3]": variant === VariantsOfButton.filling,
-            "bg-transparent font-bold border-none p-2 hover:bg-[#f1f0f0]": variant === VariantsOfButton.transparent,
+            " border-[var(--line-color)] bg-[var(--modal-bg-color)] hover:border-[#7a7979] dark:hover:border-[#444242] focus:bg-white": variant === VariantsOfButton.default,
+            "bg-[var(--primary)] border-none font-bold hover:bg-[#aa2df3]": variant === VariantsOfButton.filling,
+            "bg-[var(--modal-bg-color)] font-bold border-none p-2 hover:bg-[#f1f0f0] dark:hover:border-[#444242": variant === VariantsOfButton.transparent,
             "bg-[#afabab] text-[#afabab] hover:bg-[#948f8f] pointer-events-none": loading,
             "opacity-[0.3] pointer-events-none": disabled
           },
@@ -36,7 +36,7 @@ function Button({children, className,variant = VariantsOfButton.default , loadin
 
       
     >
-      {loading? <div className="absolute top-[30%] left-[45%]  animate-spin"><LoaderIcon className='text-white' size={25}/></div>: ""}
+      {loading? <div className="absolute top-[30%] left-[45%]  animate-spin"><LoaderIcon className='text-[var(--text-color)]' size={25}/></div>: ""}
       {children}
     </button>
    

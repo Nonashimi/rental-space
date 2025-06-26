@@ -125,7 +125,7 @@ function FilterBody({clickClose}: Props) {
                 <Crown size={30}/>
                 <div className="flex flex-col">
                   <div className="text-[16px] font-bold">Выбор гостей</div>
-                  <div className="text-[14px] text-[#646262] font-semibold w-[150px]">Самoе любимле жилье на Airbnb</div>
+                  <div className="text-[14px] text-[var(--text-gray-color)] font-semibold w-[150px]">Самoе любимле жилье на Airbnb</div>
                 </div>
               </div>
             </Button>

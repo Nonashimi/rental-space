@@ -16,11 +16,11 @@ type Props = {
 function Input({className, value, variant = InputVariant.search, disabled,  ...props}: Props) {
   return (
     <input {...props} type="text" value={value}  className={cn(
-        'py-5 px-7 text-[15px] box-border bg-transparent text-black transition duration-300  cursor-pointer placeholder-[#6b6b6b]',
+        'py-5 px-7 text-[15px] box-border bg-transparent text-[var(--text-color)] transition duration-300  cursor-pointer placeholder-[var(--text-gray-color)]',
         'overflow-hidden whitespace-nowrap text-ellipsis',
         {
           "outline-none": variant === InputVariant.search,
-          "border border-[#7a7a7a] rounded-lg": variant === InputVariant.outline,
+          "border border-[var(--line-color)] rounded-lg": variant === InputVariant.outline,
           'pointer-events-none': disabled
         },
         className)} />

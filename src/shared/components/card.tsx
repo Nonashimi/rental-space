@@ -78,8 +78,8 @@ const Card = ({cardItem, clickToFav, inFavList}: Props) => {
                 <div className="font-bold">{cardItem.place}</div>
                 <div className="flex justify-center items-center gap-1"> <Star className='fill-black' size={15}/> <div className="">{cardItem.rate}</div></div>
             </div>
-            <div className="text-[#5e5c5c] overflow-hidden whitespace-nowrap text-ellipsis w-full text-[17px] ">{cardItem.description}</div>
-            <div className="text-[#5e5c5c] ">
+            <div className="text-[var(--text-gray-color)] overflow-hidden whitespace-nowrap text-ellipsis w-full text-[17px] ">{cardItem.description}</div>
+            <div className="text-[var(--text-gray-color)] ">
                 {cardItem.date}
             </div>
             <div className="">

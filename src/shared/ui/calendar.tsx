@@ -110,7 +110,7 @@ export default function Calendar({currentMonth, currentYear, dataFromDate, setDa
         </h2>
       </div>
 
-      <div className="grid grid-cols-7 text-center font-bold text-gray-600 mb-2">
+      <div className="grid grid-cols-7 text-center font-bold text-[var(--text-gray-color)] mb-2">
         {daysShort.map((day) => (
           <div key={day}>{day}</div>
         ))}
@@ -149,10 +149,10 @@ export default function Calendar({currentMonth, currentYear, dataFromDate, setDa
                 key={`${index}-${currentMonth}`}
                 className={cn(
                             `h-full flex items-center justify-center rounded-full box-border relative z-4
-                            ${isPast || !day || limit ? 'text-gray-400 pointer-events-none' : 'hover:border hover:border-black cursor-pointer text-black'}}`,
+                            ${isPast || !day || limit ? 'text-[var(--text-gray-color)] pointer-events-none' : 'hover:border hover:border-black cursor-pointer text-black'}}`,
                             {
-                              'bg-[#b233fc] border-none text-white': isSelected ,
-                              'bg-gray-300 border-none text-white pointer-events-none':  isSpecificMode &&
+                              'bg-[var(--primary)] border-none text-white': isSelected ,
+                              'bg-[var(--text-gray-color)] border-none text-white pointer-events-none':  isSpecificMode &&
                                 (
                                   (isCheckIn && type === CalendarType.checkOut) ||
                                   (isCheckOut && type === CalendarType.checkIn)

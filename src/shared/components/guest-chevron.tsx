@@ -45,31 +45,31 @@ function GuestChevron({title, description, maxPeople, changeValue, pagination, c
   return (
     <div className="flex justify-between items-center py-2">
         <div className="flex flex-col">
-            <div className="">{title}</div>
+            <div className="text-[var(--text-gray-color)]">{title}</div>
             {
                 clickToModal?
-                <div onClick={clickToModal} className="text-[14px] text-gray-500 underline cursor-pointer">{description}</div>
+                <div onClick={clickToModal} className="text-[14px] text-[var(--text-gray-color)] underline cursor-pointer">{description}</div>
                 :
-                <div className="text-[14px] text-gray-500">{description}</div>
+                <div className="text-[14px] text-[var(--text-gray-color)]">{description}</div>
             }
         </div>
         <div className="flex gap-2 items-center">
             <div 
                 onClick={clickToMinus}
-                className={cn("w-[30px] h-[30px] rounded-full border border-gray-500 flex justify-center items-center cursor-pointer",
+                className={cn("w-[30px] h-[30px] rounded-full border border-[var(--text-gray-color)] flex justify-center items-center cursor-pointer",
                 {'opacity-20 pointer-events-none': isHaveChildren?thisPage <= 1:thisPage ===0}
             )}>
-                <Minus className='text-gray-500 font-bold' width={17} height={17}/>
+                <Minus className='text-[var(--text-gray-color)] font-bold' width={17} height={17}/>
             </div>
-            <div className="w-[30px] flex justify-center">
+            <div className="w-[30px] flex justify-center text-[var(--text-gray-color)]">
                 {thisPage}
             </div>
             <div
                 onClick={clickToPlus}
-                className={cn("w-[30px] h-[30px] rounded-full border border-gray-500 flex justify-center items-center cursor-pointer",
+                className={cn("w-[30px] h-[30px] rounded-full border border-[var(--text-gray-color)] flex justify-center items-center cursor-pointer",
                 {'opacity-20 pointer-events-none': maxPeople !== undefined ?maxPeople === 0:thisPage>=pagination.maxPages}
             )}>
-                <Plus className='text-gray-500 font-bold' width={17} height={17}/>
+                <Plus className='text-[var(--text-gray-color)] font-bold' width={17} height={17}/>
             </div>
         </div>
     </div>

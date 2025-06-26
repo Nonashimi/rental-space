@@ -52,7 +52,7 @@ function SearchInput({placeHolder, title, type, isScrolled, inputId, className, 
 
   return (
     <div onClick={clickToInput} className={cn('py-3 px-5 rounded-full transition duration-300', getClassNameInput(inputId), {'hover:bg-[#ebebeb]':!type.isFocus})}>
-        <p className={cn('text-[13px] text-[#222] font-medium', {'font-semibold flex justify-center': isScrolled})}>{title}</p>
+        <p className={cn('text-[13px] text-[var(--text-color)] font-medium', {'font-semibold flex justify-center': isScrolled})}>{title}</p>
         <div className={cn('relative h-full', inputClassName)}>
             {
                 !isScrolled && <Input disabled={disabled} className={cn('p-0 w-full')} placeholder={placeHolder} value={value} onChange={(e) => console.log(e)}/>

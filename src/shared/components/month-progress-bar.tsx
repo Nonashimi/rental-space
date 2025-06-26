@@ -15,7 +15,7 @@ function MonthProgressBar({activeMonth, setActiveMonth}: Props) {
     const strokeOffset = useMemo(() => {return CIRCUMFERENCE - (CIRCUMFERENCE * activeMonth / 12)}, [activeMonth]);
   return (
     <div className="flex items-center justify-center mt-5">
-        <div className="relative w-[300px] h-[300px] rounded-full bg-[#ebebeb] inset-shadow-2xs flex items-center justify-center">
+        <div className="relative w-[300px] h-[300px] rounded-full bg-[#ebebeb] dark:bg-[#363636] inset-shadow-2xs flex items-center justify-center">
             <svg className="rotate-[-90deg] relative z-[10] pointer-events-none" xmlns="http://www.w3.org/2000/svg" version="1.1" width="290px" height="290px">
                 <defs>
                     <linearGradient id="GradientColor">
@@ -61,9 +61,9 @@ function MonthProgressBar({activeMonth, setActiveMonth}: Props) {
 
             {/* Центральная часть */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-[170px] h-[170px] bg-white rounded-full flex flex-col items-center justify-center shadow-xl">
-                    <div className="font-bold text-[#222] text-[100px] leading-none">{activeMonth}</div>
-                    <div className="font-bold text-[#222]">months</div>
+                <div className="w-[170px] h-[170px] bg-[var(--modal-bg-color)] rounded-full flex flex-col items-center justify-center shadow-xl">
+                    <div className="font-bold text-[100px] leading-none">{activeMonth}</div>
+                    <div className="font-bold">months</div>
                 </div>
             </div>
         </div>

@@ -21,7 +21,7 @@ function FavCreate({createNewBLock}: Props) {
     <div className=''>
     <div className="p-5">
         <Input value={title} onChange={(e) => changeTitle(e.target.value)} variant={InputVariant.outline} className='w-full' placeholder='Имя для нового вишлиста'/>
-        <div className="text-[13px] py-1 text-[#525050] font-bold">
+        <div className="text-[13px] py-1 text-[var(--text-gray-color)] font-bold">
             Символов: {title.replace(/ /g, '').length} из 50
         </div>
     </div>

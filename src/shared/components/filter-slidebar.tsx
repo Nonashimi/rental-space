@@ -74,11 +74,11 @@ function FilterSlidebar({price, changeMaxByPercent, changeMinByPercent}: Props) 
 
         <div className="py-5 flex w-full justify-between">
             <div className="flex w-[20%]  flex-col items-center gap-1">
-                <div className="text-[#615f5f] text-[13px] font-[600]">Минимум</div>
+                <div className="text-[var(--text-gray-color)] text-[13px] font-[600]">Минимум</div>
                 <div  className="w-full p-4 flex justify-center border border-[#e4dcdc] rounded-full">{price.min}tg</div> 
             </div>
             <div className="flex w-[20%]  flex-col items-center gap-1">
-                <div className="text-[#615f5f] text-[13px] font-[600]">Максимум</div>
+                <div className="text-[var(--text-gray-color)] text-[13px] font-[600]">Максимум</div>
                 <div className="w-full p-4 flex justify-center border border-[#e4dcdc] rounded-full">{price.max}tg</div>
             </div>
            

@@ -105,12 +105,12 @@ function WishBlockPage({id}: Props) {
         setIsDeleteNoteOpen={setIsDeleteNoteOpen}
         />
         <FavModals/>
-        <Header size={SizeOfContainer.lg} hasSearch={false} className='sticky top-0 z-10 bg-white'/>
+        <Header size={SizeOfContainer.lg} hasSearch={false} className='sticky top-0 z-10 bg-[var(--bg-color)]'/>
         <div className="">
             <div className='' style={{ marginLeft: sidePadding }}>
                 <div className="flex relative">
                     <div className="w-[60%] min-w-[60%] pr-5 hide-scrollbar">
-                            <div className="sticky top-[92px] z-10 bg-white flex justify-between items-center py-5 ">
+                            <div className="sticky top-[92px] z-10 bg-[var(--bg-color)] flex justify-between items-center py-5 ">
                                 <div className="flex gap-2 items-center ">
                                     <ChevronLeft className='cursor-pointer' onClick={router.back}/>
                                     <div className={cn("font-bold transform transitian-all duration-300", isFavTitleHide?"translate-y-[10px] opacity-0":"opacity-1 translate-y-[0px]")}>{favoriteBlock?.title}</div>
@@ -120,7 +120,7 @@ function WishBlockPage({id}: Props) {
                             <div className="font-bold text-[30px] mt-2 observe-fav-title">
                                 {favoriteBlock?.title}
                             </div>
-                            <div className="flex gap-2 py-5 sticky top-[135px] z-10 bg-white">
+                            <div className="flex gap-2 py-5 sticky top-[135px] z-10 bg-[var(--bg-color)]">
                                 <Button variant={VariantsOfButton.default} className='rounded-full py-2'>Add dates</Button>
                                 <Button variant={VariantsOfButton.default} className='rounded-full py-2'>1 quest</Button>
                                 <Button variant={VariantsOfButton.default} className='rounded-full py-2'>Share</Button>
@@ -130,7 +130,7 @@ function WishBlockPage({id}: Props) {
                                 wishCard.map((card) => ( 
                                   <div onMouseLeave={mouseLeave} onMouseEnter={() => mouseEnter(card.id)} key={card.id} className="flex-1">
                                     <Card cardItem={card} clickToFav={clickFav} inFavList={inFavList}/>
-                                    <div className="p-3 mt-2 bg-[#f7f7f7] rounded-xl text-[15px] text-[#0000008c]">
+                                    <div className="p-3 mt-2 bg-[var(--modal-bg-color)] rounded-xl text-[15px]">
                                       <span className="break-words">
                                         {card.note}
                                       </span>
