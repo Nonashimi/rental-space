@@ -131,25 +131,25 @@ const clickToX = (id: number) => {
   <>
     {type.isFocus && <BlackFon/>}
     <div ref={containerRef} className={cn(className, "inline-flex flex-col items-center relative z-20 header-duration")}>
-        <div className={cn(isScrolled?'w-[400px]':'w-[900px]'," header-duration relative flex gap-[2px] items-center border rounded-full shadow-lg  group", type.isFocus && "bg-[#d6d4d4] border-[#a3a3a3]")}>
+        <div className={cn(isScrolled?'w-[400px]':'w-[900px]',"dark:bg-[var(--modal-bg-color)] header-duration relative flex gap-[2px] items-center border border-[var(--line-color)] rounded-full shadow-lg  group", type.isFocus && "bg-[#d6d4d4] dark:bg-[#222] border-[var(--line-color)]")}>
           <SearchInput clickToX={clickToX} className="w-1/3" title={!isScrolled?"Где":"Где угодно"} inputId={1} placeHolder="Поиск местности" defaultValue={""} type={type} isScrolled={isScrolled}/>
-          <div className="h-[30px] w-[1px] bg-gray-300"></div>
+          <div className="h-[30px] w-[1px] bg-[var(--line-color)]"></div>
           <div className="w-1/3 flex items-center">
             {
               !isScrolled && dateType === 1?
                 <>
                   <SearchInput clickToX={clickToX} className="w-1/2" title={"Прибытие"} inputId={2} value={formatDate(dataFromDate.checkIn)} placeHolder="Добавить дату" disabled={true} type={type} isScrolled={isScrolled}/>
-                    <div className="h-[30px] w-[1px] bg-gray-300"></div>
+                    <div className="h-[30px] w-[1px] bg-[var(--line-color)]"></div>
                   <SearchInput clickToX={clickToX} className="w-1/2" title={"Отьезд"} inputId={3} value={formatDate(dataFromDate.checkOut)}  placeHolder="Добавить дату" disabled={true} type={type} isScrolled={isScrolled}/>
                 </>
                :
                 <SearchInput clickToX={clickToX} className="w-full" title={isScrolled?"Любое время":"Когда"} inputId={4} placeHolder="Добавить дату" value={valueForDateInput()} disabled={true} type={type} isScrolled={isScrolled}/>
             }
           </div>
-          <div className="h-[30px] w-[1px] bg-gray-300"></div>
+          <div className="h-[30px] w-[1px] bg-[var(--line-color)]"></div>
           <SearchInput clickToX={clickToX} className="w-1/3" inputClassName = "w-1/2" title={!isScrolled?"Кто":"Гости"} inputId={5} placeHolder="Добавить гостей" value={questFormat()} type={type} isScrolled={isScrolled}/>
           <button
-            className={cn(isScrolled?'w-[30px] h-[30px]':'w-[50px] h-[50px]',"header-duration absolute bg-purple-700 flex justify-center items-center gap-2 right-2 rounded-full text-white", type.isFocus && "w-[120px]")}
+            className={cn(isScrolled?'w-[30px] h-[30px]':'w-[50px] h-[50px]',"header-duration absolute bg-[var(--primary)] flex justify-center items-center gap-2 right-2 rounded-full text-white", type.isFocus && "w-[120px]")}
             tabIndex={-1}
           >
             <SearchIcon className={cn(" text-white w-[20px] h-[20px]" , {"w-[15px] h-[15px]": isScrolled})} />
@@ -170,9 +170,9 @@ const clickToX = (id: number) => {
                 <div className="rounded-3xl overflow-hidden w-[900px] h-[600px]">
                     <Box className="w-full h-full overflow-y-auto">
                       <div className="flex justify-center">
-                        <div className="gap-2 bg-[#ebebeb] p-1 rounded-3xl inline-flex">
+                        <div className="gap-2 bg-[#ebebeb] dark:bg-[#3a3939] p-1 rounded-3xl inline-flex">
                           {btns.map((btn) => (
-                            <Button key={btn.id} onClick={() => clickToDateTypes(btn.id)} className={cn("py-2 px-5 rounded-3xl", `${dateType === btn.id?'bg-[#fff] hover:bg-[#fff] shadow-lg':'hover:bg-[#d9d6d6]'}`)} variant={VariantsOfButton.transparent}>
+                            <Button key={btn.id} onClick={() => clickToDateTypes(btn.id)} className={cn("py-2 px-5 rounded-3xl bg-transparent dark:bg-[#3a3939] dark:hover:bg-[#313131]", `${dateType === btn.id?'bg-[#fff] dark:bg-[#222] dark:hover:bg-[#222] hover:bg-[#fff] shadow-lg':'hover:bg-[#d9d6d6]'}`)} variant={VariantsOfButton.transparent}>
                               {btn.title}
                             </Button>
                           ))}

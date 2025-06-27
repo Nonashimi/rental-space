@@ -63,7 +63,7 @@ function FlexibleChoose({}: Props) {
         <div className="text-[20px]">Stay for a weekend</div>
         <div className="flex gap-3">
           {durationArray.map(val => (
-            <Button onClick={() => setDuration(val.value)} key={val.value} className={cn('rounded-full py-2', {'border-[#000] bg-gray-100':val.value===duration})} variant={VariantsOfButton.default}>{val.label}</Button>
+            <Button onClick={() => setDuration(val.value)} key={val.value} className={cn('rounded-full py-2', {'border-[#000] bg-gray-100 dark:border-[var(--line-color)] dark:bg-[#414040]':val.value===duration})} variant={VariantsOfButton.default}>{val.label}</Button>
           ))}
         </div>
       </div>

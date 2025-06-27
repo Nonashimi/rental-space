@@ -137,9 +137,9 @@ export default function Calendar({currentMonth, currentYear, dataFromDate, setDa
             })();
           return (
             <div className={cn(
-                    {"bg-[#f7f7f7]": isInRange}, 
-                    {"rounded-[100%_0_0_100%] bg-[#f7f7f7]": isStart},
-                    {"rounded-[0_100%_100%_0] bg-[#f7f7f7]": isEnd},
+                    {"bg-[#f7f7f7] dark:bg-[#2e2e2e]": isInRange}, 
+                    {"rounded-[100%_0_0_100%] bg-[#f7f7f7] dark:bg-[#2e2e2e]": isStart},
+                    {"rounded-[0_100%_100%_0] bg-[#f7f7f7] dark:bg-[#2e2e2e]": isEnd},
                     "min-w-[50px] h-[50px]")} key={index}>
               <div
                 onClick={

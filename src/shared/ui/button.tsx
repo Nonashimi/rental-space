@@ -25,9 +25,9 @@ function Button({children, className,variant = VariantsOfButton.default , loadin
           {
             
             " border-[var(--line-color)] bg-[var(--modal-bg-color)] hover:border-[#7a7979] dark:hover:border-[#444242] focus:bg-white": variant === VariantsOfButton.default,
-            "bg-[var(--primary)] border-none font-bold hover:bg-[#aa2df3]": variant === VariantsOfButton.filling,
-            "bg-[var(--modal-bg-color)] font-bold border-none p-2 hover:bg-[#f1f0f0] dark:hover:border-[#444242": variant === VariantsOfButton.transparent,
-            "bg-[#afabab] text-[#afabab] hover:bg-[#948f8f] pointer-events-none": loading,
+            "bg-[var(--primary)] border-none font-bold hover:bg-[#aa2df3] text-white": variant === VariantsOfButton.filling,
+            "bg-[var(--modal-bg-color)] font-bold border-none p-2 hover:bg-[#f1f0f0]  dark:hover:border-[#444242] dark:hover:bg-[#363535]": variant === VariantsOfButton.transparent,
+            "bg-[var(--text-gray-color)] text-[var(--text-gray-color)] pointer-events-none": loading,
             "opacity-[0.3] pointer-events-none": disabled
           },
           

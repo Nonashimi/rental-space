@@ -24,8 +24,8 @@ function ChevronCLick({handleChevronBtn, type, size = Size.normal}: Props) {
         handleChevronBtn()}} 
         className={`${size === Size.normal ? "w-[30px] h-[30px]": "w-[25px] h-[25px]"} rounded-full flex items-center justify-center transition-all duration-300 bg-white opacity-90 cursor-pointer hover:scale-105`}>
         {type === ChevronType.left 
-            ?<ChevronLeft size={size === Size.normal ? 20 : 15}/>
-            :<ChevronRight size={size === Size.normal ? 20 : 15}/>
+            ?<ChevronLeft className='text-black' size={size === Size.normal ? 20 : 15}/>
+            :<ChevronRight className='text-black' size={size === Size.normal ? 20 : 15}/>
         }
     </div>
   )

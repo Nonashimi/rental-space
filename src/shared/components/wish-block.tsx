@@ -29,7 +29,7 @@ function WishBlock({block, size = FavSize.sm, clickForCard}: Props) {
                         </div>
                         <div className="flex flex-col">
                             <div className="font-bold">{block.title}</div>
-                            <div className="text-[#818080]">Сохранено: {block.favoriteItems.length}</div>
+                            <div className="text-[var(--text-gray-color)]">Сохранено: {block.favoriteItems.length}</div>
                         </div>
     </div>
   )

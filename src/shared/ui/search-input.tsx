@@ -24,7 +24,7 @@ function SearchInput({placeHolder, title, type, isScrolled, inputId, className, 
     const {setActiveDate} = useSearchDatasStore();
     const {dateType} = useSearchDatasStore();
     const getClassNameInput = (id: number) => {
-        return cn({"p-3": isScrolled}, {"bg-white shadow-lg": type.isFocus && id === type.typeId}, className);
+        return cn({"p-3": isScrolled}, {"bg-white  dark:bg-[#313030]  shadow-lg": type.isFocus && id === type.typeId}, className);
     }
 
     const clickToInput = () => {
@@ -51,7 +51,7 @@ function SearchInput({placeHolder, title, type, isScrolled, inputId, className, 
      
 
   return (
-    <div onClick={clickToInput} className={cn('py-3 px-5 rounded-full transition duration-300', getClassNameInput(inputId), {'hover:bg-[#ebebeb]':!type.isFocus})}>
+    <div onClick={clickToInput} className={cn('py-3 px-5 rounded-full transition duration-300', getClassNameInput(inputId), {'hover:bg-[#ebebeb] dark:hover:bg-[#313030]':!type.isFocus})}>
         <p className={cn('text-[13px] text-[var(--text-color)] font-medium', {'font-semibold flex justify-center': isScrolled})}>{title}</p>
         <div className={cn('relative h-full', inputClassName)}>
             {

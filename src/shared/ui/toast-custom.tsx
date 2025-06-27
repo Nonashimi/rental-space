@@ -15,11 +15,11 @@ type Props = {
 function ToastCustom({ t, title, image, clickBtn, type = TypeOfToaster.ItemAddedOrChanged }: Props) {
   return (
     <div
-      className={`bg-white p-4 shadow-md rounded-lg flex justify-between items-center gap-4 
+      className={`bg-[var(--modal-bg-color)] p-4 shadow-md rounded-lg flex justify-between items-center gap-4 
       ${t.visible ? "animate-enter" : "animate-leave"}`}
     >
         <img src={image} className='max-w-[50px] max-h-[50px] rounded-lg' alt="" />
-      <span className="text-gray-800 font-medium">
+      <span className="text-gray-800 dark:text-[#fff] font-medium">
         {
             type === TypeOfToaster.ItemAddedOrChanged && (
                 <>Сохранено в <strong>"{title}"</strong></>
