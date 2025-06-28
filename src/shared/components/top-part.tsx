@@ -7,6 +7,7 @@ import Modal from './modal'
 import { useModal } from '@/hooks/useModal'
 import FilterBody from './filter-body'
 import { useScroll } from '@/hooks/useScroll'
+import { useDarkMode } from '@/hooks/useDarkMode'
 
 type Props = {
 
@@ -15,6 +16,7 @@ type Props = {
 function TopPart({}: Props) {
     const {isOpen, clickClose, clickOpen} = useModal();
     const {isScrolled, negativeScroll, handleScroll: positiveScroll} = useScroll();
+    const {darkMode} = useDarkMode();
   return (
     <div className={`sticky top-0 z-10 bg-[var(--bg-color)] transition-shadow duration-300 ${isScrolled ? "shadow-md" : ""}`}>
       {isOpen &&  <Modal 

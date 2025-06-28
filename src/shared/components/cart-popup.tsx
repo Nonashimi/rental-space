@@ -37,7 +37,7 @@ function CardPopup({cardItem, clickToFav, inFavList}: Props) {
 
 
   return (
-    <div className='bg-white rounded-2xl shadow-lg'>
+    <div className='bg-[var(--modal-bg-color)] rounded-2xl shadow-lg'>
         <div onClick={() => router.push(`rooms/${cardItem.id}`)} className="w-[320px] h-[200px] relative overflow-hidden rounded-t-2xl group cursor-pointer">
             <div 
                 className={`flex w-full  transition-all duration-300  scrollbar-none`}
@@ -89,15 +89,15 @@ function CardPopup({cardItem, clickToFav, inFavList}: Props) {
         </div>
         <div className="flex flex-col p-2 ">
             <div className="flex justify-between">
-                <div className="font-bold text-[15px]">{cardItem.place}</div>
-                <div className="flex gap-1"> <StarIcon className='fill-black' size={15}/> {cardItem.rate}</div>
+                <div className="font-bold text-[15px] text-[var(--text-color)]">{cardItem.place}</div>
+                <div className="flex gap-1 text-[var(--text-color)]"> <StarIcon className='fill-black' size={15}/> {cardItem.rate}</div>
             </div>
             <div className="flex gap-[2px] items-center text-[15px]">
-                <div className="">
+                <div className="text-[var(--text-color)]">
                     <strong>{cardItem.price}Tg</strong>  ночь
                 </div>
-                <div className="text-[#5e5c5c] flex items-center justify-center"><Dot size={10}/></div>
-                <div className="text-[#5e5c5c] ">
+                <div className="text-[var(--text-gray-color)] flex items-center justify-center"><Dot size={10}/></div>
+                <div className="text-[var(--text-gray-color)] ">
                     {cardItem.date}
                 </div>
             </div>

@@ -8,6 +8,7 @@ import { Cluster, useClustering } from "@/hooks/useClustering";
 import { useMapEvent } from "react-leaflet";
 import { CustomMarker } from "./custom-marker";
 import { useZoom } from "@/hooks/useZoom";
+import { useDarkMode } from "@/hooks/useDarkMode";
 
 const MapContainer = dynamic(() => import("react-leaflet").then((mod) => mod.MapContainer), { ssr: false });
 const TileLayer = dynamic(() => import("react-leaflet").then((mod) => mod.TileLayer), { ssr: false });
@@ -27,6 +28,7 @@ export default function ApartmentMap({cardList, activeId, mapCenter = [0, 0]}: P
   const [clusters, setCLusters] = useState<Cluster[]>(ClusterMarkers());
   const [mapSize, setMapSize] = useState({ width: 800, height: 768 });
   const {zoom} = useZoom(cardList, mapSize);
+  const {darkMode} = useDarkMode();
 
   const updateCondition = (id: number, condition: MarkerCondition) => {
     setCLusters((prevClusters) => {
@@ -116,7 +118,7 @@ export default function ApartmentMap({cardList, activeId, mapCenter = [0, 0]}: P
         className="flex-1"
         center={mapCenter}
         zoom={zoom}
-        style={{ width: "100%", zIndex: "0" }}
+        style={{ width: "100%", zIndex: "0", backgroundColor: darkMode ? '#1e1e1e' : '#f2f2f2' }}
         minZoom={2}
         maxZoom={12}
         worldCopyJump={true}
@@ -124,7 +126,7 @@ export default function ApartmentMap({cardList, activeId, mapCenter = [0, 0]}: P
         maxBoundsViscosity={1.0}   
       >
         <ZoomWatcher/>
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <TileLayer url={!darkMode?"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png":"https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"} />
 
         {geoData && (
           <GeoJSON

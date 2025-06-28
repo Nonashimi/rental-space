@@ -33,7 +33,7 @@ function CardClusterPopup({cardItem}: Props) {
 
 
   return (
-    <div className='bg-white rounded-xl shadow-lg flex gap-2'>
+    <div className='bg-white dark:bg-[#2e2d2d] rounded-xl shadow-lg flex gap-2'>
         <div onClick={() => router.push(`/rooms/${cardItem.id}`)} className="w-[240px] h-[130px] relative overflow-hidden rounded-lg group cursor-pointer">
             <div 
                 className={`flex w-full  transition-all duration-300  scrollbar-none`}
@@ -76,15 +76,15 @@ function CardClusterPopup({cardItem}: Props) {
         </div>
         <div className="flex flex-col p-2 ">
             <div className="flex justify-between">
-                <div className="font-bold text-[15px]">{cardItem.place}</div>
-                <div className="flex gap-1"> <StarIcon className='fill-black' size={15}/> {cardItem.rate}</div>
+                <div className="font-bold text-[15px] text-[var(--text-color)]">{cardItem.place}</div>
+                <div className="flex gap-1 text-[var(--text-color)]"> <StarIcon className='fill-[var(--bg-color)]' size={15}/> {cardItem.rate}</div>
             </div>
             <div className="flex gap-[2px] items-center text-[15px]">
-                <div className="">
+                <div className="text-[var(--text-color)]">
                     <strong>{cardItem.price}Tg</strong>  ночь
                 </div>
-                <div className="text-[#5e5c5c] flex items-center justify-center"><Dot size={10}/></div>
-                <div className="text-[#5e5c5c] ">
+                <div className="text-[var(--text-gray-color)] flex items-center justify-center"><Dot size={10}/></div>
+                <div className="text-[var(--text-gray-color)] ">
                     {cardItem.date}
                 </div>
             </div>

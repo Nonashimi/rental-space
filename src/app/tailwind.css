@@ -6,6 +6,10 @@
   --weak-gray-color: #e5e7eb;
   --modal-bg-color: #fff;
   --line-color: #d3d0d0;
+
+  --marker-bg-color: #fff;
+  --marker-visited-color: rgb(226, 223, 223);
+
 }
 /* b233fc */
 
@@ -18,4 +22,7 @@
   --modal-bg-color: #222;
   --line-color: #3d3b3b;
   --modal-hover-color: #363333;
+
+  --marker-bg-color: #2e2d2d;
+  --marker-visited-color: #505050;
 }
