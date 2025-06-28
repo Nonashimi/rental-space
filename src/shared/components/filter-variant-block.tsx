@@ -14,7 +14,7 @@ function FilterVariantBlock({title, children, subtitle}: Props) {
         <div className="py-4">
             {children}
         </div>
-        <div className="w-full h-[1px] bg-[#d3d0d0]"></div>
+        <div className="w-full h-[1px] bg-[var(--line-color)]"></div>
     </div>
   )
 }

@@ -58,14 +58,14 @@ function FilterSlidebar({price, changeMaxByPercent, changeMinByPercent}: Props) 
             <div className="w-full px-[20px] box-border h-[50px] flex justify-between items-end">
                 {
                     proggressBar.map((item, index) => (
-                        <div key={index} style={{height: `${(item/m) * 100}%`}}  className={cn("w-[7px] rounded-t-[2px] transition-all duration-100 bg-[#d3d0d0]", {'bg-[#b233fc]': checkIsInRange(index)})}></div>
+                        <div key={index} style={{height: `${(item/m) * 100}%`}}  className={cn("w-[7px] rounded-t-[2px] transition-all duration-100 bg-[#d3d0d0]", {'bg-[var(--primary)]': checkIsInRange(index)})}></div>
                     ))
                 }
             </div>
         </div>
         <div className="w-full relative flex flex-col justify-center">
             <div className="w-full h-[2px] bg-[#d3d0d0]"></div>
-            <div className="h-[2px] absolute bg-[#b233fc] rounded-md"
+            <div className="h-[2px] absolute bg-[var(--primary)] rounded-md"
             style={{ left: `${min > max ? max : min}%`, right: `${100 - max}%` }}
             ></div>
             <input type="range" value={`${min}`} onChange={(e) => handleMinByPercent(Number(e.target.value))} className='custom-range absolute w-full  appearance-none' />

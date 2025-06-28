@@ -45,7 +45,7 @@ function GuestChevron({title, description, maxPeople, changeValue, pagination, c
   return (
     <div className="flex justify-between items-center py-2">
         <div className="flex flex-col">
-            <div className="text-[var(--text-gray-color)]">{title}</div>
+            <div className="">{title}</div>
             {
                 clickToModal?
                 <div onClick={clickToModal} className="text-[14px] text-[var(--text-gray-color)] underline cursor-pointer">{description}</div>

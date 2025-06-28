@@ -98,7 +98,7 @@ function FilterBody({clickClose}: Props) {
         <FilterVariantBlock title='Удобства'>
           <div className="flex gap-2 flex-wrap">
             {amenities.map((amenity) => (
-              <Button onClick={() => handleAmenities(amenity.id)} key={amenity.id} className={cn('rounded-full', filters.amenities.includes(amenity.id) ? 'border border-[#111111]' : '')}>
+              <Button onClick={() => handleAmenities(amenity.id)} key={amenity.id} className={cn('rounded-full', filters.amenities.includes(amenity.id) ? 'border border-[#111111] dark:border-[#5c5b5b] dark:bg-[var(--modal-hover-color)]' : '')}>
                 <div className="flex gap-2">
                     {amenity.component}
                     {amenity.title}
@@ -110,7 +110,7 @@ function FilterBody({clickClose}: Props) {
         <FilterVariantBlock title='Возможности бронирования'>
             <div className="flex gap-2 flex-wrap">
               {bookingOptions.map((option) => (
-                <Button onClick={() => handlePossibility(option.id)} key={option.id} className={cn('rounded-full p-3', filters.possibility.includes(option.id) ? 'border border-[#111111]' : '')}>
+                <Button onClick={() => handlePossibility(option.id)} key={option.id} className={cn('rounded-full p-3', filters.possibility.includes(option.id) ? 'border border-[#111111] dark:border-[#5c5b5b] dark:bg-[var(--modal-hover-color)]' : '')}>
                   <div className="flex gap-2">
                     {option.component}
                     {option.title}
@@ -120,7 +120,7 @@ function FilterBody({clickClose}: Props) {
             </div>
         </FilterVariantBlock>
         <FilterVariantBlock title='Отличное жилье'>
-            <Button onClick={handleIsDemanded} className={filters.isDemanded?"border border-[#111111]":""}>
+            <Button onClick={handleIsDemanded} className={filters.isDemanded?"border border-[#111111] dark:border-[#5c5b5b] dark:bg-[var(--modal-hover-color)]":""}>
               <div className="flex gap-2 items-center">
                 <Crown size={30}/>
                 <div className="flex flex-col">

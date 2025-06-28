@@ -22,7 +22,7 @@ function FavoritesBody({favBlockList, chooseOneOfBlocks, clickCreateButton}: Pro
             </div>
         </div>
         <div className="">
-            <div className="w-full h-[1px] bg-gray-200"></div>
+            <div className="w-full h-[1px] bg-[var(--line-color)]"></div>
             <div className="flex p-5">
                 <Button onClick={clickCreateButton} className='w-full py-3' variant={VariantsOfButton.filling}>Создать новый вишлист</Button>
             </div>

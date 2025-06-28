@@ -51,9 +51,12 @@ function Categories({className}: Props) {
           <li
             key={category.id}
             onClick={() => handleParams(category.id)}
-            className={`cursor-pointer font-bold text-[var(--text-gray-color)] hover:text-[var(--primary)] ${
-              selectedCategory == category.id ? "text-[var(--primary)]" : ""
+            className={`cursor-pointer font-bold hover:text-[var(--primary)] ${
+              selectedCategory == category.id
+                ? "text-[var(--primary)]"
+                : "text-[var(--text-gray-color)]"
             }`}
+
           >
             <span>{category.title}</span>
           </li>

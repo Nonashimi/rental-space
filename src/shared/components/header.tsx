@@ -84,7 +84,7 @@ export const  Header = ({className, isScrolled, negativeScroll, positiveScroll, 
         }
       </div>
     </Container>
-    <div className="w-full h-[1px] bg-gray-300"></div>
+    <div className="w-full h-[1px] bg-[var(--line-color)]"></div>
     </div>
   )
 }

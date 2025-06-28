@@ -68,7 +68,7 @@ function MonthModal({inOpen, outOpen, setInOpen, setOutOpen, getNewCounter, data
                     <div className="px-5">
                         <Calendars CalendarMode={CalendarMode.specific} CalendarType={CalendarType.checkIn} dates={dateData!} setDates={setCorrectDate} newCounter={getNewCounter(dateData?.checkIn!, typeCalendar.exit)}/>
                     </div>
-                    <div className="w-full h-[1px] bg-[#ebebeb]"></div>
+                    <div className="w-full h-[1px] bg-[var(--line-color)]"></div>
                     <div className="flex justify-end px-5 pt-3">
                         <Button onClick={handleSave} className='w-[110px]' variant={VariantsOfButton.filling}>Save</Button>
                     </div>
@@ -81,7 +81,7 @@ function MonthModal({inOpen, outOpen, setInOpen, setOutOpen, getNewCounter, data
                     <div className="px-5">
                         <Calendars CalendarMode={CalendarMode.specific} CalendarType={CalendarType.checkOut} dates={dateData!} setDates={setCorrectDate} newCounter={getNewCounter(dataFromMonths.checkOut!, typeCalendar.arrive)}/>
                     </div>
-                    <div className="w-full h-[1px] bg-[#ebebeb]"></div>
+                    <div className="w-full h-[1px] bg-[var(--line-color)]"></div>
                     <div className="flex justify-end px-5 pt-3">
                         <Button onClick={handleSave} className='w-[110px]' variant={VariantsOfButton.filling}>Save</Button>
                     </div>

@@ -149,7 +149,7 @@ export default function Calendar({currentMonth, currentYear, dataFromDate, setDa
                 key={`${index}-${currentMonth}`}
                 className={cn(
                             `h-full flex items-center justify-center rounded-full box-border relative z-4
-                            ${isPast || !day || limit ? 'text-[var(--text-gray-color)] pointer-events-none' : 'hover:border hover:border-black cursor-pointer text-black'}}`,
+                            ${isPast || !day || limit ? 'text-[var(--text-gray-color)] pointer-events-none' : 'hover:border hover:border-black dark:hover:border-[#6e6c6c] cursor-pointer text-black'}}`,
                             {
                               'bg-[var(--primary)] border-none text-white': isSelected ,
                               'bg-[var(--text-gray-color)] border-none text-white pointer-events-none':  isSpecificMode &&

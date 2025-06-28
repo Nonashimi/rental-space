@@ -1,20 +1,21 @@
 :root {
-  --primary: #b233fc;      
+  --primary: #9440dd;      
   --bg-color: white;
   --text-color: #222;
-  --text-gray-color: #4d4d4da4;
+  --text-gray-color: #3d3c3ca4;
   --weak-gray-color: #e5e7eb;
   --modal-bg-color: #fff;
   --line-color: #d3d0d0;
 }
+/* b233fc */
 
 .dark {
   --primary: #b233fc;       
-  --bg-color: #111;
+  --bg-color: #141214;
   --text-color: #f5f5f5;
   --text-gray-color: #aaaa;
   --weak-gray-color: #292727;
   --modal-bg-color: #222;
   --line-color: #3d3b3b;
-
+  --modal-hover-color: #363333;
 }

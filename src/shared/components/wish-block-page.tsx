@@ -130,7 +130,7 @@ function WishBlockPage({id}: Props) {
                                 wishCard.map((card) => ( 
                                   <div onMouseLeave={mouseLeave} onMouseEnter={() => mouseEnter(card.id)} key={card.id} className="flex-1">
                                     <Card cardItem={card} clickToFav={clickFav} inFavList={inFavList}/>
-                                    <div className="p-3 mt-2 bg-[var(--modal-bg-color)] rounded-xl text-[15px]">
+                                    <div className="p-3 mt-2 bg-[#e7e5e5] dark:bg-[var(--modal-bg-color)] rounded-xl text-[15px]">
                                       <span className="break-words">
                                         {card.note}
                                       </span>

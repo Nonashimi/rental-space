@@ -26,7 +26,7 @@ function FavCreate({createNewBLock}: Props) {
         </div>
     </div>
     <div className="">
-        <div className="w-full h-[1px] bg-gray-200"></div>
+        <div className="w-full h-[1px] bg-[var(--line-color)]"></div>
         <div className="flex p-5 justify-between">
             <Button onClick={clearTitle} className=' py-3' variant={VariantsOfButton.transparent}>Очистить</Button>
             <Button onClick={() => createNewBLock(title)} className=' py-3' variant={VariantsOfButton.filling}>Создать</Button>
