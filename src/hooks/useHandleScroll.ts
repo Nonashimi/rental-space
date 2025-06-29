@@ -22,8 +22,12 @@ export const useHandleScroll = ({
         const widthClass = SizeOfContainer.lg as unknown as string
         const matchResult = widthClass.match(/\d+/)
         const blockWidth = matchResult ? parseInt(matchResult[0], 10) : 0
-        const padding = (window.innerWidth - window.innerWidth * blockWidth/100) / 2
+        const padding = (window.innerWidth - window.innerWidth * blockWidth/100) / 2;
+        if(window.innerWidth > 790)
         setSidePadding(padding)
+        else{
+          setSidePadding(padding * 2);
+        }
 
         const element = document.querySelector('.observe-fav-title');
         if (!element) return;

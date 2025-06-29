@@ -10,7 +10,7 @@ type Props = {
 function SwitchToMap({className}: Props) {
   const {isItList, handleSwitch} = useViewType();
   return (
-   <button onClick={handleSwitch} className={cn("bg-[#222222] p-4 flex  justify-center items-center transition-all duration-300 rounded-full hover:scale-105 fixed z-[5]  bottom-14 left-[50%] translate-x-[-50%]", className)}>
+   <button onClick={handleSwitch} className={cn("bg-[#222222] p-4 flex none md:block  justify-center items-center transition-all duration-300 rounded-full hover:scale-105 fixed z-[5]  bottom-14 left-[50%] translate-x-[-50%]", className)}>
         {
             isItList
             ? <div className="text-white flex gap-2 text-[15px] font-semibold">Показать карту <Map className={"text-white"} size={20}/></div>

@@ -24,8 +24,8 @@ function WishBlock({block, size = FavSize.sm, clickForCard}: Props) {
     }
   return (
     <div key={block.id} className="flex flex-col gap-[10px] cursor-pointer" onClick={() => clickForCard && clickForCard(block.id)} >
-                        <div className={`shadow-[0_4px_10px_rgba(0,0,0,0.2)] dark:bg-[#333232] rounded-2xl w-full box-border p-[6px]`} style={{height: size}}>
-                            <img className='rounded-xl w-full h-full object-cover' src={checkForImage(block)} alt="" />
+                        <div className={`shadow-[0_4px_10px_rgba(0,0,0,0.2)] dark:bg-[#333232] rounded-2xl w-full box-border p-[6px] lg:min-w-[${size}] lg:min-h-[${size}]`} >
+                            <img className={`rounded-xl w-full h-full object-cover`} src={checkForImage(block)} alt="" />
                         </div>
                         <div className="flex flex-col">
                             <div className="font-bold">{block.title}</div>

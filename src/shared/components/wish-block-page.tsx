@@ -109,7 +109,7 @@ function WishBlockPage({id}: Props) {
         <div className="">
             <div className='' style={{ marginLeft: sidePadding }}>
                 <div className="flex relative">
-                    <div className="w-[60%] min-w-[60%] pr-5 hide-scrollbar">
+                    <div className="w-full min-w-full mmd:w-[50%] mmd:min-w-[50%] xl:w-[60%] xl:min-w-[60%] pr-5 hide-scrollbar">
                             <div className="sticky top-[92px] z-10 bg-[var(--bg-color)] flex justify-between items-center py-5 ">
                                 <div className="flex gap-2 items-center ">
                                     <ChevronLeft className='cursor-pointer' onClick={router.back}/>
@@ -125,7 +125,7 @@ function WishBlockPage({id}: Props) {
                                 <Button variant={VariantsOfButton.default} className='rounded-full py-2'>1 quest</Button>
                                 <Button variant={VariantsOfButton.default} className='rounded-full py-2'>Share</Button>
                             </div>
-                        <div className="grid grid-cols-3 gap-5 mt-5">
+                        <div className="grid grid-cols-2 xl:grid-cols-3 gap-5 mt-5">
                             {wishCard && 
                                 wishCard.map((card) => ( 
                                   <div onMouseLeave={mouseLeave} onMouseEnter={() => mouseEnter(card.id)} key={card.id} className="flex-1">
@@ -145,7 +145,7 @@ function WishBlockPage({id}: Props) {
                                 ))}
                         </div>
                     </div>
-                    <div className="h-[calc(100vh-90.667px)] w-full sticky top-[90.667px]">
+                    <div className="hidden mmd:block  h-[calc(100vh-90.667px)] w-full sticky top-[90.667px]">
                             <ApartmentMap mapCenter={mapCenter as [number, number]} activeId = {hoveredCard} cardList={favCards}/>
                     </div>
                 </div>

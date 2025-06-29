@@ -4,7 +4,7 @@ import React from 'react'
 
 export enum SizeOfContainer {
   sm = "w-[720px]",
-  md = 'w-[61%]',
+  md = 'w-[95%] lg:w-[80%] xl:w-[70%]',
   lg = 'w-[95%] xl:w-[90%]',
 }
 type Props = {

@@ -34,7 +34,7 @@ function WishPage({}: Props) {
     }
   return (
     <>
-        <Header size={SizeOfContainer.md} hasSearch = {false}/>
+        <Header size={SizeOfContainer.lg} hasSearch = {false}/>
         <Container size={SizeOfContainer.md}>
             {
                 completeModal.isOpen && (
@@ -52,8 +52,8 @@ function WishPage({}: Props) {
                 )
             }
         
-            <h2 className='font-bold text-[33px] py-11'>Вишлисты</h2>
-            <div className="grid grid-cols-4 gap-5">
+            <h2 className='font-bold text-[27px] mmd:text-[33px] py-11'>Вишлисты</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                 {
                     favBlockList.map((block) => (
                         <div key={block.id} className="relative group">
