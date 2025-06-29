@@ -46,7 +46,7 @@ function Categories({className}: Props) {
   }, []);
 
   return (
-      <ul className={cn("flex gap-6 list-none", className)}>
+      <ul className={cn("flex gap-6 list-none overflow-x-auto", className)}>
         {categories.map((category) => (
           <li
             key={category.id}

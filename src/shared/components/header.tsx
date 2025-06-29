@@ -4,7 +4,7 @@ import { Logo } from '../ui'
 import { cn } from '@/lib/utils'
 import Container, { SizeOfContainer } from './container'
 import Search from '../ui/search'
-import { Heart, Menu, UserCircleIcon } from 'lucide-react'
+import { Heart, Menu } from 'lucide-react'
 import Button, { VariantsOfButton } from '../ui/button'
 import { useRouter } from 'next/navigation'
 import Box from './box'
@@ -26,6 +26,9 @@ export const  Header = ({className, isScrolled, negativeScroll, positiveScroll, 
 
   useEffect(() => {
   const handleClickOutside = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+    console.log(target);
+    if (target.closest(".menu-btn")) return;
     if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
       setOpenMenu(false);
     }
@@ -50,7 +53,7 @@ export const  Header = ({className, isScrolled, negativeScroll, positiveScroll, 
         <header className={
           cn(className, 'flex w-full justify-between py-3 items-center relative z-10')
           }>
-              <Logo className='w-[100px]'/>
+              <Logo className='w-[80px] lg:w-[100px]'/>
               {
                 hasSearch && (
                   <div className={cn('header-duration flex gap-4',
@@ -61,26 +64,28 @@ export const  Header = ({className, isScrolled, negativeScroll, positiveScroll, 
                   </div>
                 )
               }
-              <div ref={menuRef} className="w-[120px] relative flex justify-end">
+              <div className=" w-[120px] relative flex justify-end">
                 <div className="flex items-center gap-4">
                   <div className="w-[40px] h-[40px] rounded-full flex items-center justify-center bg-black text-white text-[13px]">O</div>
-                  <div onClick={() => setOpenMenu(!openMenu)} className="w-[40px] h-[40px] rounded-full bg-[var(--weak-gray-color)] flex items-center justify-center cursor-pointer hover:bg-[var(--weak-gray-color)] transition-all duration-300">
-                    <Menu width={18}/>
+                  <div onClick={() => setOpenMenu(!openMenu)} className="w-[40px] h-[40px] menu-btn rounded-full bg-[var(--weak-gray-color)] flex items-center justify-center cursor-pointer hover:bg-[var(--weak-gray-color)] transition-all duration-300">
+                    <Menu className='pointer-events-none' width={18}/>
                   </div>
                 </div>
-                {
-                  openMenu && <Box className='p-0 py-3 rounded-xl w-[250px] h-[100px] absolute top-14 shadow dark:bg-[#222]'>
-                  <div onClick={() => router.push('/wishlist')} className="flex gap-3 px-3 py-1 items-center hover:bg-gray-100 dark:hover:bg-[#302f2f] transition-all duration-300 cursor-pointer">
-                    <Heart width={16}/>
-                    <div className="">Wishlists</div>
-                  </div>
-                </Box>
-                }
               </div>
         </header>
+        <div ref={menuRef} className="">
+          {
+            openMenu && <Box className='p-0 py-3 rounded-xl z-30 w-[250px] h-[100px] absolute top-[70px] right-0 shadow dark:bg-[#222]'>
+            <div onClick={() => {router.push('/wishlist')}} className="flex gap-3 px-3 py-1 items-center hover:bg-gray-100 dark:hover:bg-[#302f2f] transition-all duration-300 cursor-pointer">
+              <Heart width={16}/>
+              <div className="">Wishlists</div>
+            </div>
+          </Box>
+          }
+        </div>
         {
           hasSearch && 
-          <Search negativeScroll = {negativeScroll} positiveScroll={positiveScroll} isScrolled = {isScrolled} className = {isScrolled?"absolute translate-y-[-65px]":""}/>
+          <Search negativeScroll = {negativeScroll} positiveScroll={positiveScroll} isScrolled = {isScrolled} className = {isScrolled?"absolute translate-y-[-57px] lg:translate-y-[-65px]":""}/>
         }
       </div>
     </Container>

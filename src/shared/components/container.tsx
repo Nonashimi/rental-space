@@ -5,7 +5,7 @@ import React from 'react'
 export enum SizeOfContainer {
   sm = "w-[720px]",
   md = 'w-[61%]',
-  lg = 'w-[89%]',
+  lg = 'w-[95%] xl:w-[90%]',
 }
 type Props = {
     children: React.ReactNode,

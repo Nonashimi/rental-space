@@ -12,11 +12,10 @@ function Navbar({clickOpen}: Props) {
     <Container>
         <div className='flex w-full justify-between items-center py-4'>
           <Suspense fallback={<div>Loading...</div>}>
-            <Categories className = "w-[70%]"/>
+            <Categories className = "w-[55%] md:w-[70%]"/>
           </Suspense>
             <div className="flex items-center gap-4">
                 <Button className='p-3' onClick = {clickOpen}>Фильтр</Button>
-                <Button className='p-3'>Показывать Итог</Button>
             </div>
         </div>
     </Container>

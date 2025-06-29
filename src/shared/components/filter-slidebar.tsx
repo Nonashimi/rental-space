@@ -68,18 +68,18 @@ function FilterSlidebar({price, changeMaxByPercent, changeMinByPercent}: Props) 
             <div className="h-[2px] absolute bg-[var(--primary)] rounded-md"
             style={{ left: `${min > max ? max : min}%`, right: `${100 - max}%` }}
             ></div>
-            <input type="range" value={`${min}`} onChange={(e) => handleMinByPercent(Number(e.target.value))} className='custom-range absolute w-full  appearance-none' />
-            <input type="range" value={`${max}`} onChange={(e) => handleMaxByPercent(Number(e.target.value))} className='custom-range absolute w-full  appearance-none ' />
+            <input type="range" value={`${min}`} onChange={(e) => handleMinByPercent(Number(e.target.value))} className='custom-range absolute low w-full appearance-none' />
+            <input type="range" value={`${max}`} onChange={(e) => handleMaxByPercent(Number(e.target.value))} className='custom-range absolute up w-full appearance-none ' />
         </div>
 
         <div className="py-5 flex w-full justify-between">
             <div className="flex w-[20%]  flex-col items-center gap-1">
                 <div className="text-[var(--text-gray-color)] text-[13px] font-[600]">Минимум</div>
-                <div  className="w-full p-4 flex justify-center border border-[#e4dcdc] rounded-full">{price.min}tg</div> 
+                <div  className="w-full p-4 flex justify-center border border-[var(--line-color)] rounded-full">{price.min}tg</div> 
             </div>
             <div className="flex w-[20%]  flex-col items-center gap-1">
                 <div className="text-[var(--text-gray-color)] text-[13px] font-[600]">Максимум</div>
-                <div className="w-full p-4 flex justify-center border border-[#e4dcdc] rounded-full">{price.max}tg</div>
+                <div className="w-full p-4 flex justify-center border border-[var(--line-color)] rounded-full">{price.max}tg</div>
             </div>
            
         </div>

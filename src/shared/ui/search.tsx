@@ -131,7 +131,7 @@ const clickToX = (id: number) => {
   <>
     {type.isFocus && <BlackFon/>}
     <div ref={containerRef} className={cn(className, "inline-flex flex-col items-center relative z-20 header-duration")}>
-        <div className={cn(isScrolled?'w-[400px]':'w-[900px]',"dark:bg-[var(--modal-bg-color)] header-duration relative flex gap-[2px] items-center border border-[var(--line-color)] rounded-full shadow-lg  group", type.isFocus && "bg-[#d6d4d4] dark:bg-[#222] border-[var(--line-color)]")}>
+        <div className={cn(isScrolled?'w-[400px]':'w-[90%] lg:w-[800px] xl:w-[900px]',"dark:bg-[var(--modal-bg-color)] header-duration relative flex gap-[2px] items-center border border-[var(--line-color)] rounded-full shadow-lg  group", type.isFocus && "bg-[#d6d4d4] dark:bg-[#222] border-[var(--line-color)]")}>
           <SearchInput clickToX={clickToX} className="w-1/3" title={!isScrolled?"Где":"Где угодно"} inputId={1} placeHolder="Поиск местности" defaultValue={""} type={type} isScrolled={isScrolled}/>
           <div className="h-[30px] w-[1px] bg-[var(--line-color)]"></div>
           <div className="w-1/3 flex items-center">
@@ -149,10 +149,10 @@ const clickToX = (id: number) => {
           <div className="h-[30px] w-[1px] bg-[var(--line-color)]"></div>
           <SearchInput clickToX={clickToX} className="w-1/3" inputClassName = "w-1/2" title={!isScrolled?"Кто":"Гости"} inputId={5} placeHolder="Добавить гостей" value={questFormat()} type={type} isScrolled={isScrolled}/>
           <button
-            className={cn(isScrolled?'w-[30px] h-[30px]':'w-[50px] h-[50px]',"header-duration absolute bg-[var(--primary)] flex justify-center items-center gap-2 right-2 rounded-full text-white", type.isFocus && "w-[120px]")}
+            className={cn(isScrolled?'w-[30px] h-[30px]':'w-[47px] h-[47px]',"header-duration absolute bg-[var(--primary)] flex justify-center items-center gap-2 right-2 rounded-full text-white", type.isFocus && "w-[120px]")}
             tabIndex={-1}
           >
-            <SearchIcon className={cn(" text-white w-[20px] h-[20px]" , {"w-[15px] h-[15px]": isScrolled})} />
+            <SearchIcon className={cn(" text-white w-[17px] h-[17px] lg:w-[20px] lg:h-[20px]" , {"w-[12px] h-[12px]": isScrolled})} />
             <p className={cn("font-bold hidden", type.isFocus && "block")}>Искать</p>
           </button>
         </div>

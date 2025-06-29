@@ -18,8 +18,9 @@ export default {
     },
     screens: {
       sm: '640px',
-      md: '768px',
-      lg: '1024px',
+      md: '790px',
+      mmd: '946px',
+      lg: '1100px',
       xl: '1280px',
     }
   },

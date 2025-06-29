@@ -51,7 +51,7 @@ function SearchInput({placeHolder, title, type, isScrolled, inputId, className, 
      
 
   return (
-    <div onClick={clickToInput} className={cn('py-3 px-5 rounded-full transition duration-300', getClassNameInput(inputId), {'hover:bg-[#ebebeb] dark:hover:bg-[#313030]':!type.isFocus})}>
+    <div onClick={clickToInput} className={cn('py-2 px-5 rounded-full transition duration-300', getClassNameInput(inputId), {'hover:bg-[#ebebeb] dark:hover:bg-[#313030]':!type.isFocus})}>
         <p className={cn('text-[13px] text-[var(--text-color)] font-medium', {'font-semibold flex justify-center': isScrolled})}>{title}</p>
         <div className={cn('relative h-full', inputClassName)}>
             {
@@ -59,7 +59,7 @@ function SearchInput({placeHolder, title, type, isScrolled, inputId, className, 
             }
             <div 
             onClick={(e) =>{e.stopPropagation(); clickToX(inputId)}}
-            className={cn("w-[20px] h-[20px] rounded-full -translate-y-1/3 translate-x-1/3 transition-all duration-300  absolute top-0 right-0 hover:bg-gray-100 cursor-pointer hidden",
+            className={cn("w-[20px] h-[20px] rounded-full -translate-y-1/3 translate-x-1/3 transition-all duration-300  absolute top-0 right-0 hover:bg-gray-100 dark:hover:bg-[#535353] cursor-pointer hidden",
                 {'flex justify-center items-center': isShowX()}
             )}>
                 <X className='w-[14px] h-[14px]'/>
