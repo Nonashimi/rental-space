@@ -110,7 +110,7 @@ function WishBlockPage({id}: Props) {
             <div className='' style={{ marginLeft: sidePadding }}>
                 <div className="flex relative">
                     <div className="w-full min-w-full mmd:w-[50%] mmd:min-w-[50%] xl:w-[60%] xl:min-w-[60%] pr-5 hide-scrollbar">
-                            <div className="sticky top-[92px] z-10 bg-[var(--bg-color)] flex justify-between items-center py-5 ">
+                            <div className="sticky top-[80px]  lg:top-[92px] z-10 bg-[var(--bg-color)] flex justify-between items-center py-5 ">
                                 <div className="flex gap-2 items-center ">
                                     <ChevronLeft className='cursor-pointer' onClick={router.back}/>
                                     <div className={cn("font-bold transform transitian-all duration-300", isFavTitleHide?"translate-y-[10px] opacity-0":"opacity-1 translate-y-[0px]")}>{favoriteBlock?.title}</div>
