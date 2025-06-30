@@ -152,7 +152,12 @@ const clickToX = (id: number) => {
             className={cn(isScrolled?'w-[30px] h-[30px]':'w-[47px] h-[47px]',"header-duration absolute bg-[var(--primary)] flex justify-center items-center gap-2 right-2 rounded-full text-white", type.isFocus && "w-[120px]")}
             tabIndex={-1}
           >
-            <SearchIcon className={cn(" text-white w-[17px] h-[17px] lg:w-[20px] lg:h-[20px]" , {"w-[12px] h-[12px]": isScrolled})} />
+            <SearchIcon
+              className={cn(
+                "text-white",
+                isScrolled ? "w-[13px] h-[13px]" : "w-[17px] h-[17px] lg:w-[20px] lg:h-[20px]"
+              )}
+            />
             <p className={cn("font-bold hidden", type.isFocus && "block")}>Искать</p>
           </button>
         </div>
