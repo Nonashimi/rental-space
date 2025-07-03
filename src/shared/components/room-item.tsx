@@ -14,14 +14,14 @@ type Props = {
 
 function RoomItem({ id }: Props) {
     const roomItem = useCardListStore().cardList.find(el => el.id === id)!;
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const images = roomItem.images.slice(0, 5);
     const comments = 0;
     useToaster();
     return (
         <div className="">
             <FavModals/>
-            {isOpen && <PhotosModal id={id} closeModal={() => setIsOpen(false)}/>}
+            {isOpen && <PhotosModal roomItem = {roomItem} id={id} closeModal={() => setIsOpen(false)}/>}
             <RoomItemTop roomItem={roomItem} id={id}/>
             <div className="relative">
                  <div className="grid grid-cols-4 gap-2">
@@ -54,7 +54,7 @@ function RoomItem({ id }: Props) {
                         );
                     })}
                 </div>
-                <button onClick={() => setIsOpen(true)} className='absolute bottom-5 right-5 bg-[var(--modal-bg-color)] py-1 px-4 shadow-xl rounded-lg flex gap-2 items-center border border-white dark:border-[var(--line-color)]'>
+                <button onClick={() => setIsOpen(true)} className='absolute bottom-5 right-5 bg-[var(--modal-bg-color)] py-1 px-4 shadow-xl rounded-lg flex gap-2 items-center border border-black dark:border-[var(--line-color)]'>
                     <Grip className='w-[17px]'/>
                     <div className="text-[14px] font-bold">Show all photos</div>
                 </button>
