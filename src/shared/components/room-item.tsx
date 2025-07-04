@@ -1,7 +1,7 @@
 "use client"
 import { useCardListStore } from '@/store/cards'
 import React, { useState } from 'react'
-import {  Grip, Star } from 'lucide-react'
+import {  CircleCheck, Copy, Grip, Star } from 'lucide-react'
 import { useFavoritesStore } from '@/store/favorites'
 import { useToaster } from '@/hooks/useToaster'
 import FavModals from './fav-modals'
@@ -20,6 +20,7 @@ function RoomItem({ id }: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const [isShareOpen, setisShareOpen] = useState(false);
     const images = roomItem.images.slice(0, 5);
+    const [isCopied, setIsCopied] = useState(false);
     const links = [
     {
         url: 'https://t.me/share/url?url=',
@@ -39,15 +40,6 @@ function RoomItem({ id }: Props) {
             <path d="M12.04 2c-5.5 0-9.96 4.44-9.96 9.92 0 1.75.46 3.46 1.33 4.97l-1.4 5.12 5.25-1.38a9.92 9.92 0 0 0 4.78 1.2h.01c5.5 0 9.96-4.45 9.96-9.93C22 6.44 17.54 2 12.04 2zm.08 17.82h-.01a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-3.11.82.83-3.04-.2-.31a7.9 7.9 0 0 1-1.22-4.24c0-4.39 3.58-7.97 7.97-7.97 2.13 0 4.13.83 5.63 2.33a7.93 7.93 0 0 1 2.33 5.64c-.01 4.39-3.59 7.98-7.99 7.98zm4.44-5.96c-.24-.12-1.43-.7-1.65-.77-.22-.08-.39-.12-.55.13-.16.24-.63.77-.77.93-.14.16-.28.17-.52.06-.24-.12-1.01-.37-1.93-1.18-.71-.64-1.18-1.43-1.32-1.67-.14-.24-.01-.37.11-.49.12-.12.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3 0-.42-.04-.12-.55-1.32-.75-1.8-.2-.48-.4-.42-.55-.43h-.48c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.1.16 1.5.1.46-.07 1.43-.58 1.63-1.15.2-.57.2-1.05.14-1.15-.06-.1-.22-.16-.46-.28z"/>
         </svg>
         )
-    },
-    {
-        url: 'https://vk.com/share.php?url=',
-        title: 'Vk',
-        component: () => (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#4C75A3" viewBox="0 0 24 24">
-            <path d="M12.02 2C6.49 2 2 6.5 2 12.02c0 5 3.66 9.14 8.44 9.88v-6.99H8.08v-2.9h2.36v-2.2c0-2.35 1.4-3.66 3.55-3.66 1.03 0 2.11.18 2.11.18v2.33h-1.19c-1.17 0-1.54.73-1.54 1.47v1.87h2.62l-.42 2.9h-2.2v6.99c4.78-.74 8.44-4.88 8.44-9.88C22.04 6.5 17.55 2 12.02 2z"/>
-        </svg>
-        )
     }
     ];
 
@@ -56,12 +48,23 @@ function RoomItem({ id }: Props) {
         const encodedUrl = encodeURIComponent(href);
         const encodedText = encodeURIComponent('ghbvdb');
         if(text === 'Telegram'){
-            window.location.href = `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}`;
+            window.location.href = `https://t.me/share/url?url=${encodedUrl}`;
         }else if(text === 'Whatsapp'){
-            window.location.href = `https://wa.me/?text=${encodedText}%20${encodedUrl}`;
-        }else{
-            window.location.href = `https://vk.com/share.php?url=${encodedUrl}`;
+            window.location.href = `https://wa.me/?text=${encodedUrl}`;
         }
+    };
+
+    const handleCopy = () => {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url)
+        .then(() => {
+            setIsCopied(true);
+            console.log('vfdbgfnhg');
+            setTimeout(() => setIsCopied(false), 1500);
+        })
+        .catch((err) => {
+        console.error("Ошибка при копировании:", err);
+        });
     };
 
     const comments = 0;
@@ -71,12 +74,18 @@ function RoomItem({ id }: Props) {
             <FavModals/>
             {   
                 isShareOpen && <Modal clickClose={() => setisShareOpen(false)} title='Share this place'>
-                    <div className="p-5 flex flex-col gap-6">
+                    <div className="p-5 flex flex-col gap-6 relative">
                         <div className="grid grid-cols-8 items-center gap-3">
                             <img className='col-span-1 rounded-xl' src={roomItem.images[0]} alt="" />
                             <div className="col-span-7">{roomItem.place}</div>
                         </div>
                         <div className="grid grid-cols-6 gap-3">
+                            <Button onClick={handleCopy} className='col-span-3'>
+                                <div className="flex gap-2">
+                                    <Copy/>
+                                    <div className="">Copy Link</div>
+                                </div>
+                            </Button>
                             {
                                 links.map(link => (
                                     <Button key={link.title} onClick={() => handleClick(link.title, link.url)} className='col-span-3'>
@@ -87,6 +96,18 @@ function RoomItem({ id }: Props) {
                                     </Button>
                                 ))
                             }
+                        </div>
+                        <div
+                            className={`
+                                py-1 px-3 flex items-center gap-2 
+                                absolute bottom-2 left-1/2 -translate-x-1/2
+                                bg-[var(--bg-color)] shadow-xl rounded-xl border border-[var(--line-color)]
+                                transition-all duration-500
+                                ${isCopied ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'}
+                            `}
+                            >
+                            <CircleCheck className='text-green-500 w-[17px]'/>
+                            <p className='text-[14px]'>Link Copied</p>
                         </div>
                     </div>
                 </Modal>
