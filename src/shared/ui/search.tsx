@@ -147,7 +147,7 @@ const clickToX = (id: number) => {
             }
           </div>
           <div className="h-[30px] w-[1px] bg-[var(--line-color)]"></div>
-          <SearchInput clickToX={clickToX} className="w-1/3" inputClassName = "w-1/2" title={!isScrolled?"Кто":"Гости"} inputId={5} placeHolder="Добавить гостей" value={questFormat()} type={type} isScrolled={isScrolled}/>
+          <SearchInput clickToX={clickToX} className="w-1/3" inputClassName ="w-1/2" title={!isScrolled?"Кто":"Гости"} inputId={5} placeHolder="Добавить гостей" value={questFormat()} type={type} isScrolled={isScrolled}/>
           <button
             className={cn(isScrolled?'w-[30px] h-[30px]':'w-[47px] h-[47px]',"header-duration absolute bg-[var(--primary)] flex justify-center items-center gap-2 right-2 rounded-full text-white", type.isFocus && "w-[120px]")}
             tabIndex={-1}

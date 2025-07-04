@@ -12,6 +12,7 @@ type Props = {
   roomItem: CardItem,
   id: number;
   closeModal: () => void,
+  openShared: () => void,
 }
 
 
@@ -20,7 +21,7 @@ const breakpointColumnsObj = {
  
 };
 
-export const PhotosModal:FC<Props> = ({id, roomItem, closeModal}) => {
+export const PhotosModal:FC<Props> = ({id, roomItem, closeModal, openShared}) => {
   const images = roomItem.images;
   const [deep, setDeep] = useState({isOpen: false, id: -1});
   const close = () => {
@@ -32,14 +33,14 @@ export const PhotosModal:FC<Props> = ({id, roomItem, closeModal}) => {
   }
   return(
     <div className="absolute top-0 left-0 right-0 min-h-screen z-40 bg-[var(--bg-color)]">
-      {deep.isOpen && <PhotoPaginationModal roomItem={roomItem} id={id} photo_id={deep.id} closeModal={close}/>}
-      <Container className="sticky top-0 z-10">
-        <div className="bg-[var(--bg-color)] flex justify-between items-center py-5 z-50">
+      {deep.isOpen && <PhotoPaginationModal openShared={openShared} roomItem={roomItem} id={id} photo_id={deep.id} closeModal={close}/>}
+      <Container className="sticky top-0 z-10 bg-[var(--bg-color)]">
+        <div className="flex justify-between items-center py-5 z-50">
           <ChevronLeft className="cursor-pointer" onClick={closeModal} />
-          <RoomItemTopBtns id={id} />
+          <RoomItemTopBtns clickOpenShared={openShared} id={id} />
         </div>
       </Container>
-      <Container className="w-full grid grid-cols-10 gap-4" size={SizeOfContainer.md}>
+      <Container className=" grid grid-cols-10 gap-4" size={SizeOfContainer.md}>
         <div className="col-span-3">
           cdvb 
         </div>

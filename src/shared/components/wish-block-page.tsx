@@ -136,7 +136,7 @@ function WishBlockPage({id}: Props) {
                                       </span>
                                       <span
                                         onClick={() => clickToNotes(card.id)}
-                                        className="cursor-pointer underline font-[600] transition-all duration-300 hover:text-[#000] ml-1"
+                                        className="cursor-pointer underline font-[600] transition-all duration-300 hover:text-[#000] dark:hover:text-gray-300 ml-1"
                                       >
                                         {card.note.length > 0 ? 'Edit' : 'Add note'}
                                       </span>

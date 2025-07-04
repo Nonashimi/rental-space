@@ -13,10 +13,11 @@ export enum TypeOfTopBtns {
 type Props = {
   id: number,
   className?: string
-  type?: TypeOfTopBtns
+  type?: TypeOfTopBtns,
+  clickOpenShared: () => void,
 }
 
-export const RoomItemTopBtns:FC<Props> = ({id, className, type}) => {
+export const RoomItemTopBtns:FC<Props> = ({id, className, type, clickOpenShared}) => {
   const favorites = useFavoritesStore();
 
   if(type && type == TypeOfTopBtns.hide){
@@ -33,7 +34,7 @@ export const RoomItemTopBtns:FC<Props> = ({id, className, type}) => {
   }
 
   return <div className={cn("flex gap-4", className)}>
-                    <Button variant={VariantsOfButton.transparent} className='p-2 rounded-lg'>
+                    <Button onClick={clickOpenShared} variant={VariantsOfButton.transparent} className='p-2 rounded-lg'>
                     <div className="flex gap-2 items-center">
                             <Upload size={15}/>
                             <div className="text-[14px] font-semibold underline">Поделиться</div>

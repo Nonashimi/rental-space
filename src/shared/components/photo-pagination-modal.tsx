@@ -14,6 +14,7 @@ type Props = {
   id: number;
   closeModal: () => void,
   photo_id: number,
+  openShared: () => void,
 }
 
 
@@ -22,7 +23,7 @@ const breakpointColumnsObj = {
  
 };
 
-export const PhotoPaginationModal:FC<Props> = ({id, roomItem, closeModal, photo_id}) => {
+export const PhotoPaginationModal:FC<Props> = ({id, roomItem, closeModal, photo_id, openShared}) => {
   const images = roomItem.images;
   const {thisPage, clickNext, clickPrev} = usePagination({maxPages: images.length, newPage: photo_id + 1});
 
@@ -42,12 +43,12 @@ export const PhotoPaginationModal:FC<Props> = ({id, roomItem, closeModal, photo_
             {`${thisPage}/${images.length}`}
           </div>
 
-          <RoomItemTopBtns type={TypeOfTopBtns.hide} id={id} className="z-10" />
+          <RoomItemTopBtns clickOpenShared={openShared} type={TypeOfTopBtns.hide} id={id} className="z-10" />
         </div>
       </Container>
 
 
-      <Container className="w-full gap-4 flex justify-between items-center mt-10">
+      <Container className=" gap-4 flex justify-between items-center mt-10">
         <div onClick={clickPrev} className={cn("rounded-full cursor-pointer w-[50px] h-[50px] border border-[#fff] flex justify-center items-center",
           {'opacity-10 pointer-events-none':thisPage == 1}
         )}>
