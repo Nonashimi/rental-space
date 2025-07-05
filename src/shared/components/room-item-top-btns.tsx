@@ -22,7 +22,7 @@ export const RoomItemTopBtns:FC<Props> = ({id, className, type, clickOpenShared}
 
   if(type && type == TypeOfTopBtns.hide){
     return  <div className={cn("flex gap-6", className)}>
-              <div className="flex gap-2 items-center">
+              <div onClick={clickOpenShared} className="flex gap-2 items-center cursor-pointer">
                       <Upload size={15}/>
               </div>
               <div onClick={() => favorites.clickToFav(id)} className="flex gap-2 items-center cursor-pointer">
