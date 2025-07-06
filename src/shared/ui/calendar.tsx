@@ -19,6 +19,10 @@ export enum CalendarMode {
   auto = 'auto',
   specific = 'specific'
 }
+
+
+
+
 type Props = {
   date: Date;
   currentMonth: number;
@@ -27,9 +31,10 @@ type Props = {
   mode?: CalendarMode;
   dataFromDate: Dates | undefined;
   setDataFromDate: (data: Dates) => void;
+  isMin?: boolean
 };
 
-export default function Calendar({currentMonth, currentYear, dataFromDate, setDataFromDate, mode = CalendarMode.auto, type}: Props) {
+export default function Calendar({currentMonth, currentYear, dataFromDate, setDataFromDate, mode = CalendarMode.auto, type, isMin = false}: Props) {
   
   const generateCalendar = () => {
     const firstDay = new Date(currentYear, currentMonth, 1).getDay();
@@ -103,20 +108,20 @@ export default function Calendar({currentMonth, currentYear, dataFromDate, setDa
   const dates = generateCalendar();
   const today = new Date();
   return (
-    <div className="w-full mx-auto p-4 h-[450px]">
+    <div className="w-full mx-auto p-4">
       <div className="flex justify-center items-center mb-4">
         <h2 className="text-lg font-semibold">
           {monthNames[currentMonth]} {currentYear}
         </h2>
       </div>
 
-      <div className="grid grid-cols-7 text-center font-bold text-[var(--text-gray-color)] mb-2">
+      <div className={cn("grid grid-cols-7 text-center font-bold text-[var(--text-gray-color)] mb-2", isMin ?'text-[14px]':'')}>
         {daysShort.map((day) => (
           <div key={day}>{day}</div>
         ))}
       </div>
 
-      <div className="grid grid-cols-7 text-center gap-y-2">
+      <div className={cn("grid grid-cols-7 text-center gap-y-2", isMin ?'text-[14px]':'')}>
         {dates.map((day, index) => {
           const isPast = new Date(currentYear, currentMonth, day || 0).getTime() < new Date(today.setHours(0, 0, 0, 0)).getTime();
           const dayDate = new Date(currentYear, currentMonth, day || 0);
@@ -140,7 +145,7 @@ export default function Calendar({currentMonth, currentYear, dataFromDate, setDa
                     {"bg-[#f7f7f7] dark:bg-[#2e2e2e]": isInRange}, 
                     {"rounded-[100%_0_0_100%] bg-[#f7f7f7] dark:bg-[#2e2e2e]": isStart},
                     {"rounded-[0_100%_100%_0] bg-[#f7f7f7] dark:bg-[#2e2e2e]": isEnd},
-                    "min-w-[50px] h-[50px]")} key={index}>
+                    !isMin?"min-w-[50px] min-h-[50px]":"min-w-[40px] min-h-[40px]")} key={index}>
               <div
                 onClick={
                     isPast || limit
