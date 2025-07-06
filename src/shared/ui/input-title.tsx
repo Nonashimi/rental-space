@@ -10,14 +10,15 @@ type Props = {
     disabled?: boolean,
     className?: string,
     value?: string,
+    active?: boolean
     clickToX?: (id: number) => void,
 }
 
-function InputTitle({placeHolder, title, className, disabled, value, clickToX}: Props) {
+function InputTitle({placeHolder, title, className, disabled, value, clickToX, active}: Props) {
      
 
   return (
-    <div className={cn('py-2 px-5 rounded-full transition duration-300', className)}>
+    <div className={cn('py-2 px-5 rounded-full transition duration-300', className, {'border border-[var(--text-color)] border-[2px] rounded-lg':active})}>
         <p className={cn('text-[13px] text-[var(--text-color)] font-medium')}>{title}</p>
         <div className={cn('relative h-full')}>
             <Input disabled={disabled} className={cn('p-0 w-full')} placeholder={placeHolder} value={value} onChange={(e) => console.log(e)}/>

@@ -34,9 +34,10 @@ const btns = [
 
 
 function Search({className, isScrolled, negativeScroll, positiveScroll}: Props) {
-  const {dateType, setDateType, dataFromMonths, setDataFromMonths, setDataFromDate, dataFromDate, months: monthsData, duration, guestData, setActiveDate, setActiveMonth, clearMonths, setDuration, clearGuestData} = useSearchDatasStore();
+  const {dateType, setDateType, dataFromMonths, setDataFromMonths, setDataFromDate, dataFromDate, months: monthsData, duration, guestData, setActiveMonth, clearMonths, setDuration, clearGuestData} = useSearchDatasStore();
   const type = useTypeStore();
   const containerRef = useRef<HTMLDivElement>(null);
+  const [activeDate, setActiveDate] = useState<TypeOfDate>(TypeOfDate.checkIn);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -132,22 +133,22 @@ const clickToX = (id: number) => {
     {type.isFocus && <BlackFon/>}
     <div ref={containerRef} className={cn(className, "inline-flex flex-col items-center relative z-20 header-duration")}>
         <div className={cn(isScrolled?'w-[400px]':'w-[90%] lg:w-[800px] xl:w-[900px]',"dark:bg-[var(--modal-bg-color)] header-duration relative flex gap-[2px] items-center border border-[var(--line-color)] rounded-full shadow-lg  group", type.isFocus && "bg-[#d6d4d4] dark:bg-[#222] border-[var(--line-color)]")}>
-          <SearchInput clickToX={clickToX} className="w-1/3" title={!isScrolled?"Где":"Где угодно"} inputId={1} placeHolder="Поиск местности" defaultValue={""} type={type} isScrolled={isScrolled}/>
+          <SearchInput setActiveDate={setActiveDate} clickToX={clickToX} className="w-1/3" title={!isScrolled?"Где":"Где угодно"} inputId={1} placeHolder="Поиск местности" defaultValue={""} type={type} isScrolled={isScrolled}/>
           <div className="h-[30px] w-[1px] bg-[var(--line-color)]"></div>
           <div className="w-1/3 flex items-center">
             {
               !isScrolled && dateType === 1?
                 <>
-                  <SearchInput clickToX={clickToX} className="w-1/2" title={"Прибытие"} inputId={2} value={formatDate(dataFromDate.checkIn)} placeHolder="Добавить дату" disabled={true} type={type} isScrolled={isScrolled}/>
+                  <SearchInput setActiveDate={setActiveDate} clickToX={clickToX} className="w-1/2" title={"Прибытие"} inputId={2} value={formatDate(dataFromDate.checkIn)} placeHolder="Добавить дату" disabled={true} type={type} isScrolled={isScrolled}/>
                     <div className="h-[30px] w-[1px] bg-[var(--line-color)]"></div>
-                  <SearchInput clickToX={clickToX} className="w-1/2" title={"Отьезд"} inputId={3} value={formatDate(dataFromDate.checkOut)}  placeHolder="Добавить дату" disabled={true} type={type} isScrolled={isScrolled}/>
+                  <SearchInput setActiveDate={setActiveDate} clickToX={clickToX} className="w-1/2" title={"Отьезд"} inputId={3} value={formatDate(dataFromDate.checkOut)}  placeHolder="Добавить дату" disabled={true} type={type} isScrolled={isScrolled}/>
                 </>
                :
-                <SearchInput clickToX={clickToX} className="w-full" title={isScrolled?"Любое время":"Когда"} inputId={4} placeHolder="Добавить дату" value={valueForDateInput()} disabled={true} type={type} isScrolled={isScrolled}/>
+                <SearchInput setActiveDate={setActiveDate} clickToX={clickToX} className="w-full" title={isScrolled?"Любое время":"Когда"} inputId={4} placeHolder="Добавить дату" value={valueForDateInput()} disabled={true} type={type} isScrolled={isScrolled}/>
             }
           </div>
           <div className="h-[30px] w-[1px] bg-[var(--line-color)]"></div>
-          <SearchInput clickToX={clickToX} className="w-1/3" inputClassName ="w-1/2" title={!isScrolled?"Кто":"Гости"} inputId={5} placeHolder="Добавить гостей" value={questFormat()} type={type} isScrolled={isScrolled}/>
+          <SearchInput setActiveDate={setActiveDate} clickToX={clickToX} className="w-1/3" inputClassName ="w-1/2" title={!isScrolled?"Кто":"Гости"} inputId={5} placeHolder="Добавить гостей" value={questFormat()} type={type} isScrolled={isScrolled}/>
           <button
             className={cn(isScrolled?'w-[30px] h-[30px]':'w-[47px] h-[47px]',"header-duration absolute bg-[var(--primary)] flex justify-center items-center gap-2 right-2 rounded-full text-white", type.isFocus && "w-[120px]")}
             tabIndex={-1}
@@ -184,7 +185,7 @@ const clickToX = (id: number) => {
                         </div>
                       </div>
                       {
-                        dateType === 1 && <Calendars dates={dataFromDate} setDates={setDataFromDate}/> || 
+                        dateType === 1 && <Calendars activeDate={activeDate} setActiveDate={setActiveDate} dates={dataFromDate} setDates={setDataFromDate}/> || 
                         dateType === 2 && <MonthChoose/> || 
                         dateType === 3 && <FlexibleChoose/>
                       }

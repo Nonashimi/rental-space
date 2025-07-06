@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { Dates, TypeOfDate, useSearchDatasStore } from '@/store/search-datas';
+import { Dates, TypeOfDate } from '@/store/search-datas';
 import { useTypeStore } from '@/store/search-type';
 
 const monthNames = [
@@ -31,10 +31,12 @@ type Props = {
   mode?: CalendarMode;
   dataFromDate: Dates | undefined;
   setDataFromDate: (data: Dates) => void;
-  isMin?: boolean
+  isMin?: boolean,
+  activeDate?: TypeOfDate,
+  setActiveDate?: (value: TypeOfDate) => void,
 };
 
-export default function Calendar({currentMonth, currentYear, dataFromDate, setDataFromDate, mode = CalendarMode.auto, type, isMin = false}: Props) {
+export default function Calendar({currentMonth, currentYear, dataFromDate, setDataFromDate, mode = CalendarMode.auto, type, isMin = false, activeDate, setActiveDate}: Props) {
   
   const generateCalendar = () => {
     const firstDay = new Date(currentYear, currentMonth, 1).getDay();
@@ -53,13 +55,12 @@ export default function Calendar({currentMonth, currentYear, dataFromDate, setDa
 
 
   const focusType = useTypeStore();
-  const {activeDate, setActiveDate} = useSearchDatasStore();
 
 
   const autoMode = (dayDate: Date) => {
     if (activeDate === TypeOfDate.checkIn) {
       checkIn(dayDate);
-      setActiveDate(TypeOfDate.checkOut);
+      setActiveDate?.(TypeOfDate.checkOut);
       focusType.setTypeId(3);
       if(dataFromDate?.checkOut && dayDate > dataFromDate.checkOut){
         switchAll(dayDate);

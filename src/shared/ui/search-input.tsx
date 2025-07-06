@@ -17,11 +17,11 @@ type Props = {
     value?: string,
     inputClassName?: string,
     clickToX: (id: number) => void,
+    setActiveDate: (value: TypeOfDate) => void,
 }
 
-function SearchInput({placeHolder, title, type, isScrolled, inputId, className, disabled, value, inputClassName, clickToX}: Props) {
+function SearchInput({placeHolder, title, type, isScrolled, inputId, className, disabled, value, inputClassName, clickToX, setActiveDate}: Props) {
     
-    const {setActiveDate} = useSearchDatasStore();
     const {dateType} = useSearchDatasStore();
     const getClassNameInput = (id: number) => {
         return cn({"p-3": isScrolled}, {"bg-white  dark:bg-[#313030]  shadow-lg": type.isFocus && id === type.typeId}, className);
