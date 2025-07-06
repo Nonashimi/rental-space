@@ -36,18 +36,27 @@ type Props = {
   setActiveDate?: (value: TypeOfDate) => void,
 };
 
+enum flag  {
+  low = "LOW",
+  high = "HIGH",
+}
+
 export default function Calendar({currentMonth, currentYear, dataFromDate, setDataFromDate, mode = CalendarMode.auto, type, isMin = false, activeDate, setActiveDate}: Props) {
   
   const generateCalendar = () => {
     const firstDay = new Date(currentYear, currentMonth, 1).getDay();
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-    const dates: (number | null)[] = [];
+    const dates: (number | flag)[] = [];
     for (let i = 0; i < firstDay; i++) {
-      dates.push(null);
+      dates.push(flag.low);
     }
 
     for (let d = 1; d <= daysInMonth; d++) {
       dates.push(d);
+    }
+    
+    for(let i = 0; i < dates.length%7; i++){
+      dates.push(flag.high);
     }
 
     return dates;
@@ -124,13 +133,13 @@ export default function Calendar({currentMonth, currentYear, dataFromDate, setDa
 
       <div className={cn("grid grid-cols-7 text-center gap-y-2", isMin ?'text-[14px]':'')}>
         {dates.map((day, index) => {
-          const isPast = new Date(currentYear, currentMonth, day || 0).getTime() < new Date(today.setHours(0, 0, 0, 0)).getTime();
-          const dayDate = new Date(currentYear, currentMonth, day || 0);
+          const isPast = new Date(currentYear, currentMonth, typeof day === 'number'?day:0).getTime() < new Date(today.setHours(0, 0, 0, 0)).getTime();
+          const dayDate = new Date(currentYear, currentMonth, typeof day === 'number'?day:day===flag.low?0:new Date(currentYear, currentMonth + 1, 0).getDate());
           const isCheckIn = dataFromDate?.checkIn && dayDate.toDateString() === dataFromDate.checkIn.toDateString();
           const isCheckOut = dataFromDate?.checkOut && dayDate.toDateString() === dataFromDate.checkOut.toDateString();
-          const isStart = day && dataFromDate?.checkIn && dataFromDate?.checkOut && dayDate.toDateString() === dataFromDate.checkIn.toDateString();
-          const isEnd = day && dataFromDate?.checkIn && dataFromDate?.checkOut && dayDate.toDateString() === dataFromDate.checkOut.toDateString();
-          const isSelected = (isCheckIn || isCheckOut) && day;
+          const isStart = typeof day === 'number' && dataFromDate?.checkIn && dataFromDate?.checkOut && dayDate.toDateString() === dataFromDate.checkIn.toDateString();
+          const isEnd = typeof day === 'number' && dataFromDate?.checkIn && dataFromDate?.checkOut && dayDate.toDateString() === dataFromDate.checkOut.toDateString();
+          const isSelected = (isCheckIn || isCheckOut) && typeof day === 'number';
           const isInRange =dataFromDate?.checkIn && dataFromDate?.checkOut && dayDate > dataFromDate.checkIn && dayDate < dataFromDate.checkOut;
           const isSpecificMode =  mode === CalendarMode.specific;
           const limit =
@@ -146,7 +155,7 @@ export default function Calendar({currentMonth, currentYear, dataFromDate, setDa
                     {"bg-[#f7f7f7] dark:bg-[#2e2e2e]": isInRange}, 
                     {"rounded-[100%_0_0_100%] bg-[#f7f7f7] dark:bg-[#2e2e2e]": isStart},
                     {"rounded-[0_100%_100%_0] bg-[#f7f7f7] dark:bg-[#2e2e2e]": isEnd},
-                    !isMin?"min-w-[50px] min-h-[50px]":"min-w-[40px] min-h-[40px]")} key={index}>
+                    "min-w-full aspect-[1/1]")} key={index}>
               <div
                 onClick={
                     isPast || limit
@@ -166,7 +175,7 @@ export default function Calendar({currentMonth, currentYear, dataFromDate, setDa
                             }
                         )}
               >
-                {day || ''}
+                {typeof day === 'number'?day:''}
               </div>
             </div>
           );

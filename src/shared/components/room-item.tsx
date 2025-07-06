@@ -29,7 +29,7 @@ function RoomItem({ id }: Props) {
             {isOpen && <PhotosModal openShared={() => setisShareOpen(true)} roomItem = {roomItem} id={id} closeModal={() => setIsOpen(false)}/>}
             <RoomItemTop clickOpenShared={() => setisShareOpen(true)} roomItem={roomItem} id={id}/>
             <ItemGridPhotos handleOpen={() => setIsOpen(true)} roomItem={roomItem}/>
-            <div className="grid grid-cols-[2fr_1fr] gap-[70px] h-[1500px] py-8 relative">
+            <div className="grid grid-cols-[13fr_7fr] gap-[70px] h-[1500px] py-8 relative">
                 <RoomItemInformations roomItem={roomItem}/>
                 <RoomItemPrice/>
             </div>

@@ -33,6 +33,24 @@ export const RoomItemPrice = () => {
     setisOpen(false);
   }
 
+  const switchToIn = () => {
+    setActiveDate(TypeOfDate.checkIn);
+  }
+
+  const switchToOut = () => {
+    setActiveDate(TypeOfDate.checkOut);
+  }
+
+  const clickInX = () => {
+    setDates({});
+  }
+
+  const clickOutX = () => {
+    setDates((prev) => {
+      return {...prev, checkOut: null};
+    })
+  }
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -50,23 +68,23 @@ export const RoomItemPrice = () => {
                 <div className="bg-[var(--modal-bg-color)] w-full p-6 rounded-xl shadow-2xl border  border-[var(--line-color)]">
                   <p className="text-[20px] pb-5">Add dates for prices</p>
                   <div className=" border border-[var(--line-color)] rounded-lg">
-                    <div onClick={handleOpen} className="grid grid-cols-2">
+                    <div onClick={handleOpen} className="grid grid-cols-2 box-border">
                        <InputTitle  value={formatDate(dates.checkIn)} className="rounded-none px-2 col-span-1 border-r border-[var(--line-color)]" title="CHECK-IN" placeHolder="Add date"/>
                        <InputTitle  value={formatDate(dates.checkOut)} className="rounded-none px-2 col-span-1" title="CHECKOUT" placeHolder="Add date"/>
                     </div>
-                    <InputTitle className="rounded-none px-2 col-span-2 border-t border-[var(--line-color)]" title="Guests" placeHolder="add quests"/>
+                    <InputTitle className="rounded-none px-2 col-span-2 border-t border-[var(--line-color)]" title="GUESTS" placeHolder="add quests"/>
                   </div>
                   {
                     isOpen && <div ref={containerRef} className="relative z-10">
-                                <div className="absolute top-[-138px] right-[-25px] w-[650px] bg-[var(--modal-bg-color)] shadow-[0_4px_24px_rgba(0,0,0,0.6)] py-4 px-6 rounded-xl">
+                                <div className="absolute top-[-138px] right-[-39px] w-[200%] box-content bg-[var(--modal-bg-color)] shadow-[0_4px_24px_rgba(0,0,0,0.6)] py-4 px-10 rounded-xl">
                                   <div className="grid grid-cols-2">
                                     <div className="col-span-1">
                                       <p className="font-semibold text-[18px]">Select dates</p>
                                       <p className="text-[var(--text-gray-color)]">Minimum stay: 2 nights</p>
                                     </div>
                                     <div className="col-span-1 grid grid-cols-2 border border-[var(--line-color)] rounded-lg">
-                                      <InputTitle active={TypeOfDate.checkIn === activeDate} disabled={TypeOfDate.checkIn !== activeDate} value={formatDate(dates.checkIn)} className={cn("rounded-none px-2 col-span-1", {'border-r border-[var(--line-color)]':TypeOfDate.checkIn === activeDate})} title="CHECK-IN" placeHolder="Add date"/>
-                                      <InputTitle active={TypeOfDate.checkOut === activeDate} disabled={TypeOfDate.checkOut !== activeDate} value={formatDate(dates.checkOut)} className="rounded-none px-2 col-span-1" title="CHECKOUT" placeHolder="Add date"/>
+                                      <InputTitle clickToX={clickInX} onCLick={switchToIn} active={TypeOfDate.checkIn === activeDate} disabled={TypeOfDate.checkIn !== activeDate} value={formatDate(dates.checkIn)} className={cn("rounded-none px-2 col-span-1", {'border-r border-[var(--line-color)]':TypeOfDate.checkIn === activeDate})} title="CHECK-IN" placeHolder="Add date"/>
+                                      <InputTitle clickToX={clickOutX} onCLick={switchToOut} active={TypeOfDate.checkOut === activeDate} disabled={TypeOfDate.checkOut !== activeDate} value={formatDate(dates.checkOut)} className="rounded-none px-2 col-span-1" title="CHECKOUT" placeHolder="Add date"/>
                                     </div>
                                   </div>
                                   <div className="mt-5">

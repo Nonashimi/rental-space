@@ -29,7 +29,7 @@ function Calendars({dates, setDates, newCounter, CalendarType, CalendarMode, isM
   return (
     <div className="flex justify-between ">
         <ChevronLeft onClick={clickPrev} className={cn((counter - 1 == 0) ? "pointer-events-none opacity-[10%]" : "cursor-pointer")}/>
-            <div className={cn("grid grid-cols-2 mt-4", isMin?'gap-4':'gap-8')}>
+            <div className={cn("w-full h-full grid grid-cols-2 mt-4", isMin?'gap-4':'gap-8')}>
                 <Calendar activeDate={activeDate} setActiveDate={setActiveDate} dataFromDate={dates} setDataFromDate={setDates} isMin={isMin} type={CalendarType} mode={CalendarMode} date={today} currentMonth={date.getMonth()} currentYear={date.getFullYear()}/>
                 <Calendar activeDate={activeDate} setActiveDate={setActiveDate} dataFromDate={dates} setDataFromDate={setDates} isMin={isMin}  type={CalendarType} mode={CalendarMode} date={nextDate} currentMonth={nextDate.getMonth()} currentYear={nextDate.getFullYear()}/>
             </div>
