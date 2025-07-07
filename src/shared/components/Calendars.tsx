@@ -17,7 +17,7 @@ type Props = {
   setActiveDate?: (value: TypeOfDate) => void,
 }
 function Calendars({dates, setDates, newCounter, CalendarType, CalendarMode, isMin = false, activeDate, setActiveDate}: Props) {
-    const {thisPage: counter, clickNext, clickPrev} = usePagination({maxPages: 100000, newPage: newCounter});
+    const {thisPage: counter, clickNext, clickPrev} = usePagination({maxPages: 100000, currentPage: newCounter});
     const today = new Date();
       const date = useMemo(() => {
         return new Date(today.getFullYear(), today.getMonth() + counter - 1, 1);

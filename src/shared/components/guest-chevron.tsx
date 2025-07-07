@@ -1,4 +1,3 @@
-import { usePagination } from '@/hooks/usePagination';
 import { cn } from '@/lib/utils';
 import { Minus, Plus } from 'lucide-react'
 import React from 'react'

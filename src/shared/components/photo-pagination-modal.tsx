@@ -4,7 +4,6 @@ import Container, { SizeOfContainer } from "./container";
 import { RoomItemTopBtns, TypeOfTopBtns } from "./room-item-top-btns";
 import { FC, useEffect } from "react";
 import { CardItem, useCardListStore } from "@/store/cards";
-import Masonry from "react-masonry-css";
 import { usePagination } from "@/hooks/usePagination";
 import { cn } from "@/lib/utils";
 
@@ -25,7 +24,7 @@ const breakpointColumnsObj = {
 
 export const PhotoPaginationModal:FC<Props> = ({id, roomItem, closeModal, photo_id, openShared}) => {
   const images = roomItem.images;
-  const {thisPage, clickNext, clickPrev} = usePagination({maxPages: images.length, newPage: photo_id + 1});
+  const {thisPage, clickNext, clickPrev} = usePagination({maxPages: images.length, currentPage: photo_id + 1});
 
    useEffect(() => {
     document.body.classList.add("overflow-hidden");

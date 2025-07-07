@@ -65,6 +65,27 @@ export default function Calendar({currentMonth, currentYear, dataFromDate, setDa
 
   const focusType = useTypeStore();
 
+  const checkIn = (date: Date | null) => {
+      setDataFromDate({
+        ...dataFromDate,
+        checkIn: date,
+      });
+    
+  };
+
+  const checkOut = (date: Date | null) => {
+    setDataFromDate(
+      {...dataFromDate, checkOut: date}
+    );
+  };
+  const switchAll = (date: Date | null) => {
+    setDataFromDate({
+      checkIn: date,
+      checkOut: null,
+    });
+  };
+  
+
 
   const autoMode = (dayDate: Date) => {
     if (activeDate === TypeOfDate.checkIn) {
@@ -89,32 +110,22 @@ export default function Calendar({currentMonth, currentYear, dataFromDate, setDa
   const specificMode = (dayDate: Date) => {
     console.log("clicked");
     if(type && type === CalendarType.checkIn){
-      checkIn(dayDate);
+      if(dataFromDate?.checkOut){
+        const checkOutDate = new Date(dataFromDate.checkOut);
+        const maxAllowedDate = new Date(dayDate); 
+        maxAllowedDate.setFullYear(maxAllowedDate.getFullYear() + 1);
+        if (checkOutDate > maxAllowedDate) {
+          setDataFromDate({checkIn: dayDate, checkOut: maxAllowedDate});
+        }else{
+          checkIn(dayDate);
+        }
+      }else{
+        checkIn(dayDate);
+      }
     }else if(type && type === CalendarType.checkOut){
       checkOut(dayDate);
     }
-  }
-    
-  const checkIn = (date: Date | null) => {
-      setDataFromDate({
-        ...dataFromDate,
-        checkIn: date,
-      });
-    
   };
-
-  const checkOut = (date: Date | null) => {
-    setDataFromDate(
-      {...dataFromDate, checkOut: date}
-    );
-  };
-  const switchAll = (date: Date | null) => {
-    setDataFromDate({
-      checkIn: date,
-      checkOut: null,
-    });
-  };
-  
   const dates = generateCalendar();
   const today = new Date();
   return (
@@ -158,13 +169,13 @@ export default function Calendar({currentMonth, currentYear, dataFromDate, setDa
                     "min-w-full aspect-[1/1]")} key={index}>
               <div
                 onClick={
-                    isPast || limit
+                    isPast || limit || typeof day !== 'number'
                       ? undefined
                       : () => {mode === CalendarMode.auto ? autoMode(dayDate) : specificMode(dayDate)}}
                 key={`${index}-${currentMonth}`}
                 className={cn(
                             `h-full flex items-center justify-center rounded-full box-border relative z-4
-                            ${isPast || !day || limit ? 'text-[var(--text-gray-color)] pointer-events-none' : 'hover:border hover:border-black dark:hover:border-[#6e6c6c] cursor-pointer text-black'}}`,
+                            ${isPast || typeof day !== 'number' || limit ? 'text-[var(--text-gray-color)] pointer-events-none' : 'hover:border hover:border-black dark:hover:border-[#6e6c6c] cursor-pointer text-black'}}`,
                             {
                               'bg-[var(--primary)] border-none text-white': isSelected ,
                               'bg-[var(--text-gray-color)] border-none text-white pointer-events-none':  isSpecificMode &&

@@ -34,7 +34,7 @@ const btns = [
 
 
 function Search({className, isScrolled, negativeScroll, positiveScroll}: Props) {
-  const {dateType, setDateType, dataFromMonths, setDataFromMonths, setDataFromDate, dataFromDate, months: monthsData, duration, guestData, setActiveMonth, clearMonths, setDuration, clearGuestData} = useSearchDatasStore();
+  const {dateType, setDateType, dataFromMonths, setDataFromMonths, setDataFromDate, dataFromDate, months: monthsData, duration, guestData, setActiveMonth, clearMonths, setDuration, clearGuestData, setGuestData} = useSearchDatasStore();
   const type = useTypeStore();
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeDate, setActiveDate] = useState<TypeOfDate>(TypeOfDate.checkIn);
@@ -195,7 +195,7 @@ const clickToX = (id: number) => {
             {type.typeId === 5 && 
              <div className="rounded-3xl overflow-hidden w-[450px] h-[425px] ml-auto">
                 <Box className="w-full h-full overflow-y-auto">
-                  <GuestHandler/>
+                  <GuestHandler setGuestData={setGuestData} guestData={guestData}/>
                 </Box>
              </div>
             }

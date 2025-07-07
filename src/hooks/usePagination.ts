@@ -4,14 +4,15 @@ import { useState } from "react"
 
 type Props = {
     maxPages: number,
-    newPage?: number
+    currentPage?: number,
+    minPage?: number,
 }
 
-export const usePagination = ({maxPages, newPage = 1}: Props) => {
-    const [thisPage, setThisPage] = useState(newPage);
+export const usePagination = ({maxPages, currentPage = 1, minPage = 0}: Props) => {
+    const [thisPage, setThisPage] = useState(currentPage);
 
     const clickPrev = () => {
-        if (thisPage > 1) {
+        if (thisPage > minPage) {
             setThisPage(thisPage - 1);
         }
     };

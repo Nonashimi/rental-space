@@ -15,7 +15,7 @@ type Props = {
 
 function Input({className, value, variant = InputVariant.search, disabled,  ...props}: Props) {
   return (
-    <input {...props} type="text" value={value}  className={cn(
+    <input {...props} value={value}  className={cn(
         'py-5 px-7 text-[15px] box-border bg-transparent text-[var(--text-color)] transition duration-300  cursor-pointer placeholder-[var(--text-gray-color)]',
         'overflow-hidden whitespace-nowrap text-ellipsis',
         {

@@ -1,21 +1,20 @@
-import { Minus, Plus } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
-import ChevronCLick, { ChevronType } from '../ui/chevron-click'
 import { usePagination } from '@/hooks/usePagination'
-import { cn } from '@/lib/utils'
 import GuestChevron from './guest-chevron'
-import { useSearchDatasStore } from '@/store/search-datas'
+import { guestData, useSearchDatasStore } from '@/store/search-datas'
 import Modal from './modal'
 
-type Props = {}
+type Props = {
+    guestData: guestData,
+    setGuestData: (key: string, value: number) => void,
+}
 
-function GuestHandler({}: Props) {
+function GuestHandler({guestData, setGuestData}: Props) {
     const [count, setCount] = useState(0);
-    const {guestData, setGuestData} = useSearchDatasStore();
-    const adults = usePagination({maxPages: 16, newPage: 0});
-    const children = usePagination({maxPages: 16, newPage: 0});
-    const infants = usePagination({maxPages: 5, newPage: 0});
-    const pets = usePagination({maxPages: 5, newPage: 0});
+    const adults = usePagination({maxPages: 16, currentPage: 0});
+    const children = usePagination({maxPages: 16, currentPage: 0});
+    const infants = usePagination({maxPages: 5, currentPage: 0});
+    const pets = usePagination({maxPages: 5, currentPage: 0});
     const params = [
         {
             id: 1,
