@@ -2,18 +2,16 @@
 import { FC, useEffect, useRef } from "react";
 import GuestHandler from "./guest-handler";
 import Button, { VariantsOfButton } from "../ui/button";
-import { guestData } from "@/store/search-datas";
+import { useOrderDatas } from "@/store/order-datas";
 
 
 type Props = {
   isBarOpen: boolean,
-  handleGuestData: (key: string, value: number) => void,
-  guestData: guestData,
   handleBarClose: () => void,
 }
-export const RoomPriceGuestModal:FC<Props> = ({isBarOpen, handleBarClose, handleGuestData, guestData}) => {
+export const RoomPriceGuestModal:FC<Props> = ({isBarOpen, handleBarClose}) => {
   const containerRef = useRef<HTMLDivElement>(null);
-
+  const {guestDatas, setGuestData} = useOrderDatas();
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -29,7 +27,7 @@ export const RoomPriceGuestModal:FC<Props> = ({isBarOpen, handleBarClose, handle
     {
       isBarOpen && <div ref={containerRef} className="relative">
       <div className="absolute w-full bg-[var(--modal-bg-color)] top-[2px] shadow-[0_4px_24px_rgba(0,0,0,0.6)] z-10 rounded-md p-5">
-          <GuestHandler guestData={guestData} setGuestData={handleGuestData}/>
+          <GuestHandler guestData={guestDatas} setGuestData={setGuestData}/>
         <div className="flex justify-end">
           <Button onClick={handleBarClose}  className="py-2 font-semibold" variant={VariantsOfButton.transparent}><div className="underline">Close</div></Button>
         </div>

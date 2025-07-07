@@ -6,18 +6,18 @@ import Button, { VariantsOfButton } from "../ui/button"
 import { cn } from "@/lib/utils"
 import { Dates, TypeOfDate } from "@/store/search-datas"
 import { useTypeStore } from "@/store/search-type"
+import { useOrderDatas } from "@/store/order-datas"
 
 
 type Props = {
   isOpen: boolean
-  setDates: Dispatch<SetStateAction<Dates>>,
   handleClose: () => void,
   formatDate: (date: Date | null | undefined) => string,
-  dates: Dates,
 }
-export const RoomPriceCalendarModal:FC<Props> = ({isOpen, setDates, handleClose, formatDate, dates}) => {
+export const RoomPriceCalendarModal:FC<Props> = ({isOpen, handleClose, formatDate}) => {
   const [activeDate, setActiveDate] = useState<TypeOfDate>(TypeOfDate.checkIn);
   const containerRef = useRef<HTMLDivElement>(null);
+  const {dates, setDates} = useOrderDatas();
   const handleClear = () => {
       setActiveDate(TypeOfDate.checkIn);
       setDates({});
@@ -36,9 +36,7 @@ export const RoomPriceCalendarModal:FC<Props> = ({isOpen, setDates, handleClose,
   }
 
   const clickOutX = () => {
-    setDates((prev: Dates) => {
-      return {...prev, checkOut: null};
-    });
+    setDates({checkIn: dates.checkIn, checkOut: null});
   }
 
 

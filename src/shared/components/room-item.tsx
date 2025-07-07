@@ -31,11 +31,13 @@ function RoomItem({ id }: Props) {
             <ItemGridPhotos handleOpen={() => setIsOpen(true)} roomItem={roomItem}/>
             <div className="relative">
                 <div id='header-show' className="flag"></div>
-                <div className="grid grid-cols-[13fr_7fr] gap-[70px] h-[1500px] py-8">
+                <div className="grid grid-cols-[13fr_7fr] gap-[70px] py-8">
                     <RoomItemInformations roomItem={roomItem}/>
                     <RoomItemPrice price={roomItem.price}/>
                 </div>
+                <div className="h-[1px] w-full bg-[var(--line-color)]"></div>
             </div>
+            <div className="h-[700px]"></div>
         </div>
        
     );

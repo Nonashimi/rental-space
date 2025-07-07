@@ -11,10 +11,10 @@ type Props = {
 
 function GuestHandler({guestData, setGuestData}: Props) {
     const [count, setCount] = useState(0);
-    const adults = usePagination({maxPages: 16, currentPage: 0});
-    const children = usePagination({maxPages: 16, currentPage: 0});
-    const infants = usePagination({maxPages: 5, currentPage: 0});
-    const pets = usePagination({maxPages: 5, currentPage: 0});
+    const adults = usePagination({maxPages: 16, currentPage: guestData.adults});
+    const children = usePagination({maxPages: 16, currentPage: guestData.children});
+    const infants = usePagination({maxPages: 5, currentPage: guestData.infants});
+    const pets = usePagination({maxPages: 5, currentPage: guestData.pets});
     const params = [
         {
             id: 1,

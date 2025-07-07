@@ -2,9 +2,9 @@
 import { FC, useMemo, useState } from "react";
 import Button, { VariantsOfButton } from "../ui/button"
 import InputTitle from "../ui/input-title"
-import { Dates, guestData } from "@/store/search-datas";
 import { RoomPriceCalendarModal } from "./room-price-calendar-modal";
 import { RoomPriceGuestModal } from "./room-price-guest-modal";
+import { useOrderDatas } from "@/store/order-datas";
 
 
 
@@ -14,13 +14,7 @@ type Props = {
 export const RoomItemPrice:FC<Props> = ({price}) => {
   const [isOpen, setisOpen] = useState(false);
   const [isBarOpen, setIsBarOpen] = useState(false);
-  const [dates, setDates] = useState<Dates>({});
-  const [guestData, setGuestData] = useState<guestData>({
-          adults: 1,
-          children: 0,
-          infants: 0,
-          pets: 0,
-        });
+  const {dates, guestDatas:guestData} = useOrderDatas();
   const formatDate = (date: Date | null | undefined) => {
     if(date){
       return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
@@ -66,13 +60,6 @@ export const RoomItemPrice:FC<Props> = ({price}) => {
   },[ dates.checkIn, dates.checkOut]);
 
 
-  const handleGuestData = (key:string, value:number) => {
-      setGuestData((prev) => {
-        return {...prev, [key]: value};
-      })
-  }
-
-
   const handleCheckAvailability = () => {
     const el = document.getElementById("room-item-price");
     handleCalendarOpen();
@@ -100,8 +87,8 @@ export const RoomItemPrice:FC<Props> = ({price}) => {
                     <InputTitle value={questFormat()} onCLick={handleBarOpen} className="rounded-none px-2 col-span-2 border-t border-[var(--line-color)]" title="GUESTS" placeHolder="add quests"/>
                     
                   </div>
-                  <RoomPriceCalendarModal handleClose={handleCalendarClose} setDates={setDates} dates={dates} formatDate={formatDate} isOpen={isOpen}/>
-                  <RoomPriceGuestModal guestData={guestData} handleBarClose={handleBarClose} handleGuestData={handleGuestData} isBarOpen={isBarOpen}/>
+                  <RoomPriceCalendarModal handleClose={handleCalendarClose} formatDate={formatDate} isOpen={isOpen}/>
+                  <RoomPriceGuestModal handleBarClose={handleBarClose} isBarOpen={isBarOpen}/>
                   {
                     dates && dates.checkIn && dates.checkOut ?
                         <Button className="w-full rounded-full py-3 mt-4" variant={VariantsOfButton.filling}>
