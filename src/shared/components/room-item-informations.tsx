@@ -74,7 +74,7 @@ export const RoomItemInformations:FC<Props> = ({roomItem}) => {
                 </div>
                 <div className="w-full h-[1px] bg-[var(--line-color)]"></div>
             </div>
-            <div className="pb-6">
+            <div id="Amenities" className="pb-6 scroll-mt-[130px]">
                 <div className="text-[25px] font-semibold pb-3">What this place offers</div>
                 <div className="grid grid-cols-2 gap-5 py-4">
                     {         
