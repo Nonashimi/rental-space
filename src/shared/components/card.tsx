@@ -18,15 +18,15 @@ type Props = {
 const Card = ({cardItem, clickToFav, inFavList}: Props) => {
    
     const router = useRouter();
-
-    const {thisPage, clickPrev, clickNext, clickPoint} = usePagination({maxPages: cardItem.images.length});
+    const images = cardItem.rooms.flatMap(room => room.images);
+    const {thisPage, clickPrev, clickNext, clickPoint} = usePagination({maxPages: images.length});
     const defineLocation = () => {
         if(thisPage <= 3)
             return 0;
-        else if(thisPage > 3 && thisPage <= cardItem.images.length - 3)
+        else if(thisPage > 3 && thisPage <= images.length - 3)
             return thisPage - 3;
         else
-            return cardItem.images.length - 5;
+            return images.length - 5;
         
     }
 
@@ -44,7 +44,7 @@ const Card = ({cardItem, clickToFav, inFavList}: Props) => {
                 style={{ transform: `translateX(-${(thisPage - 1) * 100}%)` }}
             >
                 {
-                    cardItem.images.map((image, index) => (
+                    images.map((image, index) => (
                         <img src={image} key={index} className='w-full aspect-[4/4] flex-none  object-cover ' alt="" />
                     ))
                 }
@@ -65,7 +65,7 @@ const Card = ({cardItem, clickToFav, inFavList}: Props) => {
                         <div className=""></div>
                     }
 
-                    {thisPage !== cardItem.images.length ?
+                    {thisPage !== images.length ?
                          <ChevronCLick handleChevronBtn={clickNext} type={ChevronType.right}/>
                         :
                         <div className=""></div>
@@ -76,7 +76,7 @@ const Card = ({cardItem, clickToFav, inFavList}: Props) => {
         <div className="flex flex-col gap-[2px]">
             <div className="flex justify-between items-center  mt-2">
                 <div className="font-bold">{cardItem.place}</div>
-                <div className="flex justify-center items-center gap-1"> <Star className='fill-black' size={15}/> <div className="">{cardItem.rate}</div></div>
+                <div className="flex justify-center items-center gap-1"> <Star className='fill-black' size={15}/> <div className="">{cardItem.total_rating}</div></div>
             </div>
             <div className="text-[var(--text-gray-color)] overflow-hidden whitespace-nowrap text-ellipsis w-full text-[17px] ">{cardItem.description}</div>
             <div className="text-[var(--text-gray-color)] ">

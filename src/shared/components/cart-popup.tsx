@@ -18,15 +18,15 @@ type Props = {
 function CardPopup({cardItem, clickToFav, inFavList}: Props) {
    
     const router = useRouter();
-
-    const {thisPage, clickPrev, clickNext, clickPoint} = usePagination({maxPages: cardItem.images.length});
+    const images = cardItem.rooms.flatMap(room => room.images);
+    const {thisPage, clickPrev, clickNext, clickPoint} = usePagination({maxPages: images.length});
     const defineLocation = () => {
         if(thisPage <= 3)
             return 0;
-        else if(thisPage > 3 && thisPage <= cardItem.images.length - 3)
+        else if(thisPage > 3 && thisPage <= images.length - 3)
             return thisPage - 3;
         else
-            return cardItem.images.length - 5;
+            return images.length - 5;
         
     }
 
@@ -44,7 +44,7 @@ function CardPopup({cardItem, clickToFav, inFavList}: Props) {
                 style={{ transform: `translateX(-${(thisPage - 1) * 100}%)` }}
             >
                 {
-                    cardItem.images.map((image, index) => (
+                    images.map((image, index) => (
                         <img src={image} key={index} className='w-full h-full flex-none  object-cover ' alt="" />
                     ))
                 }
@@ -79,7 +79,7 @@ function CardPopup({cardItem, clickToFav, inFavList}: Props) {
                         <div className=""></div>
                     }
 
-                    {thisPage !== cardItem.images.length ?
+                    {thisPage !== images.length ?
                          <ChevronCLick handleChevronBtn={clickNext} type={ChevronType.right}/>
                         :
                         <div className=""></div>
@@ -90,7 +90,7 @@ function CardPopup({cardItem, clickToFav, inFavList}: Props) {
         <div className="flex flex-col p-2 ">
             <div className="flex justify-between">
                 <div className="font-bold text-[15px] text-[var(--text-color)]">{cardItem.place}</div>
-                <div className="flex gap-1 text-[var(--text-color)]"> <StarIcon className='fill-black' size={15}/> {cardItem.rate}</div>
+                <div className="flex gap-1 text-[var(--text-color)]"> <StarIcon className='fill-black' size={15}/> {cardItem.total_rating}</div>
             </div>
             <div className="flex gap-[2px] items-center text-[15px]">
                 <div className="text-[var(--text-color)]">

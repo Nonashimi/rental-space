@@ -11,13 +11,15 @@ type Props = {
 }
 
 function PointersCard({defineLocation, cardItem, clickPoint, thisPage,defineSize}: Props) {
+    const images = cardItem.rooms.flatMap(room => room.images);
+
   return (
     <div className="absolute bottom-4 left-[50%] translate-x-[-50%] w-[75px] overflow-hidden">
                 <div 
                 className="flex gap-[10px] w-[160px] transition-all duration-300"
                 style={{ transform: `translateX(-${defineLocation() * 17}px)` }}
                 >
-                    {Array.from({ length: cardItem.images.length}).map((_, index) => (
+                    {Array.from({ length: images.length}).map((_, index) => (
                         <div
                             onClick={(e) => {
                                 e.stopPropagation();

@@ -23,7 +23,7 @@ const breakpointColumnsObj = {
 };
 
 export const PhotoPaginationModal:FC<Props> = ({id, roomItem, closeModal, photo_id, openShared}) => {
-  const images = roomItem.images;
+  const images = roomItem.rooms.flatMap(room => room.images);
   const {thisPage, clickNext, clickPrev} = usePagination({maxPages: images.length, currentPage: photo_id + 1});
 
    useEffect(() => {

@@ -12,6 +12,7 @@ type Props = {
 
 export const SharedModal:FC<Props> = ({handleClose, roomItem}) => {
   const [isCopied, setIsCopied] = useState(false);
+  const images = roomItem.rooms.flatMap(room => room.images);
   const handleClick = (text:string) => {
       const href = window.location.href;
       const encodedUrl = encodeURIComponent(href);
@@ -58,7 +59,7 @@ export const SharedModal:FC<Props> = ({handleClose, roomItem}) => {
   return <Modal clickClose={handleClose} title='Share this place'>
             <div className="p-5 flex flex-col gap-6 relative">
                 <div className="grid grid-cols-8 items-center gap-3">
-                    <img className='col-span-1 rounded-xl' src={roomItem.images[0]} alt="" />
+                    <img className='col-span-1 rounded-xl' src={images[0]} alt="" />
                     <div className="col-span-7">{roomItem.place}</div>
                 </div>
                 <div className="grid grid-cols-6 gap-3">

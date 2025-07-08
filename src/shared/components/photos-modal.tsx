@@ -22,7 +22,7 @@ const breakpointColumnsObj = {
 };
 
 export const PhotosModal:FC<Props> = ({id, roomItem, closeModal, openShared}) => {
-  const images = roomItem.images;
+  const images = roomItem.rooms.flatMap(room => room.images);
   const [deep, setDeep] = useState({isOpen: false, id: -1});
   const close = () => {
     setDeep({id: -1, isOpen: false});
@@ -50,7 +50,7 @@ export const PhotosModal:FC<Props> = ({id, roomItem, closeModal, openShared}) =>
             className="flex gap-4"
             columnClassName="space-y-4"
           >
-            {images.map((src, i) => (
+            {images.map((src:string, i:number) => (
               <div onClick={() => open(i)} key={i} className="bg-black">
                 <img
                   src={src}

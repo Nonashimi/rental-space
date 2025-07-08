@@ -9,6 +9,7 @@ import { useMapEvent } from "react-leaflet";
 import { CustomMarker } from "./custom-marker";
 import { useZoom } from "@/hooks/useZoom";
 import { useDarkMode } from "@/hooks/useDarkMode";
+import { cn } from "@/lib/utils";
 
 const MapContainer = dynamic(() => import("react-leaflet").then((mod) => mod.MapContainer), { ssr: false });
 const TileLayer = dynamic(() => import("react-leaflet").then((mod) => mod.TileLayer), { ssr: false });
@@ -19,9 +20,10 @@ type Props = {
   cardList: CardItem[],
   activeId?: number,
   mapCenter?: [number, number],
+  className?: string,
 }
 
-export default function ApartmentMap({cardList, activeId, mapCenter = [0, 0]}: Props) {
+export default function ApartmentMap({cardList, activeId, mapCenter = [0, 0], className}: Props) {
   const [geoData, setGeoData] = useState<any>(null);
   const [minDestination, setMinDestination] = useState<number>(10.5);
   const {ClusterMarkers} = useClustering(cardList, minDestination);
@@ -115,7 +117,7 @@ export default function ApartmentMap({cardList, activeId, mapCenter = [0, 0]}: P
   return (
     <div className="flex flex-col flex-1 h-full" onClick={(e) => handleMapCLick(e)}>
       <MapContainer
-        className="flex-1"
+        className={cn("flex-1", className)}
         center={mapCenter}
         zoom={zoom}
         style={{ width: "100%", zIndex: "0", backgroundColor: darkMode ? '#1e1e1e' : '#f2f2f2' }}

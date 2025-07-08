@@ -8,7 +8,7 @@ type Props = {
   roomItem: CardItem
 }
 export const ItemGridPhotos:FC<Props> = ({handleOpen, roomItem}) => {
-    const images = roomItem.images.slice(0, 5);
+    const images = roomItem.rooms.flatMap(room => room.images).slice(0, 5);
   return <div id="Photos" className="relative scroll-mt-[200px]">
             <div className="grid grid-cols-4 gap-2">
               <div onClick={handleOpen} className="cursor-pointer col-span-2 row-span-2 aspect-square rounded-tl-2xl rounded-bl-2xl overflow-hidden">
