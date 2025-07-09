@@ -17,7 +17,7 @@ export const useToaster = () => {
     if (toaster === TypeOfToaster.noneOfThem) return;
 
     let title = favBlockList.find(el => el.id === lastEditList)?.title;
-    let image = cards.cardList.find(el => el.id === currentCard)?.images[0];
+    let image = cards.cardList.find(el => el.id === currentCard)?.rooms[0].images[0];
 
     switch (toaster) {
       case TypeOfToaster.ItemAddedOrChanged:

@@ -26,7 +26,7 @@ function PointersCard({defineLocation, cardItem, clickPoint, thisPage,defineSize
                                 clickPoint(index + 1)}}
                             key={index}
                             className={cn(
-                                "w-[7px] h-[7px] rounded-full",
+                                "min-w-[7px] aspect-square rounded-full",
                                 index + 1 === thisPage ? "bg-white" : "bg-[#bebbb5]"
                             )}
                             style={{transform: `scale(${defineSize(index)})`}}

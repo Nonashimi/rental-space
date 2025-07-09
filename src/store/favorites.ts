@@ -14,7 +14,7 @@ const favBlocks: FavBlock[] = [
   {
     id: 3,
     title: "Любимый спорт",
-    favoriteItems: [10, 9],
+    favoriteItems: [9],
   },
 ];
 
