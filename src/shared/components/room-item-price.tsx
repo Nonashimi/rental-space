@@ -4,17 +4,20 @@ import Button, { VariantsOfButton } from "../ui/button"
 import InputTitle from "../ui/input-title"
 import { RoomPriceCalendarModal } from "./room-price-calendar-modal";
 import { RoomPriceGuestModal } from "./room-price-guest-modal";
-import { useOrderDatas } from "@/store/order-datas";
+import { Dates, guestData } from "@/store/search-datas";
 
 
 
 type Props = {
-  price: number
+  price: number,
+  dates: Dates,
+  guestDatas: guestData,
+  setDates: (dates: Dates) => void,
+  setGuestData: (key: string, value: number) => void,
 }
-export const RoomItemPrice:FC<Props> = ({price}) => {
+export const RoomItemPrice:FC<Props> = ({price, dates, guestDatas: guestData, setGuestData, setDates}) => {
   const [isOpen, setisOpen] = useState(false);
   const [isBarOpen, setIsBarOpen] = useState(false);
-  const {dates, guestDatas:guestData} = useOrderDatas();
   const formatDate = (date: Date | null | undefined) => {
     if(date){
       return `${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`;
@@ -87,8 +90,8 @@ export const RoomItemPrice:FC<Props> = ({price}) => {
                     <InputTitle value={questFormat()} onCLick={handleBarOpen} className="rounded-none px-2 col-span-2 border-t border-[var(--line-color)]" title="GUESTS" placeHolder="add quests"/>
                     
                   </div>
-                  <RoomPriceCalendarModal handleClose={handleCalendarClose} formatDate={formatDate} isOpen={isOpen}/>
-                  <RoomPriceGuestModal handleBarClose={handleBarClose} isBarOpen={isBarOpen}/>
+                  <RoomPriceCalendarModal dates={dates} setDates={setDates} handleClose={handleCalendarClose} formatDate={formatDate} isOpen={isOpen}/>
+                  <RoomPriceGuestModal guestDatas={guestData} setGuestData={setGuestData} handleBarClose={handleBarClose} isBarOpen={isBarOpen}/>
                   {
                     dates && dates.checkIn && dates.checkOut ?
                         <Button className="w-full rounded-full py-3 mt-4" variant={VariantsOfButton.filling}>

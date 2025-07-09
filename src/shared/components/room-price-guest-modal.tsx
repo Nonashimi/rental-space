@@ -2,16 +2,17 @@
 import { FC, useEffect, useRef } from "react";
 import GuestHandler from "./guest-handler";
 import Button, { VariantsOfButton } from "../ui/button";
-import { useOrderDatas } from "@/store/order-datas";
+import { guestData } from "@/store/search-datas";
 
 
 type Props = {
   isBarOpen: boolean,
   handleBarClose: () => void,
+  guestDatas: guestData,
+  setGuestData: (key: string, value: number) => void,
 }
-export const RoomPriceGuestModal:FC<Props> = ({isBarOpen, handleBarClose}) => {
+export const RoomPriceGuestModal:FC<Props> = ({isBarOpen, handleBarClose, guestDatas, setGuestData}) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const {guestDatas, setGuestData} = useOrderDatas();
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {

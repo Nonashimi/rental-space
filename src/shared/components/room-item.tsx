@@ -10,6 +10,7 @@ import { ItemGridPhotos } from './item-grid-photos'
 import { RoomItemInformations } from './room-item-informations'
 import { RoomItemPrice } from './room-item-price'
 import ApartmentMap from './apartment-map'
+import { useRoomInformation } from '@/hooks/useRoomInformation'
 
 type Props = {
     id: number
@@ -19,7 +20,7 @@ function RoomItem({ id }: Props) {
     const roomItem = useCardListStore().cardList.find(el => el.id === id)!;
     const [isOpen, setIsOpen] = useState(false);
     const [isShareOpen, setisShareOpen] = useState(false);
-    
+    const {guestDatas, setDates, handleGuestDatas: setGuestData, dates} = useRoomInformation();
     useToaster();
     return (
         <div className="">
@@ -33,8 +34,8 @@ function RoomItem({ id }: Props) {
             <div className="relative">
                 <div id='header-show' className="flag"></div>
                 <div className="grid grid-cols-[13fr_7fr] gap-[70px] py-8">
-                    <RoomItemInformations roomItem={roomItem}/>
-                    <RoomItemPrice price={roomItem.price}/>
+                    <RoomItemInformations dates={dates} setDates={setDates} roomItem={roomItem}/>
+                    <RoomItemPrice guestDatas={guestDatas} setDates={setDates} dates={dates} setGuestData={setGuestData} price={roomItem.price}/>
                 </div>
                 <div className="h-[1px] w-full bg-[var(--line-color)]"></div>
             </div>

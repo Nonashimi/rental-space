@@ -1,23 +1,22 @@
 'use client'
-import { Dispatch, FC, SetStateAction, useEffect, useRef, useState } from "react"
+import { FC, useEffect, useRef, useState } from "react"
 import InputTitle from "../ui/input-title"
 import Calendars from "./Calendars"
 import Button, { VariantsOfButton } from "../ui/button"
 import { cn } from "@/lib/utils"
 import { Dates, TypeOfDate } from "@/store/search-datas"
-import { useTypeStore } from "@/store/search-type"
-import { useOrderDatas } from "@/store/order-datas"
 
 
 type Props = {
   isOpen: boolean
   handleClose: () => void,
   formatDate: (date: Date | null | undefined) => string,
+  dates: Dates, 
+  setDates: (dates: Dates) => void,
 }
-export const RoomPriceCalendarModal:FC<Props> = ({isOpen, handleClose, formatDate}) => {
+export const RoomPriceCalendarModal:FC<Props> = ({isOpen, handleClose, formatDate, dates, setDates}) => {
   const [activeDate, setActiveDate] = useState<TypeOfDate>(TypeOfDate.checkIn);
   const containerRef = useRef<HTMLDivElement>(null);
-  const {dates, setDates} = useOrderDatas();
   const handleClear = () => {
       setActiveDate(TypeOfDate.checkIn);
       setDates({});

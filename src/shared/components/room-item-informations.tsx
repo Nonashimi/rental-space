@@ -1,20 +1,20 @@
 import { CardItem, groupedAmenitiesArray } from "@/store/cards"
-import { useOrderDatas } from "@/store/order-datas"
 import { Star } from "lucide-react"
 import { FC, useMemo, useState } from "react"
 import Calendars from "./Calendars"
 import Button, { VariantsOfButton } from "../ui/button"
-import { TypeOfDate } from "@/store/search-datas"
+import { Dates, TypeOfDate } from "@/store/search-datas"
 import Modal, { TypeOfModal } from "./modal"
 
 
 type Props = {
   roomItem: CardItem
+  dates: Dates,
+  setDates: (dates: Dates) => void,
 }
 
-export const RoomItemInformations:FC<Props> = ({roomItem}) => {
+export const RoomItemInformations:FC<Props> = ({roomItem, dates, setDates}) => {
   const comments = 0;
-  const {dates, setDates} = useOrderDatas();
   const [activeDate, setActiveDate] = useState<TypeOfDate>(TypeOfDate.checkIn);
     const [isOpen, setIsOpen] = useState(false);
     const fullCount = useMemo(() => {
