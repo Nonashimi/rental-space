@@ -27,7 +27,7 @@ export const RoomPriceGuestModal:FC<Props> = ({isBarOpen, handleBarClose, guestD
   return <>
     {
       isBarOpen && <div ref={containerRef} className="relative">
-      <div className="absolute w-full bg-[var(--modal-bg-color)] top-[2px] shadow-[0_4px_24px_rgba(0,0,0,0.6)] z-10 rounded-md p-5">
+      <div className="absolute z-10 w-full bg-[var(--modal-bg-color)] top-[2px] shadow-[0_4px_24px_rgba(0,0,0,0.6)] rounded-md p-5">
           <GuestHandler guestData={guestDatas} setGuestData={setGuestData}/>
         <div className="flex justify-end">
           <Button onClick={handleBarClose}  className="py-2 font-semibold" variant={VariantsOfButton.transparent}><div className="underline">Close</div></Button>

@@ -1,6 +1,7 @@
+'use client'
 import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { cn } from '@/lib/utils';
 
 type Props = {
@@ -30,6 +31,12 @@ export enum SizeForModal {
 }
 function Modal({ title, clickClose, children, size = SizeForModal.lg, type = TypeOfModal.default, className }: Props) {
 
+  useEffect(() => {
+    document.body.classList.add("overflow-hidden");
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, []);
   return (
     <div className={cn("bg-[#00000062] fixed z-50 top-0 left-0 right-0 bottom-0 flex justify-center items-center", className)}>
       <AnimatePresence>

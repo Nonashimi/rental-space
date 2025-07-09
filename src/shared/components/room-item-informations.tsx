@@ -63,7 +63,7 @@ export const RoomItemInformations:FC<Props> = ({roomItem, dates, setDates}) => {
                     }
                 </div>
             </div>
-            <div className="my-6">
+            <div className="py-6">
                 <div className="w-full h-[1px] bg-[var(--line-color)]"></div>
                 <div className="flex gap-7 items-center py-4">
                     <img className='w-[40px] h-[40px] rounded-full' src="https://static.vecteezy.com/system/resources/thumbnails/036/324/708/small/ai-generated-picture-of-a-tiger-walking-in-the-forest-photo.jpg" alt="" />
