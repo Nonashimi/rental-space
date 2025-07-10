@@ -63,18 +63,18 @@ export const RoomItemInformations:FC<Props> = ({roomItem, dates, setDates}) => {
                     }
                 </div>
             </div>
-            <div className="py-6">
-                <div className="w-full h-[1px] bg-[var(--line-color)]"></div>
-                <div className="flex gap-7 items-center py-4">
+            <div className="">
+                <div className="w-full h-[1px] bg-[var(--line-color)] my-6"></div>
+                <div className="flex gap-7 items-center">
                     <img className='w-[40px] h-[40px] rounded-full' src="https://static.vecteezy.com/system/resources/thumbnails/036/324/708/small/ai-generated-picture-of-a-tiger-walking-in-the-forest-photo.jpg" alt="" />
                     <div className="flex flex-col">
                         <div className="text-[16px] font-semibold">Hosted bt Olzhas</div>
                         <div className="text-[14px] text-gray-500">4 moths hosting</div>
                     </div>
                 </div>
-                <div className="w-full h-[1px] bg-[var(--line-color)]"></div>
+                <div className="w-full h-[1px] bg-[var(--line-color)] my-6"></div>
             </div>
-            <div id="Amenities" className="pb-6 scroll-mt-[130px]">
+            <div id="Amenities" className="scroll-mt-[130px]">
                 <div className="text-[25px] font-semibold pb-3">What this place offers</div>
                 <div className="grid grid-cols-2 gap-5 py-4">
                     {         
@@ -97,9 +97,8 @@ export const RoomItemInformations:FC<Props> = ({roomItem, dates, setDates}) => {
                     roomItem.amenities.length > 4 && <Button onClick={() => setIsOpen(true)} className="py-3 px-6">Show all {roomItem.amenities.length} amenities</Button>
                 }
             </div>
-            <div className="w-full h-[1px] bg-[var(--line-color)]"></div>
-
-            <div className="pt-6">
+            <div className="w-full h-[1px] bg-[var(--line-color)] my-10"></div>
+            <div className="">
                 <div className="pb-3">
                     <div className="text-[25px] font-semibold">
                         {

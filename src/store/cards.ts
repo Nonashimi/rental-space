@@ -492,7 +492,7 @@ export const useCardListStore = create<State>((set) => ({
     total_rating: 4.9,
     coordinates: { lat: 43.2389, lng: 76.8897 },
     owner_id: 101,
-    reviews: [1, 2, 3],
+    reviews: [1, 2, 3, 4, 5, 6, 7],
     rooms: [{ id: 1, title: "Спальня", images: images }],
     amenities: [
       101, 102, 103, 301, 401
@@ -520,7 +520,7 @@ export const useCardListStore = create<State>((set) => ({
     total_rating: 4.83,
     coordinates: { lat: 41.7151, lng: 44.8271 },
     owner_id: 102,
-    reviews: [4, 5],
+    reviews: [4, 5, 17, 14, 13, 11],
     rooms: [
       { id: 2, title: "Гостиная", images: images },
       { id: 3, title: "Кухня", images: images },

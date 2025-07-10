@@ -8,6 +8,7 @@ export const RoomItemHeader = () => {
         {id: 'Photos'},
         {id: 'Amenities'},
         {id: 'Location'},
+        {id: 'Reviews'},
     ]
 
     const handleAnchor = (id: string) => {
