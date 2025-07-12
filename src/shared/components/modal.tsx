@@ -26,7 +26,8 @@ export enum SizeForModal {
   md = 'w-[400px]',
   lg = 'w-[550px]',
   xl = "w-[750px]",
-  xxl= "w-[900px]"
+  xxl= "w-[900px]",
+  xxxl= 'w-[1100px]',
   
 }
 function Modal({ title, clickClose, children, size = SizeForModal.lg, type = TypeOfModal.default, className }: Props) {

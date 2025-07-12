@@ -11,7 +11,7 @@ import { RoomItemInformations } from './room-item-informations'
 import { RoomItemPrice } from './room-item-price'
 import ApartmentMap from './apartment-map'
 import { useRoomInformation } from '@/hooks/useRoomInformation'
-import { RoomReviews } from './room-rating'
+import { RoomReviews } from './room-rating-part'
 
 type Props = {
     id: number
@@ -28,6 +28,9 @@ function RoomItem({ id }: Props) {
             <FavModals/>
             {   
                 isShareOpen && <SharedModal roomItem={roomItem} handleClose={()=> setisShareOpen(false)}/>
+            }
+            {
+                
             }
             {isOpen && <PhotosModal openShared={() => setisShareOpen(true)} roomItem = {roomItem} id={id} closeModal={() => setIsOpen(false)}/>}
             <RoomItemTop clickOpenShared={() => setisShareOpen(true)} roomItem={roomItem} id={id}/>

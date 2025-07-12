@@ -9,7 +9,25 @@ export enum MarkerCondition  {
   VISITED = "marker-visited",
 }
 
-export const reviews = [
+export type Review = {
+    id: number,
+    user_id: number,
+    user_name: string,
+    user_avatar: string,
+    rating: {
+      Cleanliness: number,
+      Accuracy: number,
+      Check_in: number,
+      Communication: number,
+      Location: number,
+      Value: number,
+    },
+    comment: string,
+    created_at: string,  
+    images: [string?],
+}
+
+export const reviews:Review[] = [
   {
     id: 1,
     user_id: 42,
@@ -489,7 +507,7 @@ export const useCardListStore = create<State>((set) => ({
       Location: 4.7,
       Value: 4.8,
     },
-    total_rating: 4.9,
+    total_rating: 5,
     coordinates: { lat: 43.2389, lng: 76.8897 },
     owner_id: 101,
     reviews: [1, 2, 3, 4, 5, 6, 7],
