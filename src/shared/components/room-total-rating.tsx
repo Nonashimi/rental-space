@@ -46,7 +46,7 @@ export const RoomTotalRating:FC<Props> = ({roomItem, inModal}) => {
         <Star className='fill-[var(--text-color)]'/>
         <div className="">{roomItem.total_rating}</div>
         {
-          inModal &&  <div className="flex items-center">
+          !inModal &&  <div className="flex items-center">
             <Dot/>
             <div className="">{roomItem.reviews.length} reviews</div>
         </div>

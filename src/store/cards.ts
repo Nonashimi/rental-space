@@ -25,7 +25,32 @@ export type Review = {
     comment: string,
     created_at: string,  
     images: [string?],
+    responses: number[],
 }
+
+
+export type Response = {
+  id: number,
+  owner_id: number,
+  created_at: string,
+  message: string,
+}
+
+
+export const response:Response[] = [
+  {
+    id: 1,
+    owner_id: 1,
+    created_at: '2025-07-06T13:30:00Z',
+    message: 'Спасибо большое за ваш добрый отзыв, Иван! 😊 Нам очень приятно, что вам понравилось. Всегда рады видеть вас снова — возвращайтесь в любое время!',
+  },
+  {
+    id: 2,
+    owner_id: 2,
+    created_at: '2025-07-06T13:30:00Z',
+    message: 'Спасибо большое за ваш добрый отзыв',
+  }
+]
 
 export const reviews:Review[] = [
   {
@@ -44,6 +69,7 @@ export const reviews:Review[] = [
     comment: "Отличное место! Всё чисто и удобно. Обязательно вернусь.",
     created_at: "2025-07-05T14:30:00Z",
     images: ["https://example.com/review1.jpg"],
+    responses: [1],
   },
   {
     id: 2,
@@ -61,6 +87,7 @@ export const reviews:Review[] = [
     comment: "Всё понравилось, кроме немного шумных соседей.",
     created_at: "2025-06-28T11:00:00Z",
     images: [],
+    responses: []
   },
   {
     id: 3,
@@ -78,6 +105,7 @@ export const reviews:Review[] = [
     comment: "Просто сказка! Спасибо хозяевам!",
     created_at: "2025-07-01T09:45:00Z",
     images: [],
+    responses: []
   },
   {
     id: 4,
@@ -95,6 +123,7 @@ export const reviews:Review[] = [
     comment: "Удобное расположение, немного пыльно было.",
     created_at: "2025-07-02T16:20:00Z",
     images: [],
+    responses: []
   },
   {
     id: 5,
@@ -112,6 +141,8 @@ export const reviews:Review[] = [
     comment: "Всё супер, кроме трудностей с парковкой.",
     created_at: "2025-07-03T08:00:00Z",
     images: [],
+    responses: []
+
   },
   {
     id: 6,
@@ -129,6 +160,7 @@ export const reviews:Review[] = [
     comment: "Хозяйка очень гостеприимна! Рекомендую.",
     created_at: "2025-07-03T10:00:00Z",
     images: ["https://example.com/review6.jpg"],
+    responses: []
   },
   {
     id: 7,
@@ -146,6 +178,7 @@ export const reviews:Review[] = [
     comment: "Очень удобное расположение, но немного шумно ночью.",
     created_at: "2025-07-04T12:15:00Z",
     images: [],
+    responses: []
   },
   {
     id: 8,
@@ -163,6 +196,7 @@ export const reviews:Review[] = [
     comment: "Все было отлично! Спасибо большое!",
     created_at: "2025-07-05T08:45:00Z",
     images: [],
+    responses: []
   },
   {
     id: 9,
@@ -180,6 +214,7 @@ export const reviews:Review[] = [
     comment: "Красивое место, рядом много кафе и магазинов.",
     created_at: "2025-07-06T13:30:00Z",
     images: [],
+    responses: []
   },
   {
     id: 10,
@@ -197,6 +232,7 @@ export const reviews:Review[] = [
     comment: "10 из 10! Обязательно вернусь!",
     created_at: "2025-07-06T18:00:00Z",
     images: ["https://example.com/review10.jpg"],
+    responses: []
   },
   {
     id: 11,
@@ -214,6 +250,7 @@ export const reviews:Review[] = [
     comment: "Хорошее жилье, но хотелось бы чуть лучше чистоту.",
     created_at: "2025-07-07T07:30:00Z",
     images: [],
+    responses: []
   },
   {
     id: 12,
@@ -231,6 +268,7 @@ export const reviews:Review[] = [
     comment: "Очень уютно и атмосферно!",
     created_at: "2025-07-07T09:00:00Z",
     images: [],
+    responses: []
   },
   {
     id: 13,
@@ -248,6 +286,7 @@ export const reviews:Review[] = [
     comment: "Немного старый ремонт, но в целом хорошо.",
     created_at: "2025-07-07T12:00:00Z",
     images: [],
+    responses: []
   },
   {
     id: 14,
@@ -265,6 +304,7 @@ export const reviews:Review[] = [
     comment: "Просто идеальное место! Спасибо!",
     created_at: "2025-07-07T15:45:00Z",
     images: [],
+    responses: []
   },
   {
     id: 15,
@@ -282,6 +322,7 @@ export const reviews:Review[] = [
     comment: "Подходит для семейного отдыха. Рядом тихо.",
     created_at: "2025-07-07T19:10:00Z",
     images: [],
+    responses: []
   },
   {
     id: 16,
@@ -299,6 +340,7 @@ export const reviews:Review[] = [
     comment: "Очень понравилось! Всё как на фото.",
     created_at: "2025-07-08T10:30:00Z",
     images: [],
+    responses: []
   },
   {
     id: 17,
@@ -316,6 +358,7 @@ export const reviews:Review[] = [
     comment: "Всё очень удобно, особенно понравилась терраса.",
     created_at: "2025-07-08T14:00:00Z",
     images: ["https://example.com/review17.jpg"],
+    responses: []
   }
 ];
 
@@ -538,7 +581,7 @@ export const useCardListStore = create<State>((set) => ({
     total_rating: 4.83,
     coordinates: { lat: 41.7151, lng: 44.8271 },
     owner_id: 102,
-    reviews: [4, 5, 17, 14, 13, 11],
+    reviews: [4, 5, 17, 14, 13, 11, 15],
     rooms: [
       { id: 2, title: "Гостиная", images: images },
       { id: 3, title: "Кухня", images: images },
@@ -569,7 +612,7 @@ export const useCardListStore = create<State>((set) => ({
     total_rating: 4.88,
     coordinates: { lat: -8.4095, lng: 115.1889 },
     owner_id: 103,
-    reviews: [],
+    reviews: [4, 5, 17, 14, 13, 11, 15],
     rooms: [
       { id: 4, title: "Спальня 1", images: images },
       { id: 5, title: "Спальня 2", images: images },
@@ -632,7 +675,7 @@ export const useCardListStore = create<State>((set) => ({
     total_rating: 4.67,
     coordinates: { lat: 41.3851, lng: 2.1734 },
     owner_id: 105,
-    reviews: [],
+    reviews: [4, 5, 17, 14, 13, 11, 15],
     rooms: [{ id: 9, title: "Кухня", images: images }],
     amenities: [
       105, 201, 301, 401, 803
@@ -690,7 +733,7 @@ export const useCardListStore = create<State>((set) => ({
     total_rating: 4.68,
     coordinates: { lat: 52.52, lng: 13.405 },
     owner_id: 107,
-    reviews: [],
+    reviews: [4, 5, 17, 14, 13, 11, 15],
     rooms: [
       { id: 11, title: "Студия", images: images },
     ],
@@ -720,7 +763,7 @@ export const useCardListStore = create<State>((set) => ({
     total_rating: 4.76,
     coordinates: { lat: 50.0755, lng: 14.4378 },
     owner_id: 108,
-    reviews: [],
+    reviews: [4, 5, 17, 14, 13, 11, 15],
     rooms: [{ id: 12, title: "Спальня", images: images }],
     amenities: [
             105, 201, 301, 401, 803
@@ -748,7 +791,7 @@ export const useCardListStore = create<State>((set) => ({
     total_rating: 4.85,
     coordinates: { lat: 3.139, lng: 101.6869 },
     owner_id: 109,
-    reviews: [],
+    reviews: [4, 5, 17, 14, 13, 11, 15],
     rooms: [{ id: 13, title: "Гостиная", images: images }],
     amenities: [
             105, 201, 301, 401, 803
@@ -777,7 +820,7 @@ export const useCardListStore = create<State>((set) => ({
     total_rating: 4.88,
     coordinates: { lat: 38.7169, lng: -9.1399 },
     owner_id: 110,
-    reviews: [],
+    reviews: [4, 5, 17, 14, 13, 11, 15],
     rooms: [{ id: 14, title: "Спальня", images: images }],
     amenities: [
             105, 201, 301, 401, 803
@@ -805,7 +848,7 @@ export const useCardListStore = create<State>((set) => ({
   total_rating: 4.83,
   coordinates: { lat: 41.9028, lng: 12.4964 },
   owner_id: 111,
-  reviews: [],
+  reviews: [4, 5, 17, 14, 13, 11, 15],
   rooms: [{ id: 15, title: "Спальня", images }],
   amenities: [105, 201, 301],
   settings: { maxGuest: 3, minDayOrder: 2, havePet: true },
@@ -827,7 +870,7 @@ export const useCardListStore = create<State>((set) => ({
   total_rating: 4.75,
   coordinates: { lat: 41.0082, lng: 28.9784 },
   owner_id: 112,
-  reviews: [],
+  reviews: [4, 5, 17, 14, 13, 11, 15],
   rooms: [{ id: 16, title: "Гостиная", images }],
   amenities: [102, 104, 401],
   settings: { maxGuest: 2, minDayOrder: 1, havePet: false },
@@ -849,7 +892,7 @@ export const useCardListStore = create<State>((set) => ({
   total_rating: 4.95,
   coordinates: { lat: 40.7128, lng: -74.006 },
   owner_id: 113,
-  reviews: [],
+  reviews: [4, 5, 17, 14, 13, 11, 15],
   rooms: [{ id: 17, title: "Студия", images }],
   amenities: [105, 201, 301, 401],
   settings: { maxGuest: 2, minDayOrder: 3, havePet: false },
@@ -871,7 +914,7 @@ export const useCardListStore = create<State>((set) => ({
   total_rating: 4.9,
   coordinates: { lat: 25.2048, lng: 55.2708 },
   owner_id: 114,
-  reviews: [],
+  reviews: [4, 5, 17, 14, 13, 11, 15],
   rooms: [{ id: 18, title: "Спальня", images }],
   amenities: [105, 102, 801],
   settings: { maxGuest: 3, minDayOrder: 2, havePet: false },
@@ -893,7 +936,7 @@ export const useCardListStore = create<State>((set) => ({
   total_rating: 4.73,
   coordinates: { lat: -33.9249, lng: 18.4241 },
   owner_id: 115,
-  reviews: [],
+  reviews: [4, 5, 17, 14, 13, 11, 15],
   rooms: [{ id: 19, title: "Гостиная", images }],
   amenities: [105, 202, 803],
   settings: { maxGuest: 4, minDayOrder: 2, havePet: true },
@@ -915,7 +958,7 @@ export const useCardListStore = create<State>((set) => ({
   total_rating: 4.87,
   coordinates: { lat: 49.2827, lng: -123.1207 },
   owner_id: 116,
-  reviews: [],
+  reviews: [4, 5, 17, 14, 13, 11, 15],
   rooms: [{ id: 20, title: "Спальня", images }],
   amenities: [105, 104, 102, 803],
   settings: { maxGuest: 2, minDayOrder: 1, havePet: false },
@@ -937,7 +980,7 @@ export const useCardListStore = create<State>((set) => ({
   total_rating: 4.77,
   coordinates: { lat: 59.9139, lng: 10.7522 },
   owner_id: 117,
-  reviews: [],
+  reviews: [4, 5, 17, 14, 13, 11, 15],
   rooms: [{ id: 21, title: "Студия", images }],
   amenities: [101, 102, 104, 803],
   settings: { maxGuest: 2, minDayOrder: 2, havePet: true },
@@ -959,7 +1002,7 @@ export const useCardListStore = create<State>((set) => ({
   total_rating: 4.9,
   coordinates: { lat: 37.5665, lng: 126.978 },
   owner_id: 118,
-  reviews: [],
+  reviews: [4, 5, 17, 14, 13, 11, 15],
   rooms: [{ id: 22, title: "Гостиная", images }],
   amenities: [105, 104, 102, 201],
   settings: { maxGuest: 3, minDayOrder: 3, havePet: false },

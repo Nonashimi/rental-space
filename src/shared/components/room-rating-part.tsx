@@ -1,12 +1,10 @@
 import { CardItem, reviews } from "@/store/cards";
-import { CircleCheck, Dot, House, KeyRound, MapPin, MessageSquare, Star, Tag } from "lucide-react";
 import { FC, useState } from "react";
 import Button from "../ui/button";
 import { RatingOfHouse } from "./rating-of-house";
 import Modal, { SizeForModal, TypeOfModal } from "./modal";
 import { RoomTotalRating } from "./room-total-rating";
 import { RoomReview } from "./room-review";
-import { comment } from "postcss";
 
 
 type Props = {
@@ -42,7 +40,7 @@ export const RoomReviews:FC<Props> = ({roomItem}) => {
                             <div className="px-12">
                                 {
                                     room_reviews.map(comment => 
-                                        <RoomReview key={comment.id} className="py-5" comment={comment}/>
+                                        <RoomReview inModal={true} key={comment.id} className="py-5" comment={comment}/>
                                     )
                                 }
                             </div>
