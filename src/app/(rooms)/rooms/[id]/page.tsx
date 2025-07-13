@@ -14,10 +14,7 @@ async function Page({params}: Props) {
   return (
     <>
         <RoomTopPart/>
-        <RoomItemHeader/>
-        <Container size={SizeOfContainer.md}>
-            <RoomItem id={Number(id)}/>
-        </Container>
+        <RoomItem id={Number(id)}/>
     </>
 
   )

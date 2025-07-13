@@ -12,6 +12,7 @@ type Props = {
     clusters: Cluster[],
     updateCondition: (id: number, condition: MarkerCondition) => void,
     activeId?: number,
+    RoomMap?: boolean
 }
 
 const Marker = dynamic(() => import("react-leaflet").then((mod) => mod.Marker), { ssr: false });
@@ -21,7 +22,7 @@ const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), { 
 
 
 
-export const CustomMarker = ({cluster, clusters, updateCondition, activeId}: Props) =>{
+export const CustomMarker = ({cluster, clusters, updateCondition, activeId, RoomMap}: Props) =>{
     const [L, setL] = useState<any>(null);
 
     useEffect(() => {
@@ -42,6 +43,16 @@ export const CustomMarker = ({cluster, clusters, updateCondition, activeId}: Pro
                     </svg>` : ""}
                 </div>`;
     };
+
+  
+    const homeMarker = () => {
+      return `<div class="home-marker flex gap-1 transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house">
+                      <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    </svg>
+              </div>`;
+    }
+    
     
     
     const clusterMarker = (condition: MarkerCondition) => {
@@ -49,6 +60,8 @@ export const CustomMarker = ({cluster, clusters, updateCondition, activeId}: Pro
             </div>`
     ;
     }
+
+    
     
 
     const createCustomIcon = useCallback(
@@ -56,7 +69,7 @@ export const CustomMarker = ({cluster, clusters, updateCondition, activeId}: Pro
         if (!L) return null;
         return L.divIcon({
         className: "custom-marker",
-        html: cluster.cardItems.length > 1 ? clusterMarker(cluster.condition) : singleMarker(cluster.condition, cluster.cardItems[0].price, cluster.id),
+        html: RoomMap?homeMarker():cluster.cardItems.length > 1 ? clusterMarker(cluster.condition) : singleMarker(cluster.condition, cluster.cardItems[0].price, cluster.id),
         iconSize: [50, 30],
         iconAnchor: [25, 15],
         });
@@ -84,13 +97,13 @@ export const CustomMarker = ({cluster, clusters, updateCondition, activeId}: Pro
             },
           }}
         >
-          <Popup>
+          {!RoomMap &&  <Popup>
             {cluster.cardItems.length > 1 ? (
               <ListOfCardsPopup cardItems={cluster.cardItems}/>
             ) : (
             <CardPopup inFavList={favorites.inFavList} clickToFav={favorites.clickToFav} cardItem={cluster.cardItems[0]} />
             )}
-          </Popup>
+          </Popup>}
         </Marker>
       )
     );

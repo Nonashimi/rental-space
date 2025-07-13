@@ -21,9 +21,10 @@ type Props = {
   activeId?: number,
   mapCenter?: [number, number],
   className?: string,
+  roomMap?: boolean
 }
 
-export default function ApartmentMap({cardList, activeId, mapCenter = [0, 0], className}: Props) {
+export default function ApartmentMap({cardList, activeId, mapCenter = [0, 0], className, roomMap}: Props) {
   const [geoData, setGeoData] = useState<any>(null);
   const [minDestination, setMinDestination] = useState<number>(10.5);
   const {ClusterMarkers} = useClustering(cardList, minDestination);
@@ -148,7 +149,7 @@ export default function ApartmentMap({cardList, activeId, mapCenter = [0, 0], cl
         )}
 
         {clusters.map((cluster) => 
-         <CustomMarker activeId = {activeId} key={cluster.id} cluster={cluster} clusters={clusters} updateCondition={updateCondition}/>
+         <CustomMarker RoomMap={roomMap} activeId = {activeId} key={cluster.id} cluster={cluster} clusters={clusters} updateCondition={updateCondition}/>
         )}
       </MapContainer>
     </div>

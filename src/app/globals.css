@@ -90,6 +90,17 @@ body {
   z-index: 5 !important;
 }
 
+.home-marker {
+  width: 45px;
+  height: 45px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #222222;
+  color: #fff;
+}
+
 .marker-container {
   display: flex;
   align-items: center;

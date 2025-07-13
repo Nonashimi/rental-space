@@ -5,6 +5,7 @@ import InputTitle from "../ui/input-title"
 import { RoomPriceCalendarModal } from "./room-price-calendar-modal";
 import { RoomPriceGuestModal } from "./room-price-guest-modal";
 import { Dates, guestData } from "@/store/search-datas";
+import { useComputionDay } from "@/hooks/useComputionPrice";
 
 
 
@@ -24,6 +25,8 @@ export const RoomItemPrice:FC<Props> = ({price, dates, guestDatas: guestData, se
     }
     return '';
   };
+
+  const {fullCount} = useComputionDay({dates});
 
   const handleCalendarOpen = () => {
     setisOpen(true);
@@ -50,18 +53,6 @@ export const RoomItemPrice:FC<Props> = ({price, dates, guestDatas: guestData, se
 
   return [questString, infantString, petString].filter(Boolean).join(', ');
 };
-
-  const fullCount = useMemo(() => {
-    const msPerDay = 1000 * 60 * 60 * 24;
-    if(!dates.checkIn || !dates.checkOut) return 0;
-    const utc1 = Date.UTC(dates.checkIn!.getFullYear(), dates.checkIn!.getMonth(), dates.checkIn!.getDate());
-    const utc2 = Date.UTC(dates.checkOut!.getFullYear(), dates.checkOut!.getMonth(), dates.checkOut!.getDate());
-
-    const diffInMs = Math.abs(utc2 - utc1);
-    return Math.floor(diffInMs / msPerDay);
-
-  },[ dates.checkIn, dates.checkOut]);
-
 
   const handleCheckAvailability = () => {
     const el = document.getElementById("room-item-price");
@@ -92,16 +83,18 @@ export const RoomItemPrice:FC<Props> = ({price, dates, guestDatas: guestData, se
                   </div>
                   <RoomPriceCalendarModal dates={dates} setDates={setDates} handleClose={handleCalendarClose} formatDate={formatDate} isOpen={isOpen}/>
                   <RoomPriceGuestModal guestDatas={guestData} setGuestData={setGuestData} handleBarClose={handleBarClose} isBarOpen={isBarOpen}/>
-                  {
-                    dates && dates.checkIn && dates.checkOut ?
-                        <Button className="w-full rounded-full py-3 mt-4" variant={VariantsOfButton.filling}>
-                          Reserve
-                        </Button>
-                        :
-                        <Button onClick={handleCheckAvailability} className="w-full rounded-full py-3 mt-4" variant={VariantsOfButton.filling}>
-                          Check availability
-                        </Button>
-                  }
+                  <div className="">
+                    {
+                      dates && dates.checkIn && dates.checkOut ?
+                          <Button className="w-full rounded-full py-3 mt-4" variant={VariantsOfButton.filling}>
+                            Reserve
+                          </Button>
+                          :
+                          <Button onClick={handleCheckAvailability} className="w-full rounded-full py-3 mt-4" variant={VariantsOfButton.filling}>
+                            Check availability
+                          </Button>
+                    }
+                  </div>
                 </div>
             </div>
           </div>

@@ -70,8 +70,8 @@ export const PhotosModal:FC<Props> = ({id, roomItem, closeModal, openShared}) =>
           {
             rooms.map((room, index) => 
               <div key={room.id} id={room.title} className="grid grid-cols-10 gap-4 pb-[50px] scroll-mt-[40px]">
-                <div className="col-span-3 font-bold text-[23px] py-3">
-                  {room.title} 
+                <div className="col-span-3  relative">
+                  <p className="font-bold text-[23px] py-3 sticky top-3">{room.title} </p>
                 </div>
                 <div className="col-span-7">
                   <Masonry
