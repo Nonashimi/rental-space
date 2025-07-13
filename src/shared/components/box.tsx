@@ -8,9 +8,8 @@ type Props = {
 }
 
 function Box({className, children}: Props) {
-    const type = useTypeStore();
   return (
-    <div className={cn(' bg-[var(--modal-bg-color)] shadow-2xl rounded-3xl p-10 box-border', className)}>
+    <div className={cn('bg-[var(--modal-bg-color)] shadow-2xl rounded-3xl p-10 box-border', className)}>
         {children}
     </div>
   )
