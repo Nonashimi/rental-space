@@ -29,14 +29,12 @@ function RoomItem({ id }: Props) {
             {   
                 isShareOpen && <SharedModal roomItem={roomItem} handleClose={()=> setisShareOpen(false)}/>
             }
-            {
-                
-            }
             {isOpen && <PhotosModal openShared={() => setisShareOpen(true)} roomItem = {roomItem} id={id} closeModal={() => setIsOpen(false)}/>}
             <RoomItemTop clickOpenShared={() => setisShareOpen(true)} roomItem={roomItem} id={id}/>
-            <ItemGridPhotos handleOpen={() => setIsOpen(true)} roomItem={roomItem}/>
-            <div className="relative z-10">
-                <div id='header-show' className="flag"></div>
+            <div id='header-show' className="">
+                <ItemGridPhotos handleOpen={() => setIsOpen(true)} roomItem={roomItem}/>
+            </div>
+            <div className="relative z-[5]">
                 <div className="grid grid-cols-[13fr_7fr] gap-[70px] py-8">
                     <RoomItemInformations dates={dates} setDates={setDates} roomItem={roomItem}/>
                     <RoomItemPrice guestDatas={guestDatas} setDates={setDates} dates={dates} setGuestData={setGuestData} price={roomItem.price}/>

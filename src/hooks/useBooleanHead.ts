@@ -26,6 +26,18 @@ export const useBooleanHead = () => {
     },[type.isFocus]);
 
 
+    const handleScroll = () => {
+        toPositive();
+        type.setFocus(false);
+        console.log('handle scroll');
+    }
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+
 
     return {
         value,

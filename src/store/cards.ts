@@ -69,7 +69,7 @@ export const reviews:Review[] = [
     comment: "Отличное место! Всё чисто и удобно. Обязательно вернусь.",
     created_at: "2025-07-05T14:30:00Z",
     images: ["https://example.com/review1.jpg"],
-    responses: [1],
+    responses: [1, 2],
   },
   {
     id: 2,

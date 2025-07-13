@@ -12,7 +12,7 @@ type Props = {
   roomItem: CardItem,
   id: number;
   closeModal: () => void,
-  photo_id: number,
+  photo_id: string | number,
   openShared: () => void,
 }
 
@@ -24,7 +24,16 @@ const breakpointColumnsObj = {
 
 export const PhotoPaginationModal:FC<Props> = ({id, roomItem, closeModal, photo_id, openShared}) => {
   const images = roomItem.rooms.flatMap(room => room.images);
-  const {thisPage, clickNext, clickPrev} = usePagination({maxPages: images.length, currentPage: photo_id + 1});
+  const findPage = (arr_num: number, id: number) => {
+    let count = 0;
+    for(let i = 0; i < arr_num - 1; i++){
+      count += roomItem.rooms[i].images.length;
+    }
+    count += id + 1;
+    return count;
+  }
+  const currentPage = typeof photo_id === 'string'?findPage(Number(photo_id.split('-')[0]), Number(photo_id.split('-')[1])) :1;
+  const {thisPage, clickNext, clickPrev} = usePagination({maxPages: images.length, currentPage: currentPage});
 
    useEffect(() => {
     document.body.classList.add("overflow-hidden");
