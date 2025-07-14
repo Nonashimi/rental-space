@@ -2,23 +2,18 @@ import { create } from 'zustand';
 import { Dates, guestData } from './search-datas';
 
 
+
+export enum WhenToPayVariants {
+  payNow = 'Pay now',
+  payPartNowPartLater = 'Pay part now, part later',
+}
+
 export interface TypeState{
-  guestDatas: guestData,
-  dates: Dates,
-  setDates:(data: Dates) => void,
-  setGuestData: (key: string, value: number) => void,
+  WhenToPay: WhenToPayVariants,
+  handleWhenToPay: (variant: WhenToPayVariants) => void,
 }
 
 export const useOrderDatas = create<TypeState>((set, get) => ({
-  guestDatas: {
-          adults: 1,
-          children: 0,
-          infants: 0,
-          pets: 0,
-        },
-  dates: {},
-  setDates:(data) => set({ dates: { ...data } }),
-  setGuestData: (key, value) => {
-      set({guestDatas: {...get().guestDatas, [key]: value}});
-    }
+  WhenToPay: WhenToPayVariants.payNow,
+  handleWhenToPay: (variant: WhenToPayVariants) => set(() => ({WhenToPay: variant})),
 }));
