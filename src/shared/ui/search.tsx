@@ -14,6 +14,7 @@ import MonthChoose from "../components/month-choose";
 import SearchInput from "./search-input";
 import FlexibleChoose, { durationArray } from "../components/flexible-choose";
 import GuestHandler from "../components/guest-handler";
+import { useGuestFormat } from "@/hooks/useGuestFormat";
 
 
 interface Props{
@@ -98,14 +99,6 @@ function Search({className, isScrolled, negativeScroll, positiveScroll}: Props) 
     }
   }
 
-const questFormat = () => {
-  const quests = guestData.adults + guestData.children;
-  const questString = quests === 1 ? '1 guest' : quests > 0 ? `${quests} guests` : '';
-  const infantString = guestData.infants === 1 ? '1 infant' : guestData.infants > 0 ? `${guestData.infants} infants` : '';
-  const petString = guestData.pets === 1 ? '1 pet' : guestData.pets > 0 ? `${guestData.pets} pets` : '';
-
-  return [questString, infantString, petString].filter(Boolean).join(', ');
-};
 
 
 const clickToX = (id: number) => {
@@ -148,7 +141,7 @@ const clickToX = (id: number) => {
             }
           </div>
           <div className="h-[30px] w-[1px] bg-[var(--line-color)]"></div>
-          <SearchInput setActiveDate={setActiveDate} clickToX={clickToX} className="w-1/3" inputClassName ="w-1/2" title={!isScrolled?"Кто":"Гости"} inputId={5} placeHolder="Добавить гостей" value={questFormat()} type={type} isScrolled={isScrolled}/>
+          <SearchInput setActiveDate={setActiveDate} clickToX={clickToX} className="w-1/3" inputClassName ="w-1/2" title={!isScrolled?"Кто":"Гости"} inputId={5} placeHolder="Добавить гостей" value={useGuestFormat({guestData})} type={type} isScrolled={isScrolled}/>
           <button
             className={cn(isScrolled?'w-[30px] h-[30px]':'w-[47px] h-[47px]',"header-duration absolute bg-[var(--primary)] flex justify-center items-center gap-2 right-2 rounded-full text-white", type.isFocus && "w-[120px]")}
             tabIndex={-1}

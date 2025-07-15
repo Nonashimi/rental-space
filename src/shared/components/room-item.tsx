@@ -15,6 +15,8 @@ import { RoomReviews } from './room-rating-part'
 import { RoomItemHeader } from './room-item-header'
 import Container, { SizeOfContainer } from './container'
 import { useComputionDay } from '@/hooks/useComputionPrice'
+import { useOrderDatas } from '@/store/order-datas'
+import { useRouter } from 'next/navigation'
 
 type Props = {
     id: number
@@ -27,9 +29,19 @@ function RoomItem({ id }: Props) {
     const {guestDatas, setDates, handleGuestDatas: setGuestData, dates} = useRoomInformation();
     const {fullCount} = useComputionDay({dates});
     useToaster();
+    const router = useRouter();
+
+    const {actions} = useOrderDatas();
+
+    const handleReserve = () => {
+        actions.setDates(dates);
+        actions.setGuestData(guestDatas);
+        actions.setRoomItem(roomItem);
+        router.push(`/book`);
+    };
     return (
         < >
-            <RoomItemHeader price={roomItem.price} fullCount={fullCount}/>
+            <RoomItemHeader handleReserve={handleReserve} price={roomItem.price} fullCount={fullCount}/>
             <Container size={SizeOfContainer.md}>
                 <FavModals/>
                 {   
@@ -43,7 +55,7 @@ function RoomItem({ id }: Props) {
                 <div className="relative z-[5]">
                     <div className="grid grid-cols-[13fr_7fr] gap-[70px] py-8">
                         <RoomItemInformations dates={dates} setDates={setDates} roomItem={roomItem}/>
-                        <RoomItemPrice guestDatas={guestDatas} setDates={setDates} dates={dates} setGuestData={setGuestData} price={roomItem.price}/>
+                        <RoomItemPrice handleReserve={handleReserve} guestDatas={guestDatas} setDates={setDates} dates={dates} setGuestData={setGuestData} price={roomItem.price}/>
                     </div>
                 </div>
                 <div className="h-[1px] w-full bg-[var(--line-color)] my-10"></div>

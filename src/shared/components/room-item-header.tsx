@@ -5,10 +5,11 @@ import Button, { VariantsOfButton } from "../ui/button";
 
 export type Props = {
   fullCount: number,
-  price: number
+  price: number,
+  handleReserve: () => void,
 }
 
-export const RoomItemHeader = ({fullCount, price}: Props) => {
+export const RoomItemHeader = ({fullCount, price, handleReserve}: Props) => {
   const anchors = [
         {id: 'Photos'},
         {id: 'Amenities'},
@@ -82,7 +83,7 @@ export const RoomItemHeader = ({fullCount, price}: Props) => {
                   {
                     fullCount === 0 ?
                       <Button onClick={() => handleAnchor('room-item-price')} className="rounded-full px-6 py-3" variant={VariantsOfButton.filling}>Check Availability</Button>:
-                      <Button className="rounded-full px-12 py-3" variant={VariantsOfButton.filling}>Reserve</Button>
+                      <Button onClick={handleReserve} className="rounded-full px-12 py-3" variant={VariantsOfButton.filling}>Reserve</Button>
                   }
                 </div>}
               </Container>

@@ -10,7 +10,7 @@ type Props = {
 }
 
 export const WhenToPayForm: FC<Props> = ({ button, isActiveBox }) => {
-  const { WhenToPay, handleWhenToPay } = useOrderDatas();
+  const {value, actions} = useOrderDatas();
 
   const variants = [
     {
@@ -25,29 +25,31 @@ export const WhenToPayForm: FC<Props> = ({ button, isActiveBox }) => {
   ];
 
   return (
-    <div className={cn("flex flex-col gap-4 overflow-y-hidden transition-all duration-200", { 'max-h-[500px]': isActiveBox, 'max-h-0': !isActiveBox })} role="radiogroup">
-      {variants.map(({ id, title, description }) => (
-        <div key={id} className="flex justify-between items-start py-4 border-b border-[var(--line-color)]">
-          <div>
-            <p>{title}</p>
-            {description && (
-              <p className="text-[var(--text-gray-color)] text-sm">{description}</p>
-            )}
+    <div className="">
+      <div className={cn("flex flex-col gap-4 overflow-y-hidden transition-all duration-200", { 'max-h-[500px]': isActiveBox, 'max-h-0': !isActiveBox })} role="radiogroup">
+        {variants.map(({ id, title, description }) => (
+          <div key={id} className="flex justify-between items-start py-4 border-b border-[var(--line-color)]">
+            <div>
+              <p>{title}</p>
+              {description && (
+                <p className="text-[var(--text-gray-color)] text-sm">{description}</p>
+              )}
+            </div>
+
+            <RadioBox
+              checked={value.WhenToPay === id}
+              value={id}
+              onChange={() => actions.handleWhenToPay(id)}
+            />
           </div>
-
-          <RadioBox
-            checked={WhenToPay === id}
-            value={id}
-            onChange={() => handleWhenToPay(id)}
-          />
-        </div>
-      ))}
-
-      {button && (
-        <div className="flex justify-end">
-          {button()}
-        </div>
-      )}
+        ))}
+        {button && (
+          <div className="flex justify-end">
+            {button()}
+          </div>
+        )}
+      </div>
+      
     </div>
   );
 };

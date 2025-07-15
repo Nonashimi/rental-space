@@ -6,6 +6,7 @@ import { RoomPriceCalendarModal } from "./room-price-calendar-modal";
 import { RoomPriceGuestModal } from "./room-price-guest-modal";
 import { Dates, guestData } from "@/store/search-datas";
 import { useComputionDay } from "@/hooks/useComputionPrice";
+import { useOrderDatas } from "@/store/order-datas";
 
 
 
@@ -15,8 +16,9 @@ type Props = {
   guestDatas: guestData,
   setDates: (dates: Dates) => void,
   setGuestData: (key: string, value: number) => void,
+  handleReserve: () => void,
 }
-export const RoomItemPrice:FC<Props> = ({price, dates, guestDatas: guestData, setGuestData, setDates}) => {
+export const RoomItemPrice:FC<Props> = ({price, dates, guestDatas: guestData, setGuestData, setDates, handleReserve}) => {
   const [isOpen, setisOpen] = useState(false);
   const [isBarOpen, setIsBarOpen] = useState(false);
   const formatDate = (date: Date | null | undefined) => {
@@ -86,7 +88,7 @@ export const RoomItemPrice:FC<Props> = ({price, dates, guestDatas: guestData, se
                   <div className="">
                     {
                       dates && dates.checkIn && dates.checkOut ?
-                          <Button className="w-full rounded-full py-3 mt-4" variant={VariantsOfButton.filling}>
+                          <Button onClick={handleReserve} className="w-full rounded-full py-3 mt-4" variant={VariantsOfButton.filling}>
                             Reserve
                           </Button>
                           :
