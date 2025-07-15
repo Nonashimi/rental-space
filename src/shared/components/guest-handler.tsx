@@ -6,7 +6,7 @@ import Modal from './modal'
 
 type Props = {
     guestData: guestData,
-    setGuestData: (key: string, value: number) => void,
+    setGuestData: (guestData: guestData) => void,
 }
 
 function GuestHandler({guestData, setGuestData}: Props) {
@@ -53,10 +53,12 @@ function GuestHandler({guestData, setGuestData}: Props) {
     }
 
     useEffect(() => {
-        setGuestData('adults', adults.thisPage);
-        setGuestData('children', children.thisPage);
-        setGuestData('infants', infants.thisPage);
-        setGuestData('pets', pets.thisPage);
+        setGuestData({
+            adults: adults.thisPage,
+            children: children.thisPage,
+            infants: infants.thisPage,
+            pets: pets.thisPage
+        });
     },[adults.thisPage, children.thisPage, infants.thisPage, pets.thisPage]);
   return (
     <div>

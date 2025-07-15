@@ -6,7 +6,6 @@ import { RoomPriceCalendarModal } from "./room-price-calendar-modal";
 import { RoomPriceGuestModal } from "./room-price-guest-modal";
 import { Dates, guestData } from "@/store/search-datas";
 import { useComputionDay } from "@/hooks/useComputionPrice";
-import { useOrderDatas } from "@/store/order-datas";
 
 
 
@@ -15,7 +14,7 @@ type Props = {
   dates: Dates,
   guestDatas: guestData,
   setDates: (dates: Dates) => void,
-  setGuestData: (key: string, value: number) => void,
+  setGuestData: (guestData: guestData) => void,
   handleReserve: () => void,
 }
 export const RoomItemPrice:FC<Props> = ({price, dates, guestDatas: guestData, setGuestData, setDates, handleReserve}) => {

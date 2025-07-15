@@ -9,7 +9,7 @@ type Props = {
   isBarOpen: boolean,
   handleBarClose: () => void,
   guestDatas: guestData,
-  setGuestData: (key: string, value: number) => void,
+  setGuestData: (guestData: guestData) => void,
 }
 export const RoomPriceGuestModal:FC<Props> = ({isBarOpen, handleBarClose, guestDatas, setGuestData}) => {
   const containerRef = useRef<HTMLDivElement>(null);

@@ -45,7 +45,7 @@ interface State{
     setDuration :(val: number) => void,
     setMonths: (val: month) => void,
     clearMonths: () => void,
-    setGuestData: (key: string, value: number) => void,
+    setGuestData: (guestData: guestData) => void,
     clearGuestData: () => void,
 }
 
@@ -82,8 +82,8 @@ export const useSearchDatasStore = create<State>((set, get) => ({
     clearMonths: () => {
       set({months: []});
     },
-    setGuestData: (key, value) => {
-      set({guestData: {...get().guestData, [key]: value}});
+    setGuestData: (guestData: guestData) => {
+      set({guestData: guestData});
     },
     clearGuestData: () => {
       set({guestData: {adults: 0, infants: 0, children: 0, pets: 0}});

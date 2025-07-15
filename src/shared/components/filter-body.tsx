@@ -11,7 +11,7 @@ import { useFilterStore } from '@/store/filters'
 import { usePrices } from '@/hooks/usePrices'
 import { cn } from '@/lib/utils'
 import RoomPagination from './room-pagination'
-import { useParamsDetails } from '@/hooks/useParamsDetails'
+import { useFilterParams } from '@/hooks/useFIlterParams'
 
 
 type Props = {
@@ -66,9 +66,9 @@ function FilterBody({clickClose}: Props) {
   ];
 
    const {cleanAll} = useFilterStore();
-      const paramsDetails = useParamsDetails();
+      const paramsDetails = useFilterParams();
       const handleShow = () => {
-          paramsDetails.handleParams();
+          paramsDetails.updateParamsFromStore();
           clickClose?.();
       }
   return (
@@ -125,7 +125,7 @@ function FilterBody({clickClose}: Props) {
                 <Crown size={30}/>
                 <div className="flex flex-col">
                   <div className="text-[16px] font-bold">Выбор гостей</div>
-                  <div className="text-[14px] text-[var(--text-gray-color)] font-semibold w-[150px]">Самoе любимле жилье на Airbnb</div>
+                  <div className="text-[14px] text-[var(--text-gray-color)] font-semibold w-[150px]">Самoе любимые жилье на Airbnb</div>
                 </div>
               </div>
             </Button>

@@ -26,7 +26,7 @@ function RoomItem({ id }: Props) {
     const roomItem = useCardListStore().cardList.find(el => el.id === id)!;
     const [isOpen, setIsOpen] = useState(false);
     const [isShareOpen, setisShareOpen] = useState(false);
-    const {guestDatas, setDates, handleGuestDatas: setGuestData, dates} = useRoomInformation();
+    const {guestDatas, handleGuestDatas: setGuestData, dates, handleDates} = useRoomInformation();
     const {fullCount} = useComputionDay({dates});
     useToaster();
     const router = useRouter();
@@ -37,7 +37,7 @@ function RoomItem({ id }: Props) {
         actions.setDates(dates);
         actions.setGuestData(guestDatas);
         actions.setRoomItem(roomItem);
-        router.push(`/book`);
+        router.push(`/book/${id}`);
     };
     return (
         < >
@@ -54,8 +54,8 @@ function RoomItem({ id }: Props) {
                 </div>
                 <div className="relative z-[5]">
                     <div className="grid grid-cols-[13fr_7fr] gap-[70px] py-8">
-                        <RoomItemInformations dates={dates} setDates={setDates} roomItem={roomItem}/>
-                        <RoomItemPrice handleReserve={handleReserve} guestDatas={guestDatas} setDates={setDates} dates={dates} setGuestData={setGuestData} price={roomItem.price}/>
+                        <RoomItemInformations dates={dates} setDates={handleDates} roomItem={roomItem}/>
+                        <RoomItemPrice handleReserve={handleReserve} guestDatas={guestDatas} setDates={handleDates} dates={dates} setGuestData={setGuestData} price={roomItem.price}/>
                     </div>
                 </div>
                 <div className="h-[1px] w-full bg-[var(--line-color)] my-10"></div>
