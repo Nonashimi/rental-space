@@ -15,8 +15,7 @@ import { RoomReviews } from './room-rating-part'
 import { RoomItemHeader } from './room-item-header'
 import Container, { SizeOfContainer } from './container'
 import { useComputionDay } from '@/hooks/useComputionPrice'
-import { useOrderDatas } from '@/store/order-datas'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 type Props = {
     id: number
@@ -26,18 +25,14 @@ function RoomItem({ id }: Props) {
     const roomItem = useCardListStore().cardList.find(el => el.id === id)!;
     const [isOpen, setIsOpen] = useState(false);
     const [isShareOpen, setisShareOpen] = useState(false);
+    const router = useRouter();
+    const searchParams = useSearchParams();
     const {guestDatas, handleGuestDatas: setGuestData, dates, handleDates} = useRoomInformation();
     const {fullCount} = useComputionDay({dates});
     useToaster();
-    const router = useRouter();
-
-    const {actions} = useOrderDatas();
-
     const handleReserve = () => {
-        actions.setDates(dates);
-        actions.setGuestData(guestDatas);
-        actions.setRoomItem(roomItem);
-        router.push(`/book/${id}`);
+        const currentParams = searchParams.toString();
+        router.push(`/book/${id}?${currentParams}`);
     };
     return (
         < >

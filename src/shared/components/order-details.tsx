@@ -7,13 +7,20 @@ import { useFormatDates } from "@/hooks/useFormatDates";
 import { useGuestFormat } from "@/hooks/useGuestFormat";
 import Button, { VariantsOfButton } from "../ui/button";
 import { useComputionDay } from "@/hooks/useComputionPrice";
+import { useCardListStore } from "@/store/cards";
+import { useOrderParams } from "@/hooks/useOrderParams";
 
+type Props = {
+  roomId: number;
+}
 
-export const OrderDetails:FC = () => {
-  const {value, actions} = useOrderDatas();
-  const roomItem = value.roomItem;
+export const OrderDetails:FC<Props> = ({roomId}) => {
+  const {value} = useOrderDatas();
   const tripDates = useFormatDates(value.dates);
   const {fullCount} = useComputionDay({dates: value.dates});
+  const roomItem = useCardListStore().cardList.find(el => el.id === roomId);
+  const {handleDates, handleGuestDatas} = useOrderParams();
+
   return <Box className="p-5 text-[14px]">
     <div className="flex items-center gap-4">
       <img className="w-[110px] rounded-lg" src={roomItem?.rooms[0].images[0]} alt="" />

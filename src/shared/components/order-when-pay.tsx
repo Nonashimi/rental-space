@@ -5,22 +5,24 @@ import { FC } from "react";
 import { cn } from "@/lib/utils";
 
 type Props = {
-  button?: () => React.ReactNode;
-  isActiveBox: boolean
+  button?:React.ReactNode;
+  isActiveBox: boolean,
+  fullCount: number;
+  price: number;
 }
 
-export const WhenToPayForm: FC<Props> = ({ button, isActiveBox }) => {
+export const WhenToPayForm: FC<Props> = ({ button, isActiveBox, price, fullCount }) => {
   const {value, actions} = useOrderDatas();
 
   const variants = [
     {
       id: WhenToPayVariants.payNow,
-      title: 'Pay ₸44,785.52 now',
+      title: `Pay ₸${price * fullCount} now`,
     },
     {
       id: WhenToPayVariants.payPartNowPartLater,
       title: 'Pay part now, part later',
-      description: '₸22,392.76 now, ₸22,392.76 charged on Aug 14. No extra fees.'
+      description: `₸${price * fullCount/2} now, ₸${price * fullCount/2} charged on Aug 14. No extra fees.`
     }
   ];
 
@@ -45,7 +47,7 @@ export const WhenToPayForm: FC<Props> = ({ button, isActiveBox }) => {
         ))}
         {button && (
           <div className="flex justify-end">
-            {button()}
+            {button}
           </div>
         )}
       </div>

@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { Dates, guestData } from './search-datas';
-import { CardItem } from './cards';
 
 
 
@@ -14,12 +13,12 @@ export interface TypeState{
     WhenToPay: WhenToPayVariants,
     dates: Dates,
     guestData: guestData,
-    roomItem: CardItem | null
+    roomId: number | null,
   },
   actions: {
     setDates: (dates: Dates) => void,
     setGuestData: (guestData: guestData) => void,
-    setRoomItem: (roomItem: CardItem) => void,
+    setRoomId: (id: number) => void,
     handleWhenToPay: (variant: WhenToPayVariants) => void,
   }
 }
@@ -37,7 +36,7 @@ export const useOrderDatas = create<TypeState>((set, get) => ({
       infants: 0,
       pets: 0,
     },
-    roomItem: null,
+    roomId: null,
   },
   actions: {
     setDates: (dates: Dates) => set((state) => ({
@@ -52,10 +51,10 @@ export const useOrderDatas = create<TypeState>((set, get) => ({
         guestData: guestData,
       },
     })),
-    setRoomItem: (roomItem: CardItem) => set((state) => ({
+    setRoomId: (id: number) => set((state) => ({
       value: {
         ...state.value,
-        roomItem: roomItem,
+        roomId: id,
       },
     })),
     handleWhenToPay: (variant: WhenToPayVariants) => set((state) => ({
