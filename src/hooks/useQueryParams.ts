@@ -15,18 +15,20 @@ export const useQueryParams = () => {
         return params;
     }, [searchParams]);
 
-    const setParams = useCallback((newParams: Record<string, any>) => {
-        const current = new URLSearchParams(searchParams);
-        Object.entries(newParams).forEach(([key, value]) => {
-            if (value === undefined || value === null || value === "" || (Array.isArray(value) && value.length === 0)) {
-                current.delete(key);
-            } else {
-                current.set(key, Array.isArray(value) ? value.join(",") : value.toString());
-            }
-        });
+   const setParams = useCallback((newParams: Record<string, any>) => {
+    const current = new URLSearchParams(window.location.search);
+    console.log("Setting params:", newParams);
+    Object.entries(newParams).forEach(([key, value]) => {
+        if (value === undefined || value === null || value === "" || (Array.isArray(value) && value.length === 0)) {
+            current.delete(key);
+        } else {
+            current.set(key, Array.isArray(value) ? value.join(",") : value.toString());
+        }
+    });
 
-        router.push(`?${current.toString()}`, { scroll: false });
-    }, [searchParams, router]);
+    router.push(`?${current.toString()}`, { scroll: false });
+}, [router]);
+
 
     return { getParams, setParams };
 }

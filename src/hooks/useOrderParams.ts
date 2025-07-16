@@ -11,13 +11,14 @@ export const useOrderParams = () => {
   const { setDates, setGuestData } = actions;
   useEffect(() => {
     const params = getParams();
-
+    console.log(params);
     setGuestData({
       adults: Number(params.adults) || 1,
       children: Number(params.children) || 0,
       infants: Number(params.infants) || 0,
       pets: Number(params.pets) || 0,
     });
+
     if (params.checkIn || params.checkOut) {
       setDates({
         checkIn: params.checkIn ? new Date(params.checkIn) : undefined,
@@ -38,19 +39,45 @@ export const useOrderParams = () => {
     setParams(params);
   };
 
-  // Обновление дат
   const handleDates = (newDates: Dates) => {
     setDates(newDates);
-
+    console.log('Updated dates:', newDates);
     setParams({
       checkIn: newDates.checkIn ? newDates.checkIn.toLocaleDateString('en-CA') : '',
       checkOut: newDates.checkOut ? newDates.checkOut.toLocaleDateString('en-CA') : '',
     });
   };
 
+  const updateOrderParams = (data: { guests?: guestData; dates?: Dates }) => {
+    const params: Record<string, any> = {};
+
+    if (data.guests) {
+      setGuestData(data.guests);
+      (Object.keys(data.guests) as (keyof guestData)[]).forEach(k => {
+        if (data.guests![k] > 0) {
+          params[k] = data.guests![k];
+        }
+      });
+    }
+
+    if (data.dates) {
+      setDates(data.dates);
+      if (data.dates.checkIn) {
+        params.checkIn = data.dates.checkIn.toLocaleDateString('en-CA');
+      }
+      if (data.dates.checkOut) {
+        params.checkOut = data.dates.checkOut.toLocaleDateString('en-CA');
+      }
+    }
+
+    setParams(params);
+  };
+
+
 
   return {
     handleDates,
-    handleGuestDatas
+    handleGuestDatas,
+    updateOrderParams
   }
 };

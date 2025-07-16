@@ -1,5 +1,5 @@
 'use client';
-import { FC } from "react";
+import { FC, useState } from "react";
 import Box from "./box";
 import { useOrderDatas } from "@/store/order-datas";
 import { Star } from "lucide-react";
@@ -8,7 +8,8 @@ import { useGuestFormat } from "@/hooks/useGuestFormat";
 import Button, { VariantsOfButton } from "../ui/button";
 import { useComputionDay } from "@/hooks/useComputionPrice";
 import { useCardListStore } from "@/store/cards";
-import { useOrderParams } from "@/hooks/useOrderParams";
+
+import { OrderDetailsModal } from "./order-details-modal";
 
 type Props = {
   roomId: number;
@@ -19,9 +20,13 @@ export const OrderDetails:FC<Props> = ({roomId}) => {
   const tripDates = useFormatDates(value.dates);
   const {fullCount} = useComputionDay({dates: value.dates});
   const roomItem = useCardListStore().cardList.find(el => el.id === roomId);
-  const {handleDates, handleGuestDatas} = useOrderParams();
-
-  return <Box className="p-5 text-[14px]">
+  const [isOpen, setIsOpen] = useState(false);
+  
+ 
+  
+  return <> 
+  <OrderDetailsModal isOpen={isOpen} setIsOpen={setIsOpen}/>
+  <Box className="p-5 text-[14px]">
     <div className="flex items-center gap-4">
       <img className="w-[110px] rounded-lg" src={roomItem?.rooms[0].images[0]} alt="" />
       <div className="">
@@ -43,7 +48,7 @@ export const OrderDetails:FC<Props> = ({roomId}) => {
           }</div>
       </div>
       <div className="">
-        <Button variant={VariantsOfButton.default} className="py-2 px-3 text-[13px] font-semibold rounded-lg">Change</Button>
+        <Button onClick={() => setIsOpen(true)} variant={VariantsOfButton.default} className="py-2 px-3 text-[13px] font-semibold rounded-lg">Change</Button>
       </div>
     </div>
     <div className="h-[1px] w-full bg-[var(--line-color)] my-4"></div>
@@ -66,5 +71,6 @@ export const OrderDetails:FC<Props> = ({roomId}) => {
         </div>
     </div><div className=""></div>
   </Box>;
+  </>
 
 }

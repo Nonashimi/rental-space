@@ -67,7 +67,7 @@ export default function Calendar({currentMonth, currentYear, dataFromDate, setDa
 
   const checkIn = (date: Date | null) => {
       setDataFromDate({
-        ...dataFromDate,
+        checkOut: dataFromDate?.checkOut,
         checkIn: date,
       });
     
@@ -75,7 +75,7 @@ export default function Calendar({currentMonth, currentYear, dataFromDate, setDa
 
   const checkOut = (date: Date | null) => {
     setDataFromDate(
-      {...dataFromDate, checkOut: date}
+      {checkIn: dataFromDate?.checkIn, checkOut: date}
     );
   };
   const switchAll = (date: Date | null) => {
